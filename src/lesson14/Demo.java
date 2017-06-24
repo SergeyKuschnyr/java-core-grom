@@ -9,21 +9,24 @@ public class Demo {
 
         if (objectTest != null) {
             System.out.println(objectTest.toString());
-            System.out.println(objectTest.getClass().getName());
+            if (objectTest.getClass() != null)
+                System.out.println(objectTest.getClass().getName());
         }
 
         objectTest = new Object();
 
         if (objectTest != null) {
             System.out.println(objectTest.toString());
-            System.out.println(objectTest.getClass().getName());
+            if (objectTest.getClass() != null)
+                System.out.println(objectTest.getClass().getName());
         }
 
         objectTest = new Object();
 
         if (objectTest != null) {
             System.out.println(objectTest.toString());
-            System.out.println(objectTest.getClass().getName());
+            if (objectTest.getClass() != null)
+                System.out.println(objectTest.getClass().getName());
         }
     }
 }

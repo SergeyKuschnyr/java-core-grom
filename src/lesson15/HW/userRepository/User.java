@@ -14,6 +14,8 @@ public class User {
         this.sessionId = sessionId;
     }
 
+    public User(){};
+
     public Long getId() {
         return id;
     }

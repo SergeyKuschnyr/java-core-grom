@@ -13,74 +13,74 @@ public class Demo {
 
         UserRepository userRepository = new UserRepository();
 
-        userRepository.print(userRepository.getUsers());
-        //userRepository.getUsers().toString();
+        if (userRepository != null) {
 
-        System.out.println();
-        //////////save check////////////////////////////////////////////////////
+            userRepository.print(userRepository.getUsers());
+
+            System.out.println();
+            //////////save check////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-        System.out.println("Added new users and return type check");
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
+            System.out.println("Added new users and return type check");
+            userRepository.save(user1);
+            userRepository.save(user2);
+            userRepository.save(user3);
 
-        userRepository.print(userRepository.getUsers());
-        System.out.println();
+            userRepository.print(userRepository.getUsers());
+            System.out.println();
 /////////////////////////////////////////////////////////////////////////////////
-        System.out.println("Added same user check");
-        userRepository.save(user1);
+            System.out.println("Added same user check");
+            userRepository.save(user1);
 
-        userRepository.print(userRepository.getUsers());
-        System.out.println();
+            userRepository.print(userRepository.getUsers());
+            System.out.println();
 /////////////////////////////////////////////////////////////////////////////////
-        System.out.println("Overfull check");
-        for (int i = 0; i < 12; i++)
-            if (user1 != null)
-                userRepository.save(new User(user1.getId() + i, user1.getName(), user1.getSessionId()));
+            System.out.println("Overfull check");
+            for (int i = 0; i < 12; i++)
+                if (user1 != null)
+                    userRepository.save(new User(user1.getId() + i, user1.getName(), user1.getSessionId()));
 
-        userRepository.print(userRepository.getUsers());
-        System.out.println();
+            userRepository.print(userRepository.getUsers());
+            System.out.println();
 //////////////////////////////////////////////////////////////////////////////////
-        System.out.println("null save check");
+            System.out.println("null save check");
 
 //        userRepository.delete(user3);
-        userRepository.save(null);
+            userRepository.save(null);
 
-        userRepository.print(userRepository.getUsers());
-        System.out.println();
+            userRepository.print(userRepository.getUsers());
+            System.out.println();
 
-        // update check///////////////////////////////////////////////////////////
-        System.out.println("update method check");
-        System.out.println("--------------------------------");
+            // update check///////////////////////////////////////////////////////////
+            System.out.println("update method check");
+            System.out.println("--------------------------------");
 
-        System.out.println("user is...");
-        if (userRepository.update(user2) != null) {
+            System.out.println("user is...");
             userRepository.update(user2);
             userRepository.print(userRepository.getUsers());
 
+            System.out.println();
+
+            System.out.println("user is'nt...");
+            userRepository.update(user4);
+            userRepository.print(userRepository.getUsers());
+            System.out.println();
+
+            System.out.println("null check");
+            userRepository.update(null);
+            userRepository.print(userRepository.getUsers());
+            System.out.println();
+
+            // delete method check//////////////////////////////////////////////////
+            System.out.println("delete method check");
+            System.out.println("--------------------------------");
+            userRepository.delete(user3);
+            userRepository.print(userRepository.getUsers());
+            System.out.println();
+
+            userRepository.delete(user3);
+            userRepository.print(userRepository.getUsers());
+            System.out.println();
         }
-        System.out.println();
-
-        System.out.println("user is'nt...");
-        userRepository.update(user4);
-        userRepository.print(userRepository.getUsers());
-        System.out.println();
-
-        System.out.println("null check");
-        userRepository.update(null);
-        userRepository.print(userRepository.getUsers());
-        System.out.println();
-
-        // delete method check//////////////////////////////////////////////////
-        System.out.println("delete method check");
-        System.out.println("--------------------------------");
-        userRepository.delete(user3);
-        userRepository.print(userRepository.getUsers());
-        System.out.println();
-
-        userRepository.delete(user3);
-        userRepository.print(userRepository.getUsers());
-        System.out.println();
 
     }
 }

@@ -32,9 +32,9 @@ public class BookingComAPI implements API {
         return null;
     }
 
-    public Room[] findRooms(int price, int persons, String city) {
-        return null;
-    }
+//    public Room[] findRooms(int price, int persons, String city) {
+//        return null;
+//    }
 
     public Room[] findRooms(int persons, String city) {
         Room[] tempRoom = new Room[rooms.length];

@@ -79,6 +79,4 @@ public class Room {
         result = 31 * result + CityName.hashCode();
         return result;
     }
-
-
 }

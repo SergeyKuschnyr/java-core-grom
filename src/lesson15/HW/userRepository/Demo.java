@@ -33,7 +33,8 @@ public class Demo {
 /////////////////////////////////////////////////////////////////////////////////
         System.out.println("Overfull check");
         for (int i = 0; i < 12; i++)
-            userRepository.save(new User(user1.getId() + i, user1.getName(), user1.getSessionId()));
+            if (user1 != null)
+                userRepository.save(new User(user1.getId() + i, user1.getName(), user1.getSessionId()));
 
         userRepository.print(userRepository.getUsers());
         System.out.println();
@@ -50,7 +51,7 @@ public class Demo {
         System.out.println("update method check");
         System.out.println("--------------------------------");
 
-        System.out. print("user is...");
+        System.out.print("user is...");
         System.out.println(userRepository.update(user2).getName());
         userRepository.print(userRepository.getUsers());
         System.out.println();

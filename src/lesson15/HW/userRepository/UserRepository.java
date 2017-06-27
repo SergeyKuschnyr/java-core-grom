@@ -67,7 +67,7 @@ public class UserRepository {
 
     public void print(User[] userArr) {
         for (User us : userArr)
-            if (us != null)
-                System.out.println(us);
+            // if (us != null)
+            System.out.println(us);
     }
 }

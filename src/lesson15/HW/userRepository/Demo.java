@@ -14,6 +14,8 @@ public class Demo {
         UserRepository userRepository = new UserRepository();
 
         userRepository.print(userRepository.getUsers());
+        //userRepository.getUsers().toString();
+
         System.out.println();
         //////////save check////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,9 +53,12 @@ public class Demo {
         System.out.println("update method check");
         System.out.println("--------------------------------");
 
-        System.out.print("user is...");
-        System.out.println(userRepository.update(user2).getName());
-        userRepository.print(userRepository.getUsers());
+        System.out.println("user is...");
+        if (userRepository.update(user2) != null) {
+            userRepository.update(user2);
+            userRepository.print(userRepository.getUsers());
+
+        }
         System.out.println();
 
         System.out.println("user is'nt...");

@@ -10,11 +10,11 @@ public class Controller {
         this.apis = apis;
     }
 
-    public Room[] requestRooms(int price, int persons, String city, String hotel) {
+    public Room[] requestRooms(Room inputRoom) {
         int tempLength = 0;
         for (API api : apis) {
-            if (api.findRooms(price, persons, city, hotel) != null)
-                tempLength += api.findRooms(price, persons, city, hotel).length;
+            if (api.findRooms(inputRoom) != null)
+                tempLength += api.findRooms(inputRoom).length;
         }
 
         if (tempLength <= 0) {
@@ -25,9 +25,9 @@ public class Controller {
         Room[] tempRoom = new Room[tempLength];
         int index = 0;
         for (int i = 0; i < apis.length; i++)
-            for (int j = 0; apis[i].findRooms(price, persons, city, hotel) != null &&
-                    j < apis[i].findRooms(price, persons, city, hotel).length; j++) {
-                tempRoom[index] = apis[i].findRooms(price, persons, city, hotel)[j];
+            for (int j = 0; apis[i].findRooms(inputRoom) != null &&
+                    j < apis[i].findRooms(inputRoom).length; j++) {
+                tempRoom[index] = apis[i].findRooms(inputRoom)[j];
                 index++;
             }
         return tempRoom;

@@ -22,6 +22,13 @@ public class Room {
         CityName = cityName;
     }
 
+    public Room(int price, int persons, String hotelName, String cityName) {
+        this.price = price;
+        this.persons = persons;
+        this.hotelName = hotelName;
+        CityName = cityName;
+    }
+
     public long getId() {
         return id;
     }
@@ -61,20 +68,16 @@ public class Room {
 
         Room room = (Room) o;
 
-        if (id != room.id) return false;
-        if (price != room.price) return false;
+        if (!(price - 50 <= room.getPrice() && room.getPrice() <= price + 50)) return false;
         if (persons != room.persons) return false;
-        if (!dateAvailableFrom.equals(room.dateAvailableFrom)) return false;
         if (!hotelName.equals(room.hotelName)) return false;
         return CityName.equals(room.CityName);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + price;
+        int result = price;
         result = 31 * result + persons;
-        result = 31 * result + dateAvailableFrom.hashCode();
         result = 31 * result + hotelName.hashCode();
         result = 31 * result + CityName.hashCode();
         return result;

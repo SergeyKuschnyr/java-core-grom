@@ -32,7 +32,7 @@ public class UserRepository {
         for (int i = 0; i < users.length; i++) {
             if (users[i] != null && user != null && users[i].equals(user)) {
                 users[i] = new User(12345l, "Vyacheslav", "asdfgh");
-                return user;
+                return users[i];
             }
         }
         return null;

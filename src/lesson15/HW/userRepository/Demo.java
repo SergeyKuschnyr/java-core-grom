@@ -10,6 +10,7 @@ public class Demo {
         User user2 = new User(1234567l, "Victoriya", "qwerty2");
         User user3 = new User(12345678l, "Vasiliy", "qwerty3");
         User user4 = new User(98765l, "Oqsana", "qwerty4");
+        User user5 = new User(1234567l, "Nikifor", "qwerty5");
 
         UserRepository userRepository = new UserRepository();
 
@@ -55,7 +56,7 @@ public class Demo {
             System.out.println("--------------------------------");
 
             System.out.println("user is...");
-            userRepository.update(user2);
+            userRepository.update(user5);
             userRepository.print(userRepository.getUsers());
 
             System.out.println();

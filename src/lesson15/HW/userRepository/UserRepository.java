@@ -31,7 +31,7 @@ public class UserRepository {
     public User update(User user) {
         for (int i = 0; i < users.length; i++) {
             if (users[i] != null && user != null && users[i].equals(user)) {
-                users[i] = new User(12345l, "Vyacheslav", "asdfgh");
+                users[i] = user;
                 return users[i];
             }
         }

@@ -68,10 +68,10 @@ public class Room {
 
         Room room = (Room) o;
 
-        if (!(price - 50 <= room.getPrice() && room.getPrice() <= price + 50)) return false;
+        if (price != room.price) return false;
         if (persons != room.persons) return false;
-        if (!(hotelName == room.hotelName)) return false;
-        return CityName == room.CityName;
+        if (!hotelName.equals(room.hotelName)) return false;
+        return CityName.equals(room.CityName);
     }
 
     @Override
@@ -82,4 +82,26 @@ public class Room {
         result = 31 * result + CityName.hashCode();
         return result;
     }
+
+    //    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Room room = (Room) o;
+//
+//        if (!(price - 50 <= room.getPrice() && room.getPrice() <= price + 50)) return false;
+//        if (persons != room.persons) return false;
+//        if (!(hotelName == room.hotelName)) return false;
+//        return CityName == room.CityName;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = price;
+//        result = 31 * result + persons;
+//        result = 31 * result + hotelName.hashCode();
+//        result = 31 * result + CityName.hashCode();
+//        return result;
+//    }
 }

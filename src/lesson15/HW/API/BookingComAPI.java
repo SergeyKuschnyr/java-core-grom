@@ -12,13 +12,13 @@ public class BookingComAPI implements API {
     }
 
     @Override
-    public Room[] findRooms(Room inputRoom) {
+    public Room[] findRooms(int price, int persons, String city, String hotel) {
         Room[] tempRoom = new Room[rooms.length];
         int index = 0;
         for (Room room : rooms) {
             if (room != null)
-                if ((inputRoom.getPrice() - 100 <= room.getPrice() && room.getPrice() <= inputRoom.getPrice() + 100)
-                        && room.equals(inputRoom)) {
+                if (price - 100 <= room.getPrice() && room.getPrice() <= persons + 100
+                        && persons == room.getPersons() && city == room.getCityName() && hotel == room.getHotelName()) {
                     tempRoom[index] = room;
                     index++;
                 }

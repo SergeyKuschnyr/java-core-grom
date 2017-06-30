@@ -11,7 +11,7 @@ public class Room {
     private int persons;
     private Date dateAvailableFrom;
     private String hotelName;
-    private String CityName;
+    private String cityName;
 
     public Room(long id, int price, int persons, Date dateAvailableFrom, String hotelName, String cityName) {
         this.id = id;
@@ -19,43 +19,26 @@ public class Room {
         this.persons = persons;
         this.dateAvailableFrom = dateAvailableFrom;
         this.hotelName = hotelName;
-        CityName = cityName;
-    }
-
-    public Room(int price, int persons, String hotelName, String cityName) {
-        this.price = price;
-        this.persons = persons;
-        this.hotelName = hotelName;
-        CityName = cityName;
-    }
-
-    public Room(int persons, String cityName) {
-        this.persons = persons;
-        CityName = cityName;
+        this.cityName = cityName;
     }
 
     public long getId() {
         return id;
     }
-
     public int getPrice() {
         return price;
     }
-
     public int getPersons() {
         return persons;
     }
-
     public Date getDateAvailableFrom() {
         return dateAvailableFrom;
     }
-
     public String getHotelName() {
         return hotelName;
     }
-
     public String getCityName() {
-        return CityName;
+        return cityName;
     }
 
     public void setPrice(int price) {
@@ -73,36 +56,18 @@ public class Room {
 
         Room room = (Room) o;
 
+        if (price != room.price) return false;
+        if (persons != room.persons) return false;
         if (!hotelName.equals(room.hotelName)) return false;
-        return CityName.equals(room.CityName);
+        return cityName.equals(room.cityName);
     }
 
     @Override
     public int hashCode() {
-        int result = hotelName.hashCode();
-        result = 31 * result + CityName.hashCode();
+        int result = price;
+        result = 31 * result + persons;
+        result = 31 * result + hotelName.hashCode();
+        result = 31 * result + cityName.hashCode();
         return result;
     }
-
-    //    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        Room room = (Room) o;
-//
-//        if (!(price - 50 <= room.getPrice() && room.getPrice() <= price + 50)) return false;
-//        if (persons != room.persons) return false;
-//        if (!(hotelName == room.hotelName)) return false;
-//        return CityName == room.CityName;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = price;
-//        result = 31 * result + persons;
-//        result = 31 * result + hotelName.hashCode();
-//        result = 31 * result + CityName.hashCode();
-//        return result;
-//    }
 }

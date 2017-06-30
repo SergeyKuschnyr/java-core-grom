@@ -37,10 +37,12 @@ public class Demo {
 
         Controller controller = new Controller(apis);
 
-        controller.print(controller.requestRooms(new Room(40, 4,"Харьков", "Харьков")));
+        controller.print(controller.requestRooms(new Room(127651, 70, 1, new Date(20170601),
+                "София", "Житомир")));
         System.out.println();
 
-        controller.print(controller.requestRooms(new Room(2, "Харьков")));
+        controller.print(controller.requestRooms(new Room(127654, 70, 3, new Date(20170601),
+                "Дерибас", "Одесса")));
 
         System.out.println();
 
@@ -48,7 +50,8 @@ public class Demo {
 
         System.out.println();
 
-        controller.print(controller.requestRooms(new Room(0, 0, null, null)));
+        controller.print(controller.requestRooms(new Room(0l, 0, 0, null, null,
+                null)));
 
     }
 }

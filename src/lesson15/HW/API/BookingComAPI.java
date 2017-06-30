@@ -13,15 +13,16 @@ public class BookingComAPI implements API {
 
     @Override
     public Room[] findRooms(Room inputRoom) {
-            Room[] tempRoom = new Room[rooms.length];
-            int index = 0;
-            for (Room room : rooms) {
-                if (room != null)
-                    if ((inputRoom.getPrice() - 50 <= room.getPrice() && room.getPrice() <= inputRoom.getPrice() + 50) && room.equals(inputRoom)) {
-                        tempRoom[index] = room;
-                        index++;
-                    }
-            }
+        Room[] tempRoom = new Room[rooms.length];
+        int index = 0;
+        for (Room room : rooms) {
+            if (room != null)
+                if ((inputRoom.getPrice() - 100 <= room.getPrice() && room.getPrice() <= inputRoom.getPrice() + 100)
+                        && room.equals(inputRoom)) {
+                    tempRoom[index] = room;
+                    index++;
+                }
+        }
         if (index > 0) {
             Room[] resultRoom = new Room[index + 1];
             for (int i = 0; i < resultRoom.length; i++)
@@ -30,26 +31,6 @@ public class BookingComAPI implements API {
         }
         return null;
     }
-
-//    public Room[] findRooms(int persons, String city) {
-//        Room[] tempRoom = new Room[rooms.length];
-//        int index = 0;
-//        for (Room room : rooms) {
-//            if (room != null)
-//                if (room.getPersons() == persons && room.getCityName() == city) {
-//                    tempRoom[index] = room;
-//                    index++;
-//                }
-//        }
-//        if (index > 0) {
-//            Room[] resultRoom = new Room[index + 1];
-//            for (int i = 0; i < resultRoom.length; i++)
-//                resultRoom[i] = tempRoom[i];
-//            return resultRoom;
-//        }
-//        return null;
-//    }
-
 
     @Override
     public Room[] getAll() {

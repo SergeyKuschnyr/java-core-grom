@@ -5,7 +5,5 @@ package lesson15.HW.API;
  */
 public interface API {
     Room[] findRooms(Room room);
-    // Room[] findRooms(int price, int persons, String city);
-    // Room[] findRooms(int persons, String city);
     Room[] getAll();
 }

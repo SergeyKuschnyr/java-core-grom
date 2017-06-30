@@ -70,8 +70,8 @@ public class Room {
 
         if (!(price - 50 <= room.getPrice() && room.getPrice() <= price + 50)) return false;
         if (persons != room.persons) return false;
-        if (!hotelName.equals(room.hotelName)) return false;
-        return CityName.equals(room.CityName);
+        if (!(hotelName == room.hotelName)) return false;
+        return CityName == room.CityName;
     }
 
     @Override

@@ -29,6 +29,11 @@ public class Room {
         CityName = cityName;
     }
 
+    public Room(int persons, String cityName) {
+        this.persons = persons;
+        CityName = cityName;
+    }
+
     public long getId() {
         return id;
     }
@@ -68,17 +73,13 @@ public class Room {
 
         Room room = (Room) o;
 
-        if (price != room.price) return false;
-        if (persons != room.persons) return false;
         if (!hotelName.equals(room.hotelName)) return false;
         return CityName.equals(room.CityName);
     }
 
     @Override
     public int hashCode() {
-        int result = price;
-        result = 31 * result + persons;
-        result = 31 * result + hotelName.hashCode();
+        int result = hotelName.hashCode();
         result = 31 * result + CityName.hashCode();
         return result;
     }

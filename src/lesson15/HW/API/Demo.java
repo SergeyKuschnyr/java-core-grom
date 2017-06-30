@@ -40,7 +40,7 @@ public class Demo {
         controller.print(controller.requestRooms(new Room(40, 4,"Харьков", "Харьков")));
         System.out.println();
 
-        controller.print(controller.requestRooms(2, "Харьков"));
+        controller.print(controller.requestRooms(new Room(2, "Харьков")));
 
         System.out.println();
 

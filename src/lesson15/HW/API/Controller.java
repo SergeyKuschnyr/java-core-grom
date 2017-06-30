@@ -33,32 +33,32 @@ public class Controller {
         return tempRoom;
     }
 
-    public Room[] requestRooms(int price, int persons, String city) {
-        return null;
-    }
-
-    public Room[] requestRooms(int persons, String city) {
-        int tempLength = 0;
-        for (API api : apis) {
-            if (api.findRooms(persons, city) != null)
-                tempLength += api.findRooms(persons, city).length;
-        }
-
-        if (tempLength <= 0) {
-            System.out.println("For your the request nothing find");
-            return null;
-        }
-
-        Room[] tempRoom = new Room[tempLength];
-        int index = 0;
-        for (int i = 0; i < apis.length; i++)
-            for (int j = 0; apis[i].findRooms(persons, city) != null &&
-                    j < apis[i].findRooms(persons, city).length; j++) {
-                tempRoom[index] = apis[i].findRooms(persons, city)[j];
-                index++;
-            }
-        return tempRoom;
-    }
+//    public Room[] requestRooms(int price, int persons, String city) {
+//        return null;
+//    }
+//
+//    public Room[] requestRooms(int persons, String city) {
+//        int tempLength = 0;
+//        for (API api : apis) {
+//            if (api.findRooms(persons, city) != null)
+//                tempLength += api.findRooms(persons, city).length;
+//        }
+//
+//        if (tempLength <= 0) {
+//            System.out.println("For your the request nothing find");
+//            return null;
+//        }
+//
+//        Room[] tempRoom = new Room[tempLength];
+//        int index = 0;
+//        for (int i = 0; i < apis.length; i++)
+//            for (int j = 0; apis[i].findRooms(persons, city) != null &&
+//                    j < apis[i].findRooms(persons, city).length; j++) {
+//                tempRoom[index] = apis[i].findRooms(persons, city)[j];
+//                index++;
+//            }
+//        return tempRoom;
+//    }
 
     public Room[] check(API api1, API api2) {
         int index = 0;

@@ -26,6 +26,7 @@ public class Demo {
 
         Room[] tempRoom3 = {
                 new Room(123451, 20, 4, new Date(20170515), "Львовская", "Львов"),
+                new Room(121625, 30, 2, new Date(20170521), "Днепропетровск", "Днепр"),
                 new Room(126543, 30, 3, new Date(20170510), "Европейская", "Киев"),
                 new Room(122361, 60, 2, new Date(20170503), "Камьянець",
                         "Каменец-Подольский"),
@@ -44,7 +45,16 @@ public class Demo {
 
         System.out.println();
 
+        System.out.println("///check of check method/////////////////");
+        System.out.println("------0 -> 1---------------------");
         controller.print(controller.check(apis[0], apis[1]));
+        System.out.println("------1 -> 2----------------------");
+        controller.print(controller.check(apis[1], apis[2]));
+        System.out.println("------0 -> 2----------------------");
+        controller.print(controller.check(apis[0], apis[2]));
+        System.out.println("------check(null, null)-----------");
+        controller.print(controller.check(null, null));
+        System.out.println("///end of run of check method/////////");
 
         System.out.println();
 

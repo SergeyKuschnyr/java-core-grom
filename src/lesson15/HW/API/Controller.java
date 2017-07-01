@@ -43,6 +43,7 @@ public class Controller {
                         tempRooms[index] = room;
                         index++;
                     }
+
             Room[] returnRooms = new Room[index];
             for (int i = 0; i < returnRooms.length; i++)
                 returnRooms[i] = tempRooms[i];

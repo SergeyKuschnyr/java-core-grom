@@ -17,7 +17,7 @@ public class Controller {
                 tempLength += api.findRooms(price, persons, city, hotel).length;
         }
 
-        if (tempLength <= 0) {
+        if (tempLength != 0) {
             System.out.println("For your the request nothing find");
             return null;
         }

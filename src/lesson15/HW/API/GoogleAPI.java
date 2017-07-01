@@ -23,11 +23,10 @@ public class GoogleAPI implements API {
                     index++;
                 }
         }
-        if (index > 0) {
+        if (index != 0) {
             Room[] resultRoom = new Room[index];
             for (int i = 0; i < resultRoom.length; i++)
-                if (resultRoom[i] != null)
-                    resultRoom[i].equals(tempRoom[i]);
+                resultRoom[i] = tempRoom[i];
             return resultRoom;
         }
         return null;
@@ -38,16 +37,15 @@ public class GoogleAPI implements API {
         Room[] tempRoom = new Room[rooms.length];
         int index = 0;
         for (Room room : rooms) {
-            if (tempRoom[index] != null) {
-                 tempRoom[index].equals(room);
+            if (room != null) {
+                tempRoom[index] = room;
                 index++;
             }
         }
-        if (index > 0) {
+        if (index != 0) {
             Room[] resultRoom = new Room[index];
             for (int i = 0; i < resultRoom.length; i++)
-                if (resultRoom[i] != null)
-                    resultRoom[i].equals(tempRoom[i]);
+                resultRoom[i] = tempRoom[i];
             return resultRoom;
         }
         return null;

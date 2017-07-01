@@ -28,8 +28,7 @@ public class BookingComAPI implements API {
         if (index != 0) {
             Room[] resultRoom = new Room[index];
             for (int i = 0; i < resultRoom.length; i++)
-                if (resultRoom[i] != null)
-                    resultRoom[i].equals(tempRoom[i]);
+                resultRoom[i] = tempRoom[i];
             return resultRoom;
         }
         return null;
@@ -41,15 +40,14 @@ public class BookingComAPI implements API {
         int index = 0;
         for (Room room : rooms) {
             if (room != null) {
-                tempRoom[index].equals(room);
+                tempRoom[index] = room;
                 index++;
             }
         }
-        if (index > 0) {
+        if (index != 0) {
             Room[] resultRoom = new Room[index];
             for (int i = 0; i < resultRoom.length; i++)
-                if (resultRoom != null)
-                    resultRoom[i].equals(tempRoom[i]);
+                resultRoom[i] = tempRoom[i];
             return resultRoom;
         }
         return null;

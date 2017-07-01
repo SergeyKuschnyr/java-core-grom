@@ -49,6 +49,5 @@ public class Demo {
         System.out.println();
 
         controller.print(controller.requestRooms(0, 0, null, null));
-
     }
 }

@@ -36,21 +36,48 @@ public class Controller {
     public Room[] check(API api1, API api2) {
         int index = 0;
         if (api1 != null && api1.getAll() != null) {
-            Room[] tempRooms = new Room[api1.getAll().length];
-            for (Room room : api1.getAll())
-                for (Room room1 : api2.getAll())
+            for (Room room : api1.getAll()) {
+                for (Room room1 : api2.getAll()) {
                     if (room.equals(room1)) {
-                        tempRooms[index] = room;
                         index++;
                     }
-
+                }
+            }
             Room[] returnRooms = new Room[index];
-            for (int i = 0; i < returnRooms.length; i++)
-                returnRooms[i] = tempRooms[i];
+            int i = 0;
+            for (Room room : api1.getAll()) {
+                for (Room room1 : api2.getAll()) {
+                    if (room.equals(room1)) {
+                        returnRooms[i] = room1;
+                        i++;
+                    }
+                }
+            }
             return returnRooms;
         }
         return null;
     }
+
+//    public Room[] check(API api1, API api2) {
+//        int index = 0;
+//        if (api1 != null && api1.getAll() != null) {
+//            Room[] tempRooms = new Room[api1.getAll().length];
+//            for (Room room : api1.getAll()) {
+//                for (Room room1 : api2.getAll()){
+//                    if (room.equals(room1)) {
+//                        tempRooms[index] = room;
+//                        index++;
+//                    }
+//                }
+//            }
+//            Room[] returnRooms = new Room[index];
+//            for (int i = 0; i < returnRooms.length; i++){
+//                returnRooms[i] = tempRooms[i];
+//            }
+//            return returnRooms;
+//        }
+//        return null;
+//    }
 
     public void print(Room[] rooms) {
         if (rooms != null) {

@@ -36,18 +36,17 @@ public class Controller {
     public Room[] check(API api1, API api2) {
         int index = 0;
         if (api1 != null && api1.getAll() != null) {
-            Room[] rooms = new Room[api1.getAll().length];
+            Room[] tempRooms = new Room[api1.getAll().length];
             for (Room room : api1.getAll())
                 for (Room room1 : api2.getAll())
                     if (room.equals(room1)) {
-                        rooms[index] = room;
+                        tempRooms[index] = room;
                         index++;
                     }
-            Room[] rooms1 = new Room[index];
-            for (int i = 0; i < rooms1.length; i++)
-                if (rooms1[i] != null)
-                    rooms1[i] = rooms[i];
-            return rooms1;
+            Room[] returnRooms = new Room[index];
+            for (int i = 0; i < returnRooms.length; i++)
+                returnRooms[i] = tempRooms[i];
+            return returnRooms;
         }
         return null;
     }

@@ -23,8 +23,8 @@ public class TripAdvisorAPI implements API {
                     index++;
                 }
         }
-        if (index > 0) {
-            Room[] resultRoom = new Room[index + 1];
+        if (index != 0) {
+            Room[] resultRoom = new Room[index];
             for (int i = 0; i < resultRoom.length; i++)
                 resultRoom[i] = tempRoom[i];
             return resultRoom;

@@ -26,7 +26,7 @@ public class GoogleAPI implements API {
         if (index > 0) {
             Room[] resultRoom = new Room[index];
             for (int i = 0; i < resultRoom.length; i++)
-                if (resultRoom != null)
+                if (resultRoom[i] != null)
                     resultRoom[i].equals(tempRoom[i]);
             return resultRoom;
         }
@@ -46,7 +46,7 @@ public class GoogleAPI implements API {
         if (index > 0) {
             Room[] resultRoom = new Room[index];
             for (int i = 0; i < resultRoom.length; i++)
-                if (resultRoom != null)
+                if (resultRoom[i] != null)
                     resultRoom[i].equals(tempRoom[i]);
             return resultRoom;
         }

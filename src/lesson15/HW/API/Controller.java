@@ -44,7 +44,8 @@ public class Controller {
                 }
         Room[] rooms1 = new Room[index];
         for (int i = 0; i < rooms1.length; i++)
-            rooms1[i] = rooms[i];
+            if (rooms1[i] != null)
+                rooms1[i].equals(rooms[i]);
         return rooms1;
     }
 

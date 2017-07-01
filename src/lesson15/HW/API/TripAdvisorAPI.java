@@ -12,13 +12,13 @@ public class TripAdvisorAPI implements API {
     }
 
     @Override
-    public Room[] findRooms(Room inputRoom) {
+    public Room[] findRooms(int price, int persons, String city, String hotel) {
         Room[] tempRoom = new Room[rooms.length];
         int index = 0;
         for (Room room : rooms) {
             if (room != null)
-                if ((inputRoom.getPersons() - 1) <= room.getPersons() && room.getPersons() <= (inputRoom.getPersons() + 1)
-                        && room.equals(inputRoom)) {
+                if (persons - 1 <= room.getPersons() && persons <= room.getPersons() + 1 && price == room.getPrice()
+                        && city == room.getCityName() && hotel == room.getHotelName()) {
                     tempRoom[index] = room;
                     index++;
                 }

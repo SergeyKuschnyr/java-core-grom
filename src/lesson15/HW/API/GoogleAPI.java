@@ -11,7 +11,7 @@ public class GoogleAPI implements API {
         this.rooms = rooms;
     }
 
-    @Override
+/*    @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
         int index = 0;
         for (Room room : rooms) {
@@ -35,9 +35,9 @@ public class GoogleAPI implements API {
             return resultRoom;
         }
         return null;
-    }
+    }*/
 
-    @Override
+   /* @Override
     public Room[] getAll() {
         int index = 0;
         for (Room room : rooms) {
@@ -54,9 +54,9 @@ public class GoogleAPI implements API {
             return resultRoom;
         }
         return null;
-    }
+    }*/
 
-/*    @Override
+    @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
         Room[] tempRoom = new Room[rooms.length];
         int index = 0;
@@ -96,7 +96,7 @@ public class GoogleAPI implements API {
             return resultRoom;
         }
         return null;
-    }*/
+    }
 
 }
 

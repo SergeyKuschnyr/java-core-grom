@@ -21,20 +21,17 @@ public class GoogleAPI implements API {
                 }
             }
         }
-        if (index != 0) {
-            Room[] resultRoom = new Room[index];
-            int i = 0;
-            for (Room room : rooms) {
-                if (room != null) {
-                    if (room.equals(new Room(price, persons, city, hotel))) {
-                        resultRoom[i] = room;
-                        i++;
-                    }
+        Room[] resultRoom = new Room[index];
+        int i = 0;
+        for (Room room : rooms) {
+            if (room != null) {
+                if (room.equals(new Room(price, persons, city, hotel))) {
+                    resultRoom[i] = room;
+                    i++;
                 }
             }
-            return resultRoom;
         }
-        return null;
+        return resultRoom;
     }
 //
 //    @Override
@@ -93,7 +90,7 @@ public class GoogleAPI implements API {
             Room[] resultRoom = new Room[index];
             for (int i = 0; i < resultRoom.length; i++)
                 resultRoom[i] = tempRoom[i];
-             return resultRoom;
+            return resultRoom;
         }
         return null;
     }

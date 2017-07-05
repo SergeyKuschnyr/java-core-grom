@@ -22,6 +22,13 @@ public class Room {
         this.cityName = cityName;
     }
 
+    public Room(int price, int persons, String hotelName, String cityName) {
+        this.price = price;
+        this.persons = persons;
+        this.hotelName = hotelName;
+        this.cityName = cityName;
+    }
+
     public long getId() {
         return id;
     }

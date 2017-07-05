@@ -62,8 +62,7 @@ public class GoogleAPI implements API {
         int index = 0;
         for (Room room : rooms) {
             if (room != null) {
-                if (price == room.getPrice() && persons == room.getPersons() && city == room.getCityName() &&
-                        hotel == room.getHotelName()) {
+                if (room.equals(new Room(price, persons, city, hotel))) {
                     tempRoom[index] = room;
                     index++;
                 }
@@ -97,6 +96,4 @@ public class GoogleAPI implements API {
         }
         return null;
     }
-
 }
-

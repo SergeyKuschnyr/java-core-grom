@@ -25,8 +25,8 @@ public class GoogleAPI implements API {
             Room[] resultRoom = new Room[index];
             int i = 0;
             for (Room room : rooms) {
-                if (rooms != null) {
-                    if (rooms.equals(new Room(price, persons, city, hotel))) {
+                if (room != null) {
+                    if (room.equals(new Room(price, persons, city, hotel))) {
                         resultRoom[i] = room;
                         i++;
                     }

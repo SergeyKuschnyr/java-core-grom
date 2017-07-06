@@ -31,11 +31,12 @@ public class StringMethods {
         System.out.println(phrase.substring(5));
         System.out.println(phrase.substring(5, 10).trim());
 
-        System.out.println(test.toLowerCase());
         System.out.println(test.toUpperCase());
+        System.out.println(test.toLowerCase());
 
-        test.getBytes();
-        test.equals("eeee");
-        test.intern();
+
+//        test.getBytes();
+//        test.equals("eeee");
+//        test.intern();
     }
 }

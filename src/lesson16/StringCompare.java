@@ -27,6 +27,5 @@ public class StringCompare {
         String str = "testStringVar";
         System.out.println(Arrays.toString(str.getBytes()));
         System.out.println(new String(str.getBytes()));
-//        test.getBytes();
     }
 }

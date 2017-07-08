@@ -1,4 +1,4 @@
-package lesson16;
+package lesson17;
 
 /**
  * Created by Kushn_000 on 07.07.2017.
@@ -9,13 +9,17 @@ public class Solution {
         System.out.println(countWords(string));
     }
     public static int countWords(String input) {
+//        input.trim();
+//        char[] chars = input.toCharArray();
+//        int index = 0;
+//        for (char ch : chars) {
+//            if (ch == ' ')
+//                index ++;
+//        }
+//        return index + 1;
+
         input.trim();
-        char[] chars = input.toCharArray();
-        int index = 0;
-        for (char ch : chars) {
-            if (ch == ' ')
-                index ++;
-        }
-        return index + 1;
+        String[] strings = input.split(" ");
+        return strings.length;
     }
 }

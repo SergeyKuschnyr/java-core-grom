@@ -48,7 +48,8 @@ public class Solution {
     public static String[] stringLiteralArray(String input){
         input.trim();
         char[] chars = {'.', ',', ';', ':', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '?',
-                '/', '$', '%', '"', '(', ')', '{', '}', '[', ']', '@'};
+                '/', '$', '%', '"', '(', ')', '{', '}', '[', ']', '@', '-', '=', '+', '<', '>', '~',
+                '#', '^', '*', '|'};
         char[] chars2 = input.toCharArray();
         for (int i = 0; i < chars.length; i++) {
             for (int j = 0; j < chars2.length; j++) {

@@ -1,5 +1,7 @@
 package lesson17;
 
+import java.util.Arrays;
+
 /**
  * Created by Kushn_000 on 07.07.2017.
  */
@@ -9,6 +11,7 @@ public class Solution {
                 "and close, the quick.   definition 567 lot <= ";
         String string2 = "";
         String string3 = null;
+
         System.out.println(countWords(string));
         System.out.println(maxWord(string));
         System.out.println(minWord(string));
@@ -23,54 +26,74 @@ public class Solution {
     }
 
     public static int countWords(String input) {
-        if (stringLetterArray(input) != null)
-            return stringLetterArray(input).length;
+        if (input != null) {
+            input.trim();
+            char[] chars = input.toCharArray();
+            int count = 0;
+            boolean bl = true;
+            for (char ch : chars) {
+                if (Character.isLetter(ch)) {
+                    bl = true;
+                    continue;
+                }
+                if (bl) {
+                    count++;
+                    bl = false;
+                }
+            }
+            return count;
+        }
         return 0;
     }
 
     public static String maxWord(String input) {
-        if (stringLetterArray(input) != null) {
-            String[] strings = stringLetterArray(input);
-            int stringLength = 0;
-            String outputString = "";
-            for (String string : strings) {
-                char[] chars = string.toCharArray();
-                if (stringLength < chars.length) {
-                    stringLength = chars.length;
-                    outputString = string;
+        if (input != null) {
+            input.trim();
+            char[] chars = input.toCharArray();
+            int count = 0;
+            int maxLength = 0;
+            String tempWord = "";
+            String word = "";
+            for (char ch : chars) {
+                if (Character.isLetter(ch)) {
+                    count++;
+                    tempWord += Character.toString(ch);
+                } else {
+                    if (count > maxLength) {
+                        maxLength = count;
+                        word = tempWord;
+                    }
+                    count = 0;
+                    tempWord = "";
                 }
             }
-            return outputString;
+            return word;
         }
         return null;
     }
 
     public static String minWord(String input) {
-        if (stringLetterArray(input) != null) {
-            String[] strings = stringLetterArray(input);
-            int stringLength = 100;
-            String outputString = "";
-            for (String string : strings) {
-                char[] chars = string.toCharArray();
-                if (stringLength > chars.length) {
-                    stringLength = chars.length;
-                    outputString = string;
+        if (input != null) {
+            input.trim();
+            char[] chars = input.toCharArray();
+            int count = 0;
+            int maxLength = 0;
+            String tempWord = "";
+            String word = "";
+            for (char ch : chars) {
+                if (Character.isLetter(ch)) {
+                    count++;
+                    tempWord += Character.toString(ch);
+                } else {
+                    if (count < maxLength) {
+                        maxLength = count;
+                        word = tempWord;
+                    }
+                    count = 0;
+                    tempWord = "";
                 }
             }
-            return outputString;
-        }
-        return null;
-    }
-
-    public static String[] stringLetterArray(String input) {
-        if (input != null && input.length() != 0) {
-            char[] chars = input.toCharArray();
-            for (int i = 0; i < chars.length; i++)
-                if (!Character.isLetter(chars[i]))
-                    chars[i] = ' ';
-            String outputString = new String(chars);
-            String[] stringArr = outputString.split("\\s+");
-            return stringArr;
+            return word;
         }
         return null;
     }

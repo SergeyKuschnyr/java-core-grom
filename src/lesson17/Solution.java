@@ -10,41 +10,42 @@ public class Solution {
         String string = "Open the. source; code, oftyui123 the#, definition: for, editing " +
                 "and close, the quick.   definition 567 lot <= ";
         String string2 = "";
-        String string3 = null;
+        // String string3 = null;
 
         System.out.println(countWords(string));
-        System.out.println(maxWord(string));
-        System.out.println(minWord(string));
+//        System.out.println(maxWord(string));
+//        System.out.println(minWord(string));
 
         System.out.println(countWords(string2));
-        System.out.println(maxWord(string2));
-        System.out.println(minWord(string2));
+//        System.out.println(maxWord(string2));
+//        System.out.println(minWord(string2));
 
-        System.out.println(countWords(string3));
-        System.out.println(maxWord(string3));
-        System.out.println(minWord(string3));
+//        System.out.println(countWords(string3));
+//        System.out.println(maxWord(string3));
+//        System.out.println(minWord(string3));
     }
 
     public static int countWords(String input) {
-        if (input != null) {
-            input.trim();
-            char[] chars = input.toCharArray();
-            int count = 0;
-            boolean bl = true;
-            for (char ch : chars) {
-                if (Character.isLetter(ch)) {
-                    bl = true;
-                    continue;
-                }
-                if (bl) {
-                    count++;
-                    bl = false;
-                }
-            }
-            return count;
+        String[] strings = input.split(" ");
+        if (strings.length == 0)
+            return 0;
+        int count = 0;
+        for (String string : strings) {
+            if (string.length() > 0 && checkLetter(string))
+                count++;
         }
-        return 0;
+        return count;
     }
+
+    public static boolean checkLetter(String name) {
+        char[] chars = name.toCharArray();
+        for (char c : chars) {
+            if (!Character.isLetter(c))
+                return false;
+        }
+        return true;
+    }
+
 
     public static String maxWord(String input) {
         if (input != null) {

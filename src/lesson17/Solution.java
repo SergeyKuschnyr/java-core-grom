@@ -14,9 +14,9 @@ public class Solution {
 
         System.out.println(countWords(string));
         System.out.println(maxWord(string));
-//        System.out.println(minWord(string));
+        System.out.println(minWord(string));
 
-        System.out.println(countWords(string2));
+ //       System.out.println(countWords(string2));
      //   System.out.println(maxWord(string2));
 //        System.out.println(minWord(string2));
 
@@ -61,29 +61,16 @@ public class Solution {
     }
 
     public static String minWord(String input) {
-        if (input != null) {
-            input.trim();
-            char[] chars = input.toCharArray();
-            int count = 0;
-            int maxLength = 0;
-            String tempWord = "";
-            String word = "";
-            for (char ch : chars) {
-                if (Character.isLetter(ch)) {
-                    count++;
-                    tempWord += Character.toString(ch);
-                } else {
-                    if (count < maxLength) {
-                        maxLength = count;
-                        word = tempWord;
-                    }
-                    count = 0;
-                    tempWord = "";
-                }
-            }
-            return word;
+        String[] strings = input.split(" ");
+        if (strings.length == 0)
+            return null;
+        String minString = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        for (String string : strings) {
+            if (string.length() > 0 && checkLetter(string))
+                if (string.length() < minString.length())
+                    minString = string;
         }
-        return null;
+        return minString;
     }
 
     public static String mostCountedWord(String input) {

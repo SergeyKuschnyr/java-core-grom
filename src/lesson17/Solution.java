@@ -11,13 +11,15 @@ public class Solution {
                 "and close, the quick.   definition 567 lot <= ";
         String string2 = "";
         // String string3 = null;
+        String wrongString = "!@#$% +_)(* *&^%$";
 
         System.out.println(countWords(string));
         System.out.println(maxWord(string));
         System.out.println(minWord(string));
+        System.out.println(maxWord(wrongString));
 
- //       System.out.println(countWords(string2));
-     //   System.out.println(maxWord(string2));
+        //       System.out.println(countWords(string2));
+        //   System.out.println(maxWord(string2));
 //        System.out.println(minWord(string2));
 
 //        System.out.println(countWords(string3));
@@ -52,11 +54,14 @@ public class Solution {
         if (strings.length == 0)
             return null;
         String maxString = "";
+        //если во входящих данных нет вообще слов подходящих, что будет?
         for (String string : strings) {
             if (string.length() > 0 && checkLetter(string))
                 if (string.length() > maxString.length())
-                maxString = string;
+                    maxString = string;
         }
+        if (maxString == "")
+            return null;
         return maxString;
     }
 

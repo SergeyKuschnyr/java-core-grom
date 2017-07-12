@@ -13,11 +13,11 @@ public class Solution {
         // String string3 = null;
 
         System.out.println(countWords(string));
-//        System.out.println(maxWord(string));
+        System.out.println(maxWord(string));
 //        System.out.println(minWord(string));
 
         System.out.println(countWords(string2));
-//        System.out.println(maxWord(string2));
+     //   System.out.println(maxWord(string2));
 //        System.out.println(minWord(string2));
 
 //        System.out.println(countWords(string3));
@@ -48,29 +48,16 @@ public class Solution {
 
 
     public static String maxWord(String input) {
-        if (input != null) {
-            input.trim();
-            char[] chars = input.toCharArray();
-            int count = 0;
-            int maxLength = 0;
-            String tempWord = "";
-            String word = "";
-            for (char ch : chars) {
-                if (Character.isLetter(ch)) {
-                    count++;
-                    tempWord += Character.toString(ch);
-                } else {
-                    if (count > maxLength) {
-                        maxLength = count;
-                        word = tempWord;
-                    }
-                    count = 0;
-                    tempWord = "";
-                }
-            }
-            return word;
+        String[] strings = input.split(" ");
+        if (strings.length == 0)
+            return null;
+        String maxString = "";
+        for (String string : strings) {
+            if (string.length() > 0 && checkLetter(string))
+                if (string.length() > maxString.length())
+                maxString = string;
         }
-        return null;
+        return maxString;
     }
 
     public static String minWord(String input) {

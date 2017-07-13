@@ -54,7 +54,7 @@ public class Solution {
 
     public static String maxWord(String input) {
         String[] strings = input.split(" ");
-        if (strings.length == 0)
+        if (!(strings.length > 1))
             return null;
         String maxString = "";
         //если во входящих данных нет вообще слов подходящих, что будет?
@@ -70,7 +70,7 @@ public class Solution {
 
     public static String minWord(String input) {
         String[] strings = input.split(" ");
-        if (strings.length == 0)
+        if (!(strings.length > 1))
             return null;
         String minString = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         for (String string : strings) {
@@ -83,7 +83,7 @@ public class Solution {
 
     public static String mostCountedWord(String input) {
         String[] strings = input.split(" ");
-        if (strings.length == 0)
+        if (strings.length > 2)
             return null;
         int count = 0;
         int count2 = 0;

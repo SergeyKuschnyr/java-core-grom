@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class Solution {
     public static void main(String[] args) {
         String string = "Open the. source; code, oftyui123 the#, definition: for, editing " +
-                "and close, the quick.   definition 567 lot <= ";
+                "and close, the quick.   definition 567 lot <= ffffffffffffffffffffffffffffffffff";
         String string2 = "\"Открыв дверь, Путин протягивает руку. Возможно, он хотел либо помочь пассажиру выйти, либо взять пиджак с заднего сидения машины, поскольку он одет в рубашку, - написал \"Дождь\" в расширенном варианте заметки. - Лица пассажира не видно, но на более качественных кадрах, которые \"Дождю\" предоставило агентство Ruptly, видно, что на коленях у человека красная сумка. Сам этот человек одет неофициально - видно, что он в одежде с коротким рукавом. Неясно, мужчина это или женщина\".";
         // String string3 = null;
         String wrongString = "!@#$% +_)(* *&^%$";
@@ -64,9 +64,12 @@ public class Solution {
         String maxString = "";
         //если во входящих данных нет вообще слов подходящих, что будет?
         for (String string : strings) {
-            if (string.length() > 0 && checkLetter(string))
-                if (string.length() > maxString.length())
+            //ты { скобки потерял после ифов , и у тебя maxString = string; всегда выполняеьтся
+            if (string.length() > 0 && checkLetter(string)){
+                if (string.length() > maxString.length()){
                     maxString = string;
+                }
+            }
         }
         if (maxString == "")
             return null;

@@ -18,7 +18,10 @@ public class Solution {
         System.out.println(maxWord(string));
         System.out.println(minWord(string));
         System.out.println(maxWord(wrongString));
+        System.out.println("--------------------------------");
         System.out.println(mostCountedWord(string2));
+        System.out.println("--------------------------------");
+
         System.out.println(validate(internetAddress));
 
         //       System.out.println(countWords(string2));
@@ -53,6 +56,8 @@ public class Solution {
 
 
     public static String maxWord(String input) {
+        if (input == null || input.length() < 5)
+            return null;
         String[] strings = input.split(" ");
         if (!(strings.length > 1))
             return null;
@@ -69,6 +74,8 @@ public class Solution {
     }
 
     public static String minWord(String input) {
+        if (input == null || input.length() < 5)
+            return null;
         String[] strings = input.split(" ");
         if (!(strings.length > 1))
             return null;
@@ -83,7 +90,7 @@ public class Solution {
 
     public static String mostCountedWord(String input) {
         String[] strings = input.split(" ");
-        if (strings.length > 2)
+        if (strings.length < 2)
             return null;
         int count = 0;
         int count2 = 0;

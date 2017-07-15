@@ -1,7 +1,7 @@
-package lesson17;
+package lesson17.hw3;
 
 /**
- * Created by Kushn_000 on 14.07.2017.
+ * Created by Kushn_000 on 15.07.2017.
  */
 public class hw3 {
     public static String mostCountedWord(String input) {

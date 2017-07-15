@@ -1,7 +1,7 @@
-package lesson17;
+package lesson17.hw2;
 
 /**
- * Created by Kushn_000 on 14.07.2017.
+ * Created by Kushn_000 on 15.07.2017.
  */
 public class hw2 {
     public static String maxWord(String input) {

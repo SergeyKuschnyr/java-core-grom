@@ -23,9 +23,13 @@ public class Solution {
     }
 
     public static String mostCountedWord(String input) {
-        String[] strings = input.split(" ");
-        if (strings.length < 3) {
+        if (input == null || input.length() == 0) {
             return null;
+        }
+
+        String[] strings = input.split(" ");
+        if (strings.length == 1 && checkLetter(strings[0])){
+            return strings[0];
         }
 
         int count = 0;
@@ -34,7 +38,7 @@ public class Solution {
 
         for (int i = 0; i < strings.length; i++) {
             for (int j = i + 1; j < strings.length - 1; j++) {
-                if (strings[i].equals(strings[j])) {
+                if (checkLetter(strings[i]) && strings[i].equals(strings[j])) {
                     count++;
                 }
             }
@@ -44,6 +48,20 @@ public class Solution {
                 count = 0;
             }
         }
+
+        if (tempString == "") {
+            return null;
+        }
         return tempString;
+    }
+
+    public static boolean checkLetter(String name) {
+        char[] chars = name.toCharArray();
+        for (char c : chars) {
+            if (!Character.isLetter(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

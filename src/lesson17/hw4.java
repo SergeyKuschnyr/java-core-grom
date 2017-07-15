@@ -3,7 +3,7 @@ package lesson17;
 /**
  * Created by Kushn_000 on 14.07.2017.
  */
-public class InternetAddress {
+public class hw4 {
     public static boolean validate(String address) {
         if (address != null && address.length() > 11) {
             String[] strings = address.split("//");

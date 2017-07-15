@@ -3,14 +3,17 @@ package lesson17;
 /**
  * Created by Kushn_000 on 14.07.2017.
  */
-public class CountedWord {
+public class hw3 {
     public static String mostCountedWord(String input) {
         String[] strings = input.split(" ");
-        if (strings.length < 2)
+        if (strings.length < 3) {
             return null;
+        }
+
         int count = 0;
         int count2 = 0;
         String tempString = "";
+
         for (int i = 0; i < strings.length; i++) {
             for (int j = i + 1; j < strings.length - 1; j++) {
                 if (strings[i].equals(strings[j])) {

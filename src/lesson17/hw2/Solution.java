@@ -8,21 +8,73 @@ public class Solution {
         String string = "Open the source code oftyui the definition for editing " +
                 "and close the quick   definition lot  ffffffffffffffffffffffffffffffffff";
 
-        String string2 = "\"Открыв дверь, Путин протягивает руку. Возможно, он хотел либо помочь " +
-                "пассажиру выйти, либо взять пиджак с заднего сидения машины, поскольку он одет " +
-                "в рубашку, - написал \"Дождь\" в расширенном варианте заметки. - Лица пассажира " +
-                "не видно, но на более качественных кадрах, которые \"Дождю\" предоставило " +
-                "агентство Ruptly, видно, что на коленях у человека красная сумка. Сам этот человек " +
-                "одет неофициально - видно, что он в одежде с коротким рукавом. Неясно, мужчина это " +
-                "или женщина\".";
+//        String string2 = "\"Открыв дверь, Путин протягивает руку. Возможно, он хотел либо помочь " +
+//                "пассажиру выйти, либо взять пиджак с заднего сидения машины, поскольку он одет " +
+//                "в рубашку, - написал \"Дождь\" в расширенном варианте заметки. - Лица пассажира " +
+//                "не видно, но на более качественных кадрах, которые \"Дождю\" предоставило " +
+//                "агентство Ruptly, видно, что на коленях у человека красная сумка. Сам этот человек " +
+//                "одет неофициально - видно, что он в одежде с коротким рукавом. Неясно, мужчина это " +
+//                "или женщина\".";
 
         String wrongString = "!@#$% +_)(* *&^%$";
 //    String internetAddress = "http://gromcode.com";
-        System.out.println(hw2.maxWord(string));
+        System.out.println(maxWord(string));
         System.out.println("------------------------------");
-        System.out.println(hw2.maxWord("test"));
+        System.out.println(maxWord("test"));
         System.out.println("------------------------------");
-        System.out.println(hw2.minWord(string));
-        System.out.println(hw2.maxWord(wrongString));
+        System.out.println(minWord(string));
+        System.out.println(maxWord(wrongString));
+    }
+
+    public static String maxWord(String input) {
+        if (input == null || input.length() == 0) {
+            return null;
+        }
+
+        String[] strings = input.split(" ");
+
+        String maxString = "";
+
+        for (String string : strings) {
+            if (string.length() > 0 && checkLetter(string)) {
+                if (string.length() > maxString.length()) {
+                    maxString = string;
+                }
+            }
+        }
+
+        if (maxString == "") {
+            return null;
+        }
+        return maxString;
+    }
+
+    public static String minWord(String input) {
+        if (input == null || input.length() == 0) {
+            return null;
+        }
+
+        String[] strings = input.split(" ");
+
+        String minString = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+        for (String string : strings) {
+            if (string.length() > 0 && checkLetter(string)) {
+                if (string.length() < minString.length()) {
+                    minString = string;
+                }
+            }
+        }
+        return minString;
+    }
+
+    public static boolean checkLetter(String name) {
+        char[] chars = name.toCharArray();
+        for (char c : chars) {
+            if (!Character.isLetter(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

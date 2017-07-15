@@ -18,12 +18,21 @@ public class Solution {
 
         String wrongString = "!@#$% +_)(* *&^%$";
 //    String internetAddress = "http://gromcode.com";
-        System.out.println(maxWord(string));
-        System.out.println("------------------------------");
-        System.out.println(maxWord("test"));
-        System.out.println("------------------------------");
+        //System.out.println(maxWord(string));
+        //System.out.println("------------------------------");
+        //System.out.println(maxWord("test"));
+        //System.out.println("------------------------------");
         System.out.println(minWord(string));
-        System.out.println(maxWord(wrongString));
+        System.out.println(minWord(wrongString));
+        System.out.println(minWord(""));
+        System.out.println(minWord("a s"));
+        System.out.println(minWord("8 6"));
+        System.out.println(minWord("\\\\ \\\\"));
+        System.out.println(minWord(": ;"));
+        System.out.println(minWord("4 g"));
+        System.out.println(minWord(null));
+
+        //System.out.println(maxWord(wrongString));
     }
 
     public static String maxWord(String input) {
@@ -64,6 +73,9 @@ public class Solution {
                     minString = string;
                 }
             }
+        }
+        if (minString == "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") {
+            return null;
         }
         return minString;
     }

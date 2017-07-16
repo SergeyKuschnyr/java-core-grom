@@ -19,7 +19,7 @@ public class Solution {
 //        String internetAddress = "http://gromcode.com";
 
         System.out.println("\"6789 asdfgh\"");
-        System.out.println(mostCountedWord("6789 asdfgh"));
+        System.out.println(mostCountedWord("6789 09877"));
         System.out.println("\"asdfgh 6789\"");
         System.out.println(mostCountedWord("asdfgh 6789"));
 //        System.out.println("\"Open the source code oftyui the definition for editing " +
@@ -41,10 +41,17 @@ public class Solution {
         }
 
         String[] strings = input.split(" ");
+        if (strings.length == 1) {
+            if (checkLetter(strings[0])) {
+                return strings[0];
+            }
+            return null;
+        }
 
         int count = 0;
         int count2 = 0;
         String tempString = "";
+
         for (int i = 0; i < strings.length; i++) {
             for (int j = 0; i != j && j < strings.length; j++) {
                 if (checkLetter(strings[i]) && strings[i].equals(strings[j])) {
@@ -57,8 +64,12 @@ public class Solution {
             }
             count = 0;
         }
+
         if (tempString == "") {
-            return strings[0];
+            for (String str : strings)
+                if (checkLetter(str))
+                    return str;
+            return null;
         }
         return tempString;
     }

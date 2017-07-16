@@ -32,6 +32,15 @@ public class Solution {
         System.out.println(mostCountedWord(string3));
         System.out.println("\"раз два три пять восемь 1111111111111111\"");
         System.out.println(mostCountedWord(string4));
+        System.out.println(mostCountedWord("123456 09876"));
+        System.out.println(mostCountedWord("123qwert"));
+        System.out.println(mostCountedWord("asdfgh12345"));
+        System.out.println(mostCountedWord("asdfgh12345 12345"));
+        System.out.println(mostCountedWord("asdfgh12345 lkjhgf"));
+        System.out.println(mostCountedWord("12345"));
+
+
+
     }
 
     public static String mostCountedWord(String input) {
@@ -41,19 +50,13 @@ public class Solution {
         }
 
         String[] strings = input.split(" ");
-//        if (strings.length == 1) {
-//            if (checkLetter(strings[0])) {
-//                return strings[0];
-//            }
-//            return null;
-//        }
 
         int count = 0;
         int count2 = 0;
         String tempString = "";
 
         for (int i = 0; i < strings.length; i++) {
-            for (int j = 0;  j < strings.length; j++) {
+            for (int j = 0; i != j && j < strings.length; j++) {
                 if (checkLetter(strings[i]) && strings[i].equals(strings[j])) {
                     count++;
                 }

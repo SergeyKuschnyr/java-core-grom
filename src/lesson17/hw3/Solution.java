@@ -1,5 +1,7 @@
 package lesson17.hw3;
 
+import java.util.Arrays;
+
 /**
  * Created by Kushn_000 on 15.07.2017.
  */
@@ -8,18 +10,15 @@ public class Solution {
         String string = "Open the source code oftyui the definition for editing " +
                 "and close the quick   definition lot  ffffffffffffffffffffffffffffffffff";
 
-        String string2 = "\"Открыв дверь, Путин протягивает руку. Возможно, он хотел либо помочь " +
-                "пассажиру выйти, либо взять пиджак с заднего сидения машины, поскольку он одет " +
-                "в рубашку, - написал \"Дождь\" в расширенном варианте заметки. - Лица пассажира " +
-                "не видно, но на более качественных кадрах, которые \"Дождю\" предоставило " +
-                "агентство Ruptly, видно, что на коленях у человека красная сумка. Сам этот человек " +
-                "одет неофициально - видно, что он в одежде с коротким рукавом. Неясно, мужчина это " +
-                "или женщина\".";
+        String string2 = "раз два два три три три три три пять пять пять восемь восемь восемь восемь 1111111111111111";
+        String string3 = "9";
 
 //        String wrongString = "!@#$% +_)(* *&^%$";
 //        String internetAddress = "http://gromcode.com";
 
         System.out.println(mostCountedWord(string2));
+        System.out.println(mostCountedWord(string3));
+
     }
 
     public static String mostCountedWord(String input) {
@@ -28,8 +27,11 @@ public class Solution {
         }
 
         String[] strings = input.split(" ");
-        if (strings.length == 1 && checkLetter(strings[0])){
-            return strings[0];
+        if (strings.length == 1) {
+            if (checkLetter(strings[0])) {
+                return strings[0];
+            }
+            return null;
         }
 
         int count = 0;
@@ -37,7 +39,7 @@ public class Solution {
         String tempString = "";
 
         for (int i = 0; i < strings.length; i++) {
-            for (int j = i + 1; j < strings.length - 1; j++) {
+            for (int j = 0; i != j && j < strings.length; j++) {
                 if (checkLetter(strings[i]) && strings[i].equals(strings[j])) {
                     count++;
                 }
@@ -45,8 +47,8 @@ public class Solution {
             if (count > count2) {
                 count2 = count;
                 tempString = strings[i];
-                count = 0;
             }
+            count = 0;
         }
 
         if (tempString == "") {
@@ -64,4 +66,17 @@ public class Solution {
         }
         return true;
     }
+
+//    public static boolean qwerty(String str1, String str2) {
+//        if (str1.length() != str2.length())
+//            return false;
+//        char[] ch1 = str1.toCharArray();
+//        char[] ch2 = str2.toCharArray();
+//        for (int i = 0; i < ch1.length; i++) {
+//                if (ch1[i] != ch2[i]) {
+//                    return false;
+//                }
+//            }
+//        return true;
+//    }
 }

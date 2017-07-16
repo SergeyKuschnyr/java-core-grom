@@ -47,20 +47,32 @@ public class Solution {
                 i = 1;
             }
 
-            char[] ch = strings1[i].toCharArray();
-            for (char c : ch) {
-                if (!Character.isLetter(c)) {
-                    return false;
-                }
-            }
+//            char[] ch = strings1[i].toCharArray();
+//            for (char c : ch) {
+//                if (!Character.isLetter(c)) {
+//                    return false;
+//                }
+//            }
             String[] zoneArr = {"com", "org", "net"};
-            for (String str : zoneArr) {
-                if (str.equals(strings1[i + 1])) {
-                    return true;
+
+            if (checkLetter(strings1[i]))
+                for (String str : zoneArr) {
+                    if (str.equals(strings1[i + 1])) {
+                        return true;
+                    }
                 }
-            }
             return false;
         }
         return false;
+    }
+
+    public static boolean checkLetter(String name) {
+        char[] chars = name.toCharArray();
+        for (char c : chars) {
+            if (!Character.isLetter(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

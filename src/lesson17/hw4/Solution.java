@@ -55,13 +55,14 @@ public class Solution {
 //            }
             String[] zoneArr = {"com", "org", "net"};
 
-            if (checkLetter(strings1[i]))
+            if (checkLetter(strings1[i])) {
                 for (String str : zoneArr) {
                     if (str.equals(strings1[i + 1])) {
                         return true;
                     }
                 }
-            return false;
+                return false;
+            }
         }
         return false;
     }

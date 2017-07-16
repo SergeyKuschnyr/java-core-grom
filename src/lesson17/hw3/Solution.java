@@ -19,19 +19,19 @@ public class Solution {
 //        String internetAddress = "http://gromcode.com";
 
         System.out.println("\"6789 asdfgh\"");
-        System.out.println(mostCountedWord("6789 09877"));
+        System.out.println(mostCountedWord("6789 asdfgh"));
         System.out.println("\"asdfgh 6789\"");
         System.out.println(mostCountedWord("asdfgh 6789"));
-//        System.out.println("\"Open the source code oftyui the definition for editing " +
-//                "and close the quick   definition lot  ffffffffffffffffffffffffffffffffff\"");
-//        System.out.println(mostCountedWord(string));
-//        System.out.println("\"раз два два три три три три три пять пять пять пять пять " +
-//                "восемь восемь восемь восемь восемь восемь восемь 1111111111111111\"");
-//        System.out.println(mostCountedWord(string2));
-//        System.out.println("\"qwerty\"");
-//        System.out.println(mostCountedWord(string3));
-//        System.out.println("\"раз два три пять восемь 1111111111111111\"");
-//        System.out.println(mostCountedWord(string4));
+        System.out.println("\"Open the source code oftyui the definition for editing " +
+                "and close the quick   definition lot  ffffffffffffffffffffffffffffffffff\"");
+        System.out.println(mostCountedWord(string));
+        System.out.println("\"раз два два три три три три три пять пять пять пять пять " +
+                "восемь восемь восемь восемь восемь восемь восемь 1111111111111111\"");
+        System.out.println(mostCountedWord(string2));
+        System.out.println("\"qwerty\"");
+        System.out.println(mostCountedWord(string3));
+        System.out.println("\"раз два три пять восемь 1111111111111111\"");
+        System.out.println(mostCountedWord(string4));
     }
 
     public static String mostCountedWord(String input) {
@@ -41,19 +41,19 @@ public class Solution {
         }
 
         String[] strings = input.split(" ");
-        if (strings.length == 1) {
-            if (checkLetter(strings[0])) {
-                return strings[0];
-            }
-            return null;
-        }
+//        if (strings.length == 1) {
+//            if (checkLetter(strings[0])) {
+//                return strings[0];
+//            }
+//            return null;
+//        }
 
         int count = 0;
         int count2 = 0;
         String tempString = "";
 
         for (int i = 0; i < strings.length; i++) {
-            for (int j = 0; i != j && j < strings.length; j++) {
+            for (int j = 0;  j < strings.length; j++) {
                 if (checkLetter(strings[i]) && strings[i].equals(strings[j])) {
                     count++;
                 }

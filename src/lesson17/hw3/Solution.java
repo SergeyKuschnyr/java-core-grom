@@ -65,7 +65,7 @@ public class Solution {
         }
 
         if (tempString == "") {
-            return null;
+            return strings[0];
         }
         return tempString;
     }

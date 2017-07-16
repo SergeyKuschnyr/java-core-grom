@@ -17,7 +17,7 @@ public class Solution {
                 "или женщина\".";
 
 //    String wrongString = "!@#$% +_)(* *&^%$";
-        String internetAddress = "http://gromcode.com";
+        String internetAddress = "https://www.gromcode.com";
 
         System.out.println(validate(internetAddress));
     }

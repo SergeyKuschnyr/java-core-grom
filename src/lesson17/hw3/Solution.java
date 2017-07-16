@@ -10,15 +10,22 @@ public class Solution {
         String string = "Open the source code oftyui the definition for editing " +
                 "and close the quick   definition lot  ffffffffffffffffffffffffffffffffff";
 
-        String string2 = "раз два два три три три три три пять пять пять восемь восемь восемь восемь 1111111111111111";
-        String string3 = "9";
+        String string2 = "раз два два три три три три три пять пять пять пять пять " +
+                "восемь восемь восемь восемь восемь восемь восемь 1111111111111111";
+        String string3 = "qwerty";
+        String string4 = "раз два три пять восемь 1111111111111111";
 
 //        String wrongString = "!@#$% +_)(* *&^%$";
 //        String internetAddress = "http://gromcode.com";
 
+        System.out.println("-------------------------------------");
+        System.out.println(mostCountedWord("6789 asdfgh"));
+        System.out.println(mostCountedWord("asdfgh 6789"));
+        System.out.println("-------------------------------------");
+        System.out.println(mostCountedWord(string));
         System.out.println(mostCountedWord(string2));
         System.out.println(mostCountedWord(string3));
-
+        System.out.println(mostCountedWord(string4));
     }
 
     public static String mostCountedWord(String input) {
@@ -28,9 +35,9 @@ public class Solution {
 
         String[] strings = input.split(" ");
         if (strings.length == 1) {
-            if (checkLetter(strings[0])) {
-                return strings[0];
-            }
+//            if (checkLetter(strings[0])) {
+//                return strings[0];
+//            }
             return null;
         }
 

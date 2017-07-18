@@ -20,7 +20,7 @@ public class Solution {
 
 //    String wrongString = "!@#$% +_)(* *&^%$";
         //String internetAddress = "http://g.com";
-        String internetAddress = "http://gromcode.com";
+        String internetAddress = "https://www.gromcode.com";
         //String internetAddress2 = "http://qwerty.asdfgh";
 
         System.out.println(validate(internetAddress));
@@ -32,6 +32,7 @@ public class Solution {
             return false;
 
         String[] strings = address.split("\\.");
+        System.out.println(Arrays.toString(strings));
 
         if (!(strings[strings.length - 1].equals("com") ||
                 strings[strings.length - 1].equals("org") ||
@@ -39,11 +40,13 @@ public class Solution {
             return false;
         }
 
+        System.out.println("---------------------------");
         if (strings.length == 3) {
-            if (!strings[0].equals("https://www") && !checkLetter(strings[1]) ||
-                    !strings[0].equals("http://www") && !checkLetter(strings[1])) {
-                return false;
-            } else return true;
+            if (strings[0].equals("https://www") && checkLetter(strings[1]) ||
+                    strings[0].equals("http://www") && checkLetter(strings[1])) {
+                return true;
+            }
+            return false;
         }
         if (strings[0].substring(0, 7).equals("http://") && checkLetter(strings[0].substring(7))) {
             return true;
@@ -55,7 +58,6 @@ public class Solution {
 
         return false;
     }
-
 
 
     public static boolean checkLetter(String name) {

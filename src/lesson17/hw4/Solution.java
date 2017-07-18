@@ -20,7 +20,7 @@ public class Solution {
 
 //    String wrongString = "!@#$% +_)(* *&^%$";
         //String internetAddress = "http://g.com";
-        String internetAddress = "http://www.grom.code.com";
+        String internetAddress = "https://www.gromcode890.com";
         //String internetAddress2 = "http://qwerty.asdfgh";
 
         System.out.println(validate(internetAddress));
@@ -49,6 +49,7 @@ public class Solution {
             }
             return false;
         }
+
         if (strings[0].substring(0, 7).equals("http://") && checkLetter(strings[0].substring(7))) {
             return true;
         }
@@ -64,7 +65,7 @@ public class Solution {
     public static boolean checkLetter(String name) {
         char[] chars = name.toCharArray();
         for (char c : chars) {
-            if (!Character.isLetter(c)) {
+            if (!(Character.isLetter(c) || Character.isDigit(c))) {
                 return false;
             }
         }

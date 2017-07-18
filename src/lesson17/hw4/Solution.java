@@ -20,7 +20,7 @@ public class Solution {
 
 //    String wrongString = "!@#$% +_)(* *&^%$";
         //String internetAddress = "http://g.com";
-        String internetAddress = "https://www.gromcode.com";
+        String internetAddress = "http://www.grom.code.com";
         //String internetAddress2 = "http://qwerty.asdfgh";
 
         System.out.println(validate(internetAddress));
@@ -32,7 +32,8 @@ public class Solution {
             return false;
 
         String[] strings = address.split("\\.");
-        System.out.println(Arrays.toString(strings));
+        if (strings.length > 3)
+            return false;
 
         if (!(strings[strings.length - 1].equals("com") ||
                 strings[strings.length - 1].equals("org") ||

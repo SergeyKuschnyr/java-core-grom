@@ -1,5 +1,7 @@
 package lesson17.hw4;
 
+import java.util.Arrays;
+
 /**
  * Created by Kushn_000 on 15.07.2017.
  */
@@ -18,49 +20,43 @@ public class Solution {
 
 //    String wrongString = "!@#$% +_)(* *&^%$";
         //String internetAddress = "http://g.com";
-        String internetAddress = "https://www.gromcode.com";
+        String internetAddress = "http://gromcode.com";
+        //String internetAddress2 = "http://qwerty.asdfgh";
 
         System.out.println(validate(internetAddress));
+        //System.out.println(validate(internetAddress2));
     }
 
     public static boolean validate(String address) {
-        if (address == null && address.length() < 12) {
+        if (!(address.substring(0, 7).equals("http://") || address.substring(0, 8).equals("https://")))
             return false;
-        }
-        String[] strings = address.split("//");
-        if (strings.length != 2) {
+
+        String[] strings = address.split("\\.");
+
+        if (!(strings[strings.length - 1].equals("com") ||
+                strings[strings.length - 1].equals("org") ||
+                strings[strings.length - 1].equals("net"))) {
             return false;
         }
 
-        if (!(strings[0].equals("http:") || strings[0].equals("https:"))) {
-            return false;
-        }
-
-        String[] strings1 = strings[1].split("\\.");
-        if (!(1 < strings1.length && strings1.length < 4)) {
-            return false;
-        }
-
-        int i = 0;
-        if (strings1.length == 3) {
-            if (!strings1[0].equals("www")) {
+        if (strings.length == 3) {
+            if (!strings[0].equals("https://www") && !checkLetter(strings[1]) ||
+                    !strings[0].equals("http://www") && !checkLetter(strings[1])) {
                 return false;
-            }
-            i = 1;
+            } else return true;
+        }
+        if (strings[0].substring(0, 7).equals("http://") && checkLetter(strings[0].substring(7))) {
+            return true;
         }
 
-        String[] zoneArr = {"com", "org", "net"};
-
-        if (!checkLetter(strings1[i]))
-            return false;
-
-        for (String str : zoneArr) {
-            if (str.equals(strings1[i + 1])) {
-                return true;
-            }
+        if (strings[0].substring(0, 8).equals("https://") && checkLetter(strings[0].substring(8))) {
+            return true;
         }
+
         return false;
     }
+
+
 
     public static boolean checkLetter(String name) {
         char[] chars = name.toCharArray();

@@ -20,7 +20,7 @@ public class Solution {
 
 //    String wrongString = "!@#$% +_)(* *&^%$";
         //String internetAddress = "http://g.com";
-        String internetAddress = "http://www.gromcode.com";
+        String internetAddress = "https://www/36gromcode678.org";
         //String internetAddress2 = "http://qwerty.asdfgh";
 
         System.out.println(validate(internetAddress));
@@ -28,12 +28,6 @@ public class Solution {
     }
 
     public static boolean validate(String address) {
-        if (!(address.substring(0, 7).equals("http://") ||
-                address.substring(0, 8).equals("https://") ||
-                address.substring(0, 11).equals("http://www.") ||
-                address.substring(0, 12).equals("https://www.")
-        ))
-            return false;
 
         if (!(address.substring(address.length() - 4).equals(".com") ||
                 address.substring(address.length() - 4).equals(".org") ||
@@ -41,13 +35,27 @@ public class Solution {
             return false;
         }
 
-        if (!(checkLetter(address.substring(7, address.length() - 4)) ||
-                checkLetter(address.substring(8, address.length() - 4)) ||
-                checkLetter(address.substring(11, address.length() - 4)) ||
-                checkLetter(address.substring(12, address.length() - 4))
-        ))
-            return false;
-        return true;
+        if (address.substring(0, 7).equals("http://")) {
+            if (checkLetter(address.substring(7, address.length() - 4)))
+                return true;
+        }
+
+        if (address.substring(0, 8).equals("https://")) {
+            if (checkLetter(address.substring(8, address.length() - 4)))
+                return true;
+        }
+
+        if (address.substring(0, 11).equals("http://www.")) {
+            if (checkLetter(address.substring(11, address.length() - 4)))
+                return true;
+        }
+
+        if (address.substring(0, 12).equals("https://www.")) {
+            if (checkLetter(address.substring(12, address.length() - 4)))
+                return true;
+        }
+
+        return false;
     }
 
 

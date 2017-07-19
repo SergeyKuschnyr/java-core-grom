@@ -20,7 +20,7 @@ public class Solution {
 
 //    String wrongString = "!@#$% +_)(* *&^%$";
         //String internetAddress = "http://g.com";
-        String internetAddress = "https://www.gromcode890.com";
+        String internetAddress = "http://www.gromcode.com";
         //String internetAddress2 = "http://qwerty.asdfgh";
 
         System.out.println(validate(internetAddress));
@@ -28,37 +28,26 @@ public class Solution {
     }
 
     public static boolean validate(String address) {
-        if (!(address.substring(0, 7).equals("http://") || address.substring(0, 8).equals("https://")))
+        if (!(address.substring(0, 7).equals("http://") ||
+                address.substring(0, 8).equals("https://") ||
+                address.substring(0, 11).equals("http://www.") ||
+                address.substring(0, 12).equals("https://www.")
+        ))
             return false;
 
-        String[] strings = address.split("\\.");
-        if (strings.length > 3)
-            return false;
-
-        if (!(strings[strings.length - 1].equals("com") ||
-                strings[strings.length - 1].equals("org") ||
-                strings[strings.length - 1].equals("net"))) {
-            return false;
-        }
-
-        System.out.println("---------------------------");
-        if (strings.length == 3) {
-            if (strings[0].equals("https://www") && checkLetter(strings[1]) ||
-                    strings[0].equals("http://www") && checkLetter(strings[1])) {
-                return true;
-            }
+        if (!(address.substring(address.length() - 4).equals(".com") ||
+                address.substring(address.length() - 4).equals(".org") ||
+                address.substring(address.length() - 4).equals(".net"))) {
             return false;
         }
 
-        if (strings[0].substring(0, 7).equals("http://") && checkLetter(strings[0].substring(7))) {
-            return true;
-        }
-
-        if (strings[0].substring(0, 8).equals("https://") && checkLetter(strings[0].substring(8))) {
-            return true;
-        }
-
-        return false;
+        if (!(checkLetter(address.substring(7, address.length() - 4)) ||
+                checkLetter(address.substring(8, address.length() - 4)) ||
+                checkLetter(address.substring(11, address.length() - 4)) ||
+                checkLetter(address.substring(12, address.length() - 4))
+        ))
+            return false;
+        return true;
     }
 
 

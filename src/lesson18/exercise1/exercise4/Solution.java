@@ -1,4 +1,4 @@
-package lesson18.exercise1.exercise3;
+package lesson18.exercise1.exercise4;
 
 import java.util.Arrays;
 
@@ -12,15 +12,24 @@ public class Solution {
     }
 
     public static int[] findNumbers(String text) {
-
         String[] strings = text.split(" ");
+        String[] tempString = {};
         int count = 0;
         for (String str : strings) {
             try {
                 Integer.parseInt(str);
                 count++;
             } catch (Exception e) {
-                System.out.println("not a number");
+                tempString = str.split("\\.");
+                if (tempString.length == 2) {
+                    try {
+                        Integer.parseInt(tempString[0]);
+                        Integer.parseInt(tempString[1]);
+                        System.out.println("not a number");
+                    } catch (Exception e1) {
+                        System.out.println("error");
+                    }
+                }
             }
         }
 
@@ -31,7 +40,7 @@ public class Solution {
                 intArray[count] = Integer.parseInt(str);
                 count++;
             } catch (Exception e) {
-                System.out.println("not a number");
+                System.out.println("error");
             }
         }
         return intArray;

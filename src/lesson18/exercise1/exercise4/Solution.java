@@ -14,19 +14,18 @@ public class Solution {
     public static int[] findNumbers(String text) {
 
         String[] strings = text.split(" ");
-        int count = 0;
+        int count = strings.length;
         for (String str : strings) {
             char[] chars = str.toCharArray();
             for (char c : chars) {
                 if (!Character.isDigit(c)) {
-                    count++;
+                    count--;
                     break;
                 }
             }
         }
 
-        count = strings.length - count - 1;
-        int[] intArray = new int[count];
+        int[] intArray = new int[count - 1];
         count = 0;
         boolean flag = false;
 
@@ -40,12 +39,11 @@ public class Solution {
                     break;
                 }
             }
-            if (flag){
-                flag = false;
-                continue;
+            if (!flag){
+                intArray[count] = Integer.parseInt(str);
+                count++;
             }
-            intArray[count] = Integer.parseInt(str);
-            count++;
+            flag = false;
         }
         return intArray;
     }

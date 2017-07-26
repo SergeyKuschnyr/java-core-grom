@@ -7,42 +7,48 @@ import java.util.Arrays;
  */
 public class Solution {
     public static void main(String[] args) {
-        String string = "qwerty asdfgh 123 cvbnm 23456 qwer567 1.1234   4567 34.56 56. .89 ...34";
+        String string = "qwerty asdfgh 123 cvbnm 23456 qwer567 1.1234  4567 34.56 56. .89 ...34";
         System.out.println(Arrays.toString(findNumbers(string)));
     }
 
     public static int[] findNumbers(String text) {
+
         String[] strings = text.split(" ");
-        String[] tempString = {};
         int count = 0;
         for (String str : strings) {
-            try {
-                Integer.parseInt(str);
-                count++;
-            } catch (Exception e) {
-                tempString = str.split("\\.");
-                if (tempString.length == 2) {
-                    try {
-                        Integer.parseInt(tempString[0]);
-                        Integer.parseInt(tempString[1]);
-                        System.out.println("not a number");
-                    } catch (Exception e1) {
-                        System.out.println("error");
-                    }
+            char[] chars = str.toCharArray();
+            for (char c : chars) {
+                if (!Character.isDigit(c)) {
+                    count++;
+                    break;
                 }
             }
         }
 
+        count = strings.length - count - 1;
         int[] intArray = new int[count];
         count = 0;
+        boolean flag = false;
+
         for (String str : strings) {
-            try {
-                intArray[count] = Integer.parseInt(str);
-                count++;
-            } catch (Exception e) {
-                System.out.println("error");
+            char[] chars = str.toCharArray();
+            if (chars.length == 0)
+                continue;
+            for (char c : chars) {
+                if (!Character.isDigit(c)) {
+                    flag = true;
+                    break;
+                }
             }
+            if (flag){
+                flag = false;
+                continue;
+            }
+            intArray[count] = Integer.parseInt(str);
+            count++;
         }
         return intArray;
     }
 }
+
+

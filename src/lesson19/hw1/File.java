@@ -38,10 +38,9 @@ public class File {
         return size;
     }
 
-    private boolean checkNameLength(String name) throws Exception {
+    private void checkNameLength(String name) throws Exception {
         if (name.length() > 10) {
             throw new Exception("Input name is mistake");
         }
-        return true;
     }
 }

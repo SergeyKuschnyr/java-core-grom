@@ -4,10 +4,10 @@ package lesson19.hw1;
  * Created by Kushn_000 on 29.07.2017.
  */
 public class File {
-    long id;
-    String name;
-    String format;
-    long size;
+    private long id;
+    private String name;
+    private String format;
+    private long size;
 
     public File( long id, String name, String format,long size){
         try {

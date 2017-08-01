@@ -4,11 +4,11 @@ package lesson19.hw1;
  * Created by Kushn_000 on 29.07.2017.
  */
 public class Storage {
-    long id;
-    File[] files;
-    String[] formatSupported;
-    String storageCountry;
-    long storageSize;
+    private long id;
+    private File[] files;
+    private String[] formatSupported;
+    private String storageCountry;
+    private long storageSize;
 
     public Storage(long id, File[] files, String[] formatSupported,
                    String storageCountry, long storageSize) {

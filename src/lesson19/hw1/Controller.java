@@ -28,14 +28,14 @@ public class Controller {
         if (searchEmptyPosition(storage) == 0) {
             throw new RuntimeException("Array overfull");
         }
-        storage.files[searchEmptyPosition(storage)] = file;
+        storage.getFiles()[searchEmptyPosition(storage)] = file;
     }
 
     public void delete(Storage storage, File file) {
         if (doesTheFileExistForDel(storage, file) == 0) {
             throw new RuntimeException("File not find");
         }
-        storage.files[doesTheFileExistForDel(storage, file)] = null;
+        storage.getFiles()[doesTheFileExistForDel(storage, file)] = null;
     }
 
     public void transferAll(Storage storageFrom, Storage storageTo) {
@@ -48,11 +48,11 @@ public class Controller {
         if (fileFormatCheck2(storageFrom, storageTo)) {
             throw new RuntimeException("File format is wrong");
         }
-        for (int i = 0; i < storageFrom.files.length; i++) {
-            if (storageFrom.files[i] != null) {
-                for (int j = 0; j < storageTo.files.length; j++) {
-                    if (storageTo.files[j] == null) {
-                        storageTo.files[j] = storageFrom.files[i];
+        for (int i = 0; i < storageFrom.getFiles().length; i++) {
+            if (storageFrom.getFiles()[i] != null) {
+                for (int j = 0; j < storageTo.getFiles().length; j++) {
+                    if (storageTo.getFiles()[j] == null) {
+                        storageTo.getFiles()[j] = storageFrom.getFiles()[i];
                         break;
                     }
                 }
@@ -67,17 +67,17 @@ public class Controller {
         if (doesTheFileExist(storageTo, id) != 0) {
             throw new RuntimeException("Same file already exist");
         }
-        if (isSpace(storageTo, storageFrom.files[doesTheFileExist(storageFrom, id)])) {
+        if (isSpace(storageTo, storageFrom.getFiles()[doesTheFileExist(storageFrom, id)])) {
             throw new RuntimeException("Storage overfull");
         }
         if (searchEmptyPosition(storageTo) == 0) {
             throw new RuntimeException("Array overfull");
         }
-        if (!fileFormatCheck(storageFrom, storageTo.files[doesTheFileExist(storageTo, id)])) {
+        if (!fileFormatCheck(storageFrom, storageTo.getFiles()[doesTheFileExist(storageTo, id)])) {
             throw new RuntimeException("File format is wrong");
         }
-        storageTo.files[searchEmptyPosition(storageTo)] = storageFrom.files[doesTheFileExist(storageFrom, id)];
-        storageFrom.files[doesTheFileExist(storageFrom, id)] = null;
+        storageTo.getFiles()[searchEmptyPosition(storageTo)] = storageFrom.getFiles()[doesTheFileExist(storageFrom, id)];
+        storageFrom.getFiles()[doesTheFileExist(storageFrom, id)] = null;
     }
 
     private boolean isSpace(Storage storageTo, File file) {
@@ -85,8 +85,8 @@ public class Controller {
     }
 
     private int doesTheFileExist(Storage storage, long id) {
-        for (int i = 0; i < storage.files.length; i++) {
-            if (storage.files[i] != null && storage.files[i].getId() == id) {
+        for (int i = 0; i < storage.getFiles().length; i++) {
+            if (storage.getFiles()[i] != null && storage.getFiles()[i].getId() == id) {
                 return i;
             }
         }
@@ -94,10 +94,10 @@ public class Controller {
     }
 
     private int doesTheFileExistForDel(Storage storage, File file) {
-        for (int i = 0; i < storage.files.length; i++) {
+        for (int i = 0; i < storage.getFiles().length; i++) {
             if (file != null) {
-                if (storage.files[i].getName().equals(file.getName()) &&
-                        storage.files[i].getId() == file.getId()) {
+                if (storage.getFiles()[i].getName().equals(file.getName()) &&
+                        storage.getFiles()[i].getId() == file.getId()) {
                     return i;
                 }
             }
@@ -106,8 +106,8 @@ public class Controller {
     }
 
     private int searchEmptyPosition(Storage storage) {
-        for (int i = 0; i < storage.files.length; i++) {
-            if (storage.files[i] == null) {
+        for (int i = 0; i < storage.getFiles().length; i++) {
+            if (storage.getFiles()[i] == null) {
                 return i;
             }
         }
@@ -117,12 +117,12 @@ public class Controller {
     private boolean isEmptyPosition(Storage storageFrom, Storage storageTo) {
         int count1 = 0;
         int count2 = 0;
-        for (File file : storageFrom.files) {
+        for (File file : storageFrom.getFiles()) {
             if (file != null) {
                 count1++;
             }
         }
-        for (File file : storageTo.files) {
+        for (File file : storageTo.getFiles()) {
             if (file == null) {
                 count2++;
             }
@@ -131,7 +131,7 @@ public class Controller {
     }
 
     private boolean fileFormatCheck(Storage storage, File file) {
-        for (String fs : storage.formatSupported) {
+        for (String fs : storage.getFormatSupported()) {
             if (fs != null && fs.equals(file.getFormat())) {
                 return true;
             }
@@ -140,7 +140,7 @@ public class Controller {
     }
 
     private boolean fileFormatCheck2(Storage storageFrom, Storage storageTo) {
-        for (File file : storageFrom.files) {
+        for (File file : storageFrom.getFiles()) {
             if (file != null && fileFormatCheck(storageTo, file)) {
                 return false;
             }
@@ -150,7 +150,7 @@ public class Controller {
 
     private int sumOfFileSize(Storage storage) {
         int totalSize = 0;
-        for (File file1 : storage.files) {
+        for (File file1 : storage.getFiles()) {
             if (file1 != null)
                 totalSize += file1.getSize();
         }

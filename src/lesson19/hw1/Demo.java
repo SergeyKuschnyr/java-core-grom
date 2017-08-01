@@ -40,7 +40,7 @@ public class Demo {
         System.out.println("-----------------------put method check");
         print(storageFrom);
         try {
-            controller.put(storageFrom, storageTo.files[1]);
+            controller.put(storageFrom, storageTo.getFiles()[1]);
         } catch (Exception rt) {
             System.out.println("error: " + rt.getMessage());
         }
@@ -51,7 +51,7 @@ public class Demo {
         System.out.println("--------------------delete method check");
         print(storageTo);
         try {
-            controller.delete(storageTo, storageTo.files[6]);
+            controller.delete(storageTo, storageTo.getFiles()[6]);
         } catch (Exception e) {
             System.out.println("error: " + e.getMessage());
         }
@@ -87,7 +87,7 @@ public class Demo {
 
     public static void print(Storage storage){
         System.out.print("{");
-        for (File file : storage.files) {
+        for (File file : storage.getFiles()) {
             if (file != null) {
                 System.out.print(file.getId() + ", ");
             } else System.out.print("null, ");

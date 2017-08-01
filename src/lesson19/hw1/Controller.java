@@ -15,7 +15,7 @@ public class Controller {
         return storage;
     }
 
-    public void put(Storage storage, File file) {
+    public File put(Storage storage, File file) {
         if (isSpace(storage, file)) {
             throw new RuntimeException("Storage overfull");
         }
@@ -29,6 +29,7 @@ public class Controller {
             throw new RuntimeException("Array overfull");
         }
         storage.getFiles()[searchEmptyPosition(storage)] = file;
+        return file;
     }
 
     public void delete(Storage storage, File file) {

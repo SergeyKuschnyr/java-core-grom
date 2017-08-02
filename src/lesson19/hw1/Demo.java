@@ -7,17 +7,18 @@ import java.util.Arrays;
  */
 public class Demo {
     public static void main(String[] args) {
-        File file1 = new File(12345l, "qwerty1", "txt", 1);
-        File file2 = new File(1234l, "qwerty2", "exe", 1);
-        File file3 = new File(123l, "qwerty00003", "jpg", 1);
-        File file4 = new File(123456l, "qwerty4", "exe", 1);
-        File file5 = new File(123457l, "qwerty5", "txt", 1);
 
-        File file6 = new File(123458l, "qwerty6", "exe", 1);
-        File file7 = new File(123459l, "qwerty7", "jpg", 1);
-        File file8 = new File(1234510l, "qwerty8", "exe", 1);
-        File file9 = new File(123457l, "qwerty9", "txt", 1);
-        File file10 = new File(1234511l, "qwerty10", "jpg", 1);
+        File file1 = filesCreates(12345l, "qwerty1", "txt", 1);
+        File file2 = filesCreates(1234l, "qwerty2", "exe", 1);
+        File file3 = filesCreates(123l, "qwerty3", "jpg", 1);
+        File file4 = filesCreates(123456l, "qwerty4", "exe", 1);
+        File file5 = filesCreates(123457l, "qwerty5", "txt", 1);
+
+        File file6 = filesCreates(123458l, "qwerty6", "exe", 1);
+        File file7 = filesCreates(123459l, "qwerty7", "jpg", 1);
+        File file8 = filesCreates(1234510l, "qwerty8", "exe", 1);
+        File file9 = filesCreates(123457l, "qwerty9", "txt", 1);
+        File file10 = filesCreates(1234511l, "qwerty10", "jpg", 1);
 
         File[] filesFrom = {file1, file2, file3, file4, null};
         File[] filesTo = {file6, file7, file8, file9, file10, null, null, null, null, null};
@@ -85,7 +86,7 @@ public class Demo {
         System.out.println();
     }
 
-    public static void print(Storage storage){
+    public static void print(Storage storage) {
         System.out.print("{");
         for (File file : storage.getFiles()) {
             if (file != null) {
@@ -93,5 +94,14 @@ public class Demo {
             } else System.out.print("null, ");
         }
         System.out.println("}");
+    }
+
+    public static File filesCreates(long id, String name, String format, long size) {
+        try {
+            return new File(id, name, format, size);
+        }catch (Exception e){
+            System.out.println("error: " + e.getMessage());
+        }
+        return null;
     }
 }

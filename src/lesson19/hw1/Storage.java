@@ -13,6 +13,12 @@ public class Storage {
     public Storage(long id, File[] files, String[] formatSupported,
                    String storageCountry, long storageSize) {
         this.id = id;
+//        for (int i = 0; i < files.length; i++) {
+//            if (files[i] != null && files[i].getName().length() > 10) {
+//                throw new RuntimeException("File name length more 10");
+//                //files[i] = null;
+//            }
+//        }
         this.files = files;
         this.formatSupported = formatSupported;
         this.storageCountry = storageCountry;

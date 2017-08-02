@@ -16,8 +16,9 @@ public class Controller {
     }
 
     public File put(Storage storage, File file) {
-        if (isSpace(storage, file)) {
-            throw new RuntimeException("Storage overfull");
+        if (!isSpace(storage, file)) {
+            System.err.println("Storage overfull");
+            return null;
         }
         if (doesTheFileExist(storage, file.getId()) != 0) {
             throw new RuntimeException("Same file already exist");
@@ -37,6 +38,26 @@ public class Controller {
             throw new RuntimeException("File not find");
         }
         storage.getFiles()[doesTheFileExistForDel(storage, file)] = null;
+    }
+
+    public void transferFile(Storage storageFrom, Storage storageTo, long id) {
+        if (doesTheFileExist(storageFrom, id) == 0) {
+            throw new RuntimeException("File don't find");
+        }
+        if (doesTheFileExist(storageTo, id) != 0) {
+            throw new RuntimeException("Same file already exist");
+        }
+        if (isSpace(storageTo, storageFrom.getFiles()[doesTheFileExist(storageFrom, id)])) {
+            throw new RuntimeException("Storage overfull");
+        }
+        if (searchEmptyPosition(storageTo) == 0) {
+            throw new RuntimeException("Array overfull");
+        }
+        if (!fileFormatCheck(storageFrom, storageTo.getFiles()[doesTheFileExist(storageTo, id)])) {
+            throw new RuntimeException("File format is wrong");
+        }
+        storageTo.getFiles()[searchEmptyPosition(storageTo)] = storageFrom.getFiles()[doesTheFileExist(storageFrom, id)];
+        storageFrom.getFiles()[doesTheFileExist(storageFrom, id)] = null;
     }
 
     public void transferAll(Storage storageFrom, Storage storageTo) {
@@ -61,28 +82,8 @@ public class Controller {
         }
     }
 
-    public void transferFile(Storage storageFrom, Storage storageTo, long id) {
-        if (doesTheFileExist(storageFrom, id) == 0) {
-            throw new RuntimeException("File don't find");
-        }
-        if (doesTheFileExist(storageTo, id) != 0) {
-            throw new RuntimeException("Same file already exist");
-        }
-        if (isSpace(storageTo, storageFrom.getFiles()[doesTheFileExist(storageFrom, id)])) {
-            throw new RuntimeException("Storage overfull");
-        }
-        if (searchEmptyPosition(storageTo) == 0) {
-            throw new RuntimeException("Array overfull");
-        }
-        if (!fileFormatCheck(storageFrom, storageTo.getFiles()[doesTheFileExist(storageTo, id)])) {
-            throw new RuntimeException("File format is wrong");
-        }
-        storageTo.getFiles()[searchEmptyPosition(storageTo)] = storageFrom.getFiles()[doesTheFileExist(storageFrom, id)];
-        storageFrom.getFiles()[doesTheFileExist(storageFrom, id)] = null;
-    }
-
     private boolean isSpace(Storage storageTo, File file) {
-        return storageTo.getStorageSize() - sumOfFileSize(storageTo) < file.getSize();
+        return storageTo.getStorageSize() - sumOfFileSize(storageTo) > file.getSize();
     }
 
     private int doesTheFileExist(Storage storage, long id) {

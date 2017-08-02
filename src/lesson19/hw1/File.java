@@ -9,17 +9,14 @@ public class File {
     private String format;
     private long size;
 
-    public File( long id, String name, String format,long size){
-        try {
-            checkNameLength(name);
-            this.id = id;
-            this.name = name;
-            this.format = format;
-            this.size = size;
-        }catch (Exception e){
-            System.out.println("error: " + e.getMessage());
-
+    public File(long id, String name, String format, long size) {
+        if (name.length() > 10) {
+            throw new RuntimeException("Input name is mistake");
         }
+        this.id = id;
+        this.name = name;
+        this.format = format;
+        this.size = size;
     }
 
     public long getId() {
@@ -38,9 +35,9 @@ public class File {
         return size;
     }
 
-    private void checkNameLength(String name) throws Exception {
-        if (name.length() > 10) {
-            throw new Exception("Input name is mistake");
-        }
-    }
+//    private void checkNameLength(String name) throws Exception {
+//        if (name.length() > 10) {
+//            throw new Exception("Input name is mistake");
+//        }
+//    }
 }

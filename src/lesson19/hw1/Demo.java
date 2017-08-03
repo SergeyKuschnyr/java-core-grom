@@ -9,7 +9,7 @@ public class Demo {
     public static void main(String[] args) {
 
         File file1 = fileCreating(12345l, "qwerty1", "txt", 1);
-        File file2 = fileCreating(1234l, "qwerty2", "com", 1);
+        File file2 = fileCreating(1234l, "qwerty2", "txt", 1);
         File file3 = fileCreating(123l, "qwerty3", "jpg", 1);
         File file4 = fileCreating(123456l, "qwerty4", "exe", 1);
         File file5 = fileCreating(123457l, "qwerty5", "txt", 1);
@@ -20,14 +20,14 @@ public class Demo {
         File file9 = fileCreating(123457l, "qwerty9", "txt", 1);
         File file10 = fileCreating(1234511l, "qwerty10", "jpg", 1);
 
-        File[] filesFrom = {file1, file2, file3, file4, null};
+        File[] filesFrom = {file1, file2, file3, file4};
         File[] filesTo = {file6, file7, file8, file9, file10, null, null, null, null, null};
 
         String[] formatFileFrom = {"txt", "exe", "jpg"};
         String[] formatFilesTo = {"txt", "exe", "jpg"};
 
         Storage storageFrom = storageCreating(12345l, filesFrom, formatFileFrom, "Ukraine", 7);
-        Storage storageTo = storageCreating(12340l, filesTo, formatFilesTo, "USA", 7);
+        Storage storageTo = storageCreating(12340l, filesTo, formatFilesTo, "USA", 9);
 
         Storage[] storages = {storageFrom, storageTo};
 
@@ -66,7 +66,7 @@ public class Demo {
         System.out.println("--------------------delete method check");
         print(storageTo);
         try {
-            controller.delete(storageTo, storageTo.getFiles()[6]);
+            controller.delete(storageTo, storageTo.getFiles()[3]);
         } catch (Exception e) {
             System.out.println("error: " + e.getMessage());
         }

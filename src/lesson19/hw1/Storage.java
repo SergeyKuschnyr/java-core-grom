@@ -12,17 +12,17 @@ public class Storage {
 
     public Storage(long id, File[] files, String[] formatSupported,
                    String storageCountry, long storageSize) {
-        this.id = id;
-//        for (int i = 0; i < files.length; i++) {
-//            if (files[i] != null && files[i].getName().length() > 10) {
-//                throw new RuntimeException("File name length more 10");
-//                //files[i] = null;
-//            }
-//        }
-        this.files = files;
         this.formatSupported = formatSupported;
-        this.storageCountry = storageCountry;
         this.storageSize = storageSize;
+        if (!checkFormatInArr(files)){
+            throw new RuntimeException("File format is wrong in Array");
+        }
+        if (sumOfFileSize(files) > storageSize){
+            throw new RuntimeException("Size of files more storage size");
+        }
+        this.id = id;
+        this.files = files;
+        this.storageCountry = storageCountry;
     }
 
     public long getId() {
@@ -43,5 +43,32 @@ public class Storage {
 
     public long getStorageSize() {
         return storageSize;
+    }
+
+    private boolean checkFormatInArr(File[] files) {
+        for (File file : files) {
+            if (file != null && !checkFormat(file)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkFormat(File file) {
+        for (String fileFormat : formatSupported) {
+            if (file != null && file.getFormat().equals(fileFormat)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int sumOfFileSize(File[] files) {
+        int totalSize = 0;
+        for (File file : files) {
+            if (file != null)
+                totalSize += file.getSize();
+        }
+        return totalSize;
     }
 }

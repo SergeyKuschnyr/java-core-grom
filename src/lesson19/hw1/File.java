@@ -9,7 +9,8 @@ public class File {
     private String format;
     private long size;
 
-    public File(long id, String name, String format, long size) {
+    public File (long id, String name, String format, long size) {
+
         if (name.length() > 10) {
             throw new RuntimeException("Input name is mistake");
         }
@@ -34,10 +35,4 @@ public class File {
     public long getSize() {
         return size;
     }
-
-//    private void checkNameLength(String name) throws Exception {
-//        if (name.length() > 10) {
-//            throw new Exception("Input name is mistake");
-//        }
-//    }
 }

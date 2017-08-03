@@ -8,17 +8,17 @@ import java.util.Arrays;
 public class Demo {
     public static void main(String[] args) {
 
-        File file1 = filesCreates(12345l, "qwerty1", "txt", 1);
-        File file2 = filesCreates(1234l, "qwerty2", "exe", 1);
-        File file3 = filesCreates(123l, "qwerty3", "jpg", 1);
-        File file4 = filesCreates(123456l, "qwerty4", "exe", 1);
-        File file5 = filesCreates(123457l, "qwerty5", "txt", 1);
+        File file1 = fileCreating(12345l, "qwerty1", "txt", 1);
+        File file2 = fileCreating(1234l, "qwerty2", "com", 1);
+        File file3 = fileCreating(123l, "qwerty3", "jpg", 1);
+        File file4 = fileCreating(123456l, "qwerty4", "exe", 1);
+        File file5 = fileCreating(123457l, "qwerty5", "txt", 1);
 
-        File file6 = filesCreates(123458l, "qwerty6", "exe", 1);
-        File file7 = filesCreates(123459l, "qwerty7", "jpg", 1);
-        File file8 = filesCreates(1234510l, "qwerty8", "exe", 1);
-        File file9 = filesCreates(123457l, "qwerty9", "txt", 1);
-        File file10 = filesCreates(1234511l, "qwerty10", "jpg", 1);
+        File file6 = fileCreating(123458l, "qwerty6", "exe", 1);
+        File file7 = fileCreating(123459l, "qwerty7", "jpg", 1);
+        File file8 = fileCreating(1234510l, "qwerty8", "exe", 1);
+        File file9 = fileCreating(123457l, "qwerty9", "txt", 1);
+        File file10 = fileCreating(1234511l, "qwerty10", "jpg", 1);
 
         File[] filesFrom = {file1, file2, file3, file4, null};
         File[] filesTo = {file6, file7, file8, file9, file10, null, null, null, null, null};
@@ -26,8 +26,8 @@ public class Demo {
         String[] formatFileFrom = {"txt", "exe", "jpg"};
         String[] formatFilesTo = {"txt", "exe", "jpg"};
 
-        Storage storageFrom = new Storage(12345l, filesFrom, formatFileFrom, "Ukraine", 7);
-        Storage storageTo = new Storage(12340l, filesTo, formatFilesTo, "USA", 7);
+        Storage storageFrom = storageCreating(12345l, filesFrom, formatFileFrom, "Ukraine", 7);
+        Storage storageTo = storageCreating(12340l, filesTo, formatFilesTo, "USA", 7);
 
         Storage[] storages = {storageFrom, storageTo};
 
@@ -38,16 +38,30 @@ public class Demo {
 
     public static void controllerMethodCheck(Storage storageFrom, Storage storageTo, Controller controller) {
 
-        System.out.println("-----------------------put method check");
-        print(storageFrom);
+        System.out.println("------------put method check");
+        print(storageTo);
         try {
-            controller.put(storageFrom, storageTo.getFiles()[1]);
+            if (storageTo != null && storageFrom != null) {
+                controller.put(storageTo, storageFrom.getFiles()[1]);
+            } else
+                System.out.println("storage don't create");
         } catch (Exception rt) {
             System.out.println("error: " + rt.getMessage());
         }
-        print(storageFrom);
+        print(storageTo);
         System.out.println();
 
+//        print(storageFrom);
+//        try {
+//            if (storageTo != null && storageFrom != null) {
+//                controller.put(storageFrom, storageFrom.getFiles()[1]);
+//            } else
+//                System.out.println("storage don't create");
+//        } catch (Exception rt) {
+//            System.out.println("error: " + rt.getMessage());
+//        }
+//        print(storageFrom);
+        System.out.println();
 
         System.out.println("--------------------delete method check");
         print(storageTo);
@@ -87,21 +101,34 @@ public class Demo {
     }
 
     public static void print(Storage storage) {
-        System.out.print("{");
-        for (File file : storage.getFiles()) {
-            if (file != null) {
-                System.out.print(file.getId() + ", ");
-            } else System.out.print("null, ");
+        if (storage != null) {
+            System.out.print("{");
+            for (File file : storage.getFiles()) {
+                if (file != null) {
+                    System.out.print(file.getId() + ", ");
+                } else System.out.print("null, ");
+            }
+            System.out.println("}");
         }
-        System.out.println("}");
+        ;
     }
 
-    public static File filesCreates(long id, String name, String format, long size) {
+    public static File fileCreating(long id, String name, String format, long size) {
         try {
             return new File(id, name, format, size);
-        }catch (Exception e){
+        } catch (RuntimeException e) {
             System.out.println("error: " + e.getMessage());
         }
         return null;
+    }
+
+    private static Storage storageCreating(long id, File[] files, String[] fileFormat,
+                                           String storageCountry, long storageSize) {
+        try {
+            return new Storage(id, files, fileFormat, storageCountry, storageSize);
+        } catch (RuntimeException rt) {
+            System.out.println("error: " + rt.getMessage());
+            return null;
+        }
     }
 }

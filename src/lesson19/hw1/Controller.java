@@ -15,60 +15,64 @@ public class Controller {
         return storage;
     }
 
-    public File put(Storage storage, File file) {
+    public File put (Storage storage, File file) throws Exception{
+        if (file == null && storage != null) {
+            System.out.println("error: input file is null or storage don't exist");
+            return null;
+        }
         if (!isSpace(storage, file)) {
             System.err.println("Storage overfull");
             return null;
         }
-        if (doesTheFileExist(storage, file.getId()) != 0) {
-            throw new RuntimeException("Same file already exist");
+        if (doesTheFileExist (storage, file.getId()) != 0) {
+            throw new Exception("Same file already exist");
         }
         if (!fileFormatCheck(storage, file)) {
-            throw new RuntimeException("File format is wrong");
+            throw new Exception("File format is wrong");
         }
         if (searchEmptyPosition(storage) == 0) {
-            throw new RuntimeException("Array overfull");
+            throw new Exception("Array overfull");
         }
         storage.getFiles()[searchEmptyPosition(storage)] = file;
         return file;
     }
 
-    public void delete(Storage storage, File file) {
+    public void delete(Storage storage, File file) throws Exception{
         if (doesTheFileExistForDel(storage, file) == 0) {
-            throw new RuntimeException("File not find");
+            throw new Exception("File not find");
         }
         storage.getFiles()[doesTheFileExistForDel(storage, file)] = null;
     }
 
-    public void transferFile(Storage storageFrom, Storage storageTo, long id) {
+    public void transferFile(Storage storageFrom, Storage storageTo, long id) throws Exception{
         if (doesTheFileExist(storageFrom, id) == 0) {
-            throw new RuntimeException("File don't find");
+            throw new Exception("File don't find");
         }
         if (doesTheFileExist(storageTo, id) != 0) {
-            throw new RuntimeException("Same file already exist");
+            throw new Exception("Same file already exist");
         }
         if (isSpace(storageTo, storageFrom.getFiles()[doesTheFileExist(storageFrom, id)])) {
-            throw new RuntimeException("Storage overfull");
+            throw new Exception("Storage overfull");
         }
         if (searchEmptyPosition(storageTo) == 0) {
-            throw new RuntimeException("Array overfull");
+            throw new Exception("Array overfull");
         }
         if (!fileFormatCheck(storageFrom, storageTo.getFiles()[doesTheFileExist(storageTo, id)])) {
-            throw new RuntimeException("File format is wrong");
+            throw new Exception("File format is wrong");
         }
         storageTo.getFiles()[searchEmptyPosition(storageTo)] = storageFrom.getFiles()[doesTheFileExist(storageFrom, id)];
         storageFrom.getFiles()[doesTheFileExist(storageFrom, id)] = null;
     }
 
-    public void transferAll(Storage storageFrom, Storage storageTo) {
+    public void transferAll(Storage storageFrom, Storage storageTo) throws Exception{
         if (sumOfFileSize(storageFrom) + sumOfFileSize(storageTo) > storageTo.getStorageSize()) {
-            throw new RuntimeException("Space don't enough");
+            throw new Exception("Space don't enough");
         }
         if (!isEmptyPosition(storageFrom, storageTo)) {
-            throw new RuntimeException("Array overfull");
+            throw new Exception("Array overfull");
         }
         if (fileFormatCheck2(storageFrom, storageTo)) {
-            throw new RuntimeException("File format is wrong");
+            throw new Exception("File format is wrong");
         }
         for (int i = 0; i < storageFrom.getFiles().length; i++) {
             if (storageFrom.getFiles()[i] != null) {
@@ -83,7 +87,10 @@ public class Controller {
     }
 
     private boolean isSpace(Storage storageTo, File file) {
-        return storageTo.getStorageSize() - sumOfFileSize(storageTo) > file.getSize();
+        System.out.println(storageTo.getId());
+        //if (storageTo != null)
+            return storageTo.getStorageSize() - sumOfFileSize(storageTo) > file.getSize();
+        //return false;
     }
 
     private int doesTheFileExist(Storage storage, long id) {
@@ -138,7 +145,7 @@ public class Controller {
                 return true;
             }
         }
-        return true;
+        return false;
     }
 
     private boolean fileFormatCheck2(Storage storageFrom, Storage storageTo) {

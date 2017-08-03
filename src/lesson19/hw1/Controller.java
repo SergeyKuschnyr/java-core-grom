@@ -71,7 +71,7 @@ public class Controller {
         if (!isEmptyPosition(storageFrom, storageTo)) {
             throw new Exception("Array overfull");
         }
-        if (fileFormatCheck2(storageFrom, storageTo)) {
+        if (fileFormatCheck(storageFrom, storageTo)) {
             throw new Exception("File format is wrong");
         }
         for (int i = 0; i < storageFrom.getFiles().length; i++) {
@@ -148,7 +148,7 @@ public class Controller {
         return false;
     }
 
-    private boolean fileFormatCheck2(Storage storageFrom, Storage storageTo) {
+    private boolean fileFormatCheck(Storage storageFrom, Storage storageTo) {
         for (File file : storageFrom.getFiles()) {
             if (file != null && fileFormatCheck(storageTo, file)) {
                 return false;

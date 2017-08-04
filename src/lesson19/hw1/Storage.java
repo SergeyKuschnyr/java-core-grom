@@ -11,14 +11,14 @@ public class Storage {
     private long storageSize;
 
     public Storage(long id, File[] files, String[] formatSupported,
-                   String storageCountry, long storageSize) {
+                   String storageCountry, long storageSize) throws Exception{
         this.formatSupported = formatSupported;
         this.storageSize = storageSize;
         if (!checkFormatInArr(files)){
-            throw new RuntimeException("File format is wrong in Array");
+            throw new Exception("File format from array is wrong");
         }
         if (sumOfFileSize(files) > storageSize){
-            throw new RuntimeException("Size of files more storage size");
+            throw new Exception("Size of files more storage size");
         }
         this.id = id;
         this.files = files;

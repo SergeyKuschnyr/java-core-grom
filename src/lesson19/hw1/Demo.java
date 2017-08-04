@@ -116,7 +116,7 @@ public class Demo {
     public static File fileCreating(long id, String name, String format, long size) {
         try {
             return new File(id, name, format, size);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             System.out.println("error: " + e.getMessage());
         }
         return null;
@@ -126,7 +126,7 @@ public class Demo {
                                            String storageCountry, long storageSize) {
         try {
             return new Storage(id, files, fileFormat, storageCountry, storageSize);
-        } catch (RuntimeException rt) {
+        } catch (Exception rt) {
             System.out.println("error: " + rt.getMessage());
             return null;
         }

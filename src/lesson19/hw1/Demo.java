@@ -29,9 +29,9 @@ public class Demo {
         Storage storageFrom = storageCreating(12345l, filesFrom, formatFileFrom, "Ukraine", 7);
         Storage storageTo = storageCreating(12340l, filesTo, formatFilesTo, "USA", 9);
 
-        Storage[] storages = {storageFrom, storageTo};
+        //Storage[] storages = {storageFrom, storageTo};
 
-        Controller controller = new Controller(storages);
+        Controller controller = new Controller();
 
         controllerMethodCheck(storageFrom, storageTo, controller);
     }

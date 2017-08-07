@@ -5,28 +5,19 @@ package lesson19.hw1;
  */
 public class Controller {
 
-    private Storage[] storage;
-
-    public Controller(Storage[] storage) {
-        this.storage = storage;
-    }
-
-    public Storage[] getStorage() {
-        return storage;
-    }
-
-    public File put(Storage storage, File file) throws Exception {
-        if (file == null && storage != null) {
-            System.out.println("error: input file is null or storage don't exist");
+    public File put(Storage storageTo, File file) throws Exception {
+        if (file == null && storageTo != null) {
+            System.out.println("error: input file or storage is null");
             return null;
         }
-        fileFormatCheck(storage, file);
+        fileFormatCheck(storageTo, file);
 
-        isSpace(storage, file);
+        isSpace(storageTo, file);
 
-        int index = searchEmptyPosition(storage);
+        int index = searchNullPosition(storageTo);
 
-        storage.getFiles()[index] = file;
+        storageTo.getFiles()[index] = file;
+
         return file;
     }
 
@@ -39,14 +30,14 @@ public class Controller {
 
     public void transferFile(Storage storageFrom, Storage storageTo, long id) throws Exception {
         if (storageFrom != null && storageTo != null) {
-            int ident = getIndex(storageFrom, id);
+            int indexFrom = getIndex(storageFrom, id);
             getIndex(storageTo, id);
-            isSpace(storageTo, storageFrom.getFiles()[ident]);
-            fileFormatCheck(storageTo, storageFrom);
-            int index = searchEmptyPosition(storageTo);
+            isSpace(storageTo, storageFrom.getFiles()[indexFrom]);
+            fileFormatCheck(storageTo, storageFrom.getFiles()[indexFrom]);
+            int indexTo = searchNullPosition(storageTo);
 
-            storageTo.getFiles()[index] = storageFrom.getFiles()[ident];
-            storageFrom.getFiles()[ident] = null;
+            storageTo.getFiles()[indexTo] = storageFrom.getFiles()[indexFrom];
+            storageFrom.getFiles()[indexFrom] = null;
         }
 
     }
@@ -71,13 +62,12 @@ public class Controller {
         }
     }
 
-    private boolean isSpace(Storage storageTo, File file) throws Exception {
+    private void isSpace(Storage storageTo, File file) throws Exception {
         if (!(storageTo.getStorageSize() - sumOfFileSize(storageTo) > file.getSize()))
             throw new Exception("Storage overfull");
-        return true;
     }
 
-    private static int searchEmptyPosition(Storage storage) throws Exception {
+    private static int searchNullPosition(Storage storage) throws Exception {
         for (int i = 0; i < storage.getFiles().length; i++) {
             if (storage.getFiles()[i] == null) {
                 return i;
@@ -107,7 +97,7 @@ public class Controller {
         throw new Exception("put file in storage with id: " + storage.getId() + "error");
     }
 
-    private void isEmptyPosition(Storage storageFrom, Storage storageTo) throws  Exception{
+    private void isEmptyPosition(Storage storageFrom, Storage storageTo) throws Exception {
         int count1 = 0;
         int count2 = 0;
         for (File file : storageFrom.getFiles()) {
@@ -133,13 +123,12 @@ public class Controller {
         throw new Exception("File format is wrong");
     }
 
-    private boolean fileFormatCheck(Storage storageFrom, Storage storageTo) throws Exception {
+    private void fileFormatCheck(Storage storageFrom, Storage storageTo) throws Exception {
         for (File file : storageFrom.getFiles()) {
-            if (file != null && fileFormatCheck(storageTo, file)) {
-                return false;
+            if (file != null){
+                fileFormatCheck(storageTo, file);
             }
         }
-        return true;
     }
 
     private int sumOfFileSize(Storage storage) {

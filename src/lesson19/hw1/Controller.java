@@ -10,10 +10,16 @@ public class Controller {
             System.out.println("error: input file or storage is null");
             return null;
         }
+
+        for (int i = 0; i < storageTo.getFiles().length; i++) {
+            if (storageTo.getFiles()[i] != null) {
+                if (storageTo.getFiles()[i].getId() == file.getId()) {
+                    throw new Exception("same file already exist");
+                }
+            }
+        }
         fileFormatCheck(storageTo, file);
-
         isSpace(storageTo, file);
-
         int index = searchNullPosition(storageTo);
 
         storageTo.getFiles()[index] = file;
@@ -125,7 +131,7 @@ public class Controller {
 
     private void fileFormatCheck(Storage storageFrom, Storage storageTo) throws Exception {
         for (File file : storageFrom.getFiles()) {
-            if (file != null){
+            if (file != null) {
                 fileFormatCheck(storageTo, file);
             }
         }

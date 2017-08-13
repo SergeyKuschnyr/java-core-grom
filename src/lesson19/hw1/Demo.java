@@ -21,12 +21,12 @@ public class Demo {
         File file10 = fileCreating(1234511l, "qwerty10", "jpg", 1);
 
         File[] filesFrom = {file1, file2, file3, file4};
-        File[] filesTo = {file6, file7, file8, file9, file10, null};
+        File[] filesTo = {file6, file7, file8, file9, file10, file4};
 
         String[] formatFileFrom = {"txt", "exe", "jpg"};
         String[] formatFilesTo = {"txt", "exe", "jpg"};
 
-        Storage storageFrom = storageCreating(12345l, filesFrom, formatFileFrom, "Ukraine", 7);
+        Storage storageFrom = storageCreating(12345l, filesFrom, formatFileFrom, "Ukraine", 12);
         Storage storageTo = storageCreating(12340l, filesTo, formatFilesTo, "USA", 9);
 
         //Storage[] storages = {storageFrom, storageTo};
@@ -38,54 +38,50 @@ public class Demo {
 
     public static void controllerMethodCheck(Storage storageFrom, Storage storageTo, Controller controller) {
 
-        System.out.println("------------put method check");
-        print(storageTo);
-        try {
-            //controller.put(storageTo, storageFrom.getFiles()[1]);
-            controller.put(storageTo, fileCreating(5678l, "qwerty11", "jpg", 1l));
+//        System.out.println("------------put method check");
+//        print(storageTo);
+//        try {
+//            //controller.put(storageTo, storageFrom.getFiles()[1]);
+//            controller.put(storageTo, fileCreating(5678l, "qwerty11", "jpg", 11l));
+//
+//        } catch (Exception rt) {
+//            System.out.println("error: " + rt.getMessage());
+//        }
+//        print(storageTo);
+//        System.out.println();
+//
+//        print(storageFrom);
+//        try {
+//            controller.put(storageFrom, storageFrom.getFiles()[1]);
+//        } catch (Exception rt) {
+//            System.out.println("error: " + rt.getMessage());
+//        }
+//        print(storageFrom);
+//        System.out.println();
 
-        } catch (Exception rt) {
-            System.out.println("error: " + rt.getMessage());
-        }
-        print(storageTo);
-        System.out.println();
+//        System.out.println("--------------------delete method check");
+//        print(storageTo);
+//        try {
+//            controller.delete(storageTo, storageFrom.getFiles()[3]);
+//        } catch (Exception e) {
+//            System.out.println("error: " + e.getMessage());
+//        }
+//        print(storageTo);
+//        System.out.println();
 
-        print(storageFrom);
-        try {
-            if (storageTo != null && storageFrom != null) {
-                controller.put(storageFrom, storageFrom.getFiles()[1]);
-            } else
-                System.out.println("storage don't create");
-        } catch (Exception rt) {
-            System.out.println("error: " + rt.getMessage());
-        }
-        print(storageFrom);
-        System.out.println();
-
-        System.out.println("--------------------delete method check");
-        print(storageTo);
-        try {
-            controller.delete(null, storageTo.getFiles()[2]);
-        } catch (Exception e) {
-            System.out.println("error: " + e.getMessage());
-        }
-        print(storageTo);
-        System.out.println();
-
-
-        System.out.println("--------------transferFile method check");
-        print(storageFrom);
-        print(storageTo);
-        try {
-            controller.transferFile(storageFrom, storageTo, 1234l);
-        } catch (Exception e) {
-            System.out.println("error: " + e.getMessage());
-        }
-        print(storageFrom);
-        print(storageTo);
-        System.out.println();
-
-
+//        System.out.println("--------------transferFile method check");
+//        print(storageFrom);
+//        print(storageTo);
+//        try {
+//            controller.transferFile(storageFrom, storageTo, storageFrom.getFiles()[2].getId());
+//        } catch (Exception e) {
+//            System.out.println("error: " + e.getMessage());
+//        }
+//        print(storageFrom);
+//        print(storageTo);
+//        System.out.println();
+//
+//
         System.out.println("----------------transferAll method check");
         print(storageFrom);
         print(storageTo);

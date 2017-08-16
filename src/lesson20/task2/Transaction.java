@@ -11,15 +11,15 @@ public class Transaction {
     private int amount;
     private String description;
     private TransactionType type;
-    private Date dateCreate;
+    private Date dateCreated;
 
-    public Transaction(long id, String city, int amount, String description, TransactionType type, Date dateCreate) {
+    public Transaction(long id, String city, int amount, String description, TransactionType type, Date dateCreated) {
         this.id = id;
         this.city = city;
         this.amount = amount;
         this.description = description;
         this.type = type;
-        this.dateCreate = dateCreate;
+        this.dateCreated = dateCreated;
     }
 
     public long getId() {
@@ -42,7 +42,7 @@ public class Transaction {
         return type;
     }
 
-    public Date getDateCreate() {
-        return dateCreate;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 }

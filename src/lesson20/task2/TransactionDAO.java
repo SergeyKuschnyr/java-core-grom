@@ -19,11 +19,11 @@ public class TransactionDAO {
         return transactions[validate(transaction)];
     }
 
-    Transaction[] transactionList() {
+    public Transaction[] transactionList() {
         return transactions;
     }
 
-    Transaction[] transactionList(String city) throws BadRequestException {
+    public Transaction[] transactionList(String city) throws BadRequestException {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction.getCity().equals(city)) {
@@ -42,7 +42,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    Transaction[] transactionList(int amount) throws LimitExceeded {
+    public Transaction[] transactionList(int amount) throws LimitExceeded {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction.getAmount() < amount) {
@@ -71,7 +71,7 @@ public class TransactionDAO {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null) {
-                calendar.setTime(transaction.getDateCreate());
+                calendar.setTime(transaction.getDateCreated());
                 int trMonth = calendar.get(Calendar.MONTH);
                 int trDay = calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -84,7 +84,7 @@ public class TransactionDAO {
         int index = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null) {
-                calendar.setTime(transaction.getDateCreate());
+                calendar.setTime(transaction.getDateCreated());
                 int trMonth = calendar.get(Calendar.MONTH);
                 int trDay = calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -103,7 +103,7 @@ public class TransactionDAO {
 
         int sum = 0;
         int count = 0;
-        for (Transaction tr : getTransactionsPerDay(transaction.getDateCreate())) {
+        for (Transaction tr : getTransactionsPerDay(transaction.getDateCreated())) {
             sum += tr.getAmount();
             count++;
         }

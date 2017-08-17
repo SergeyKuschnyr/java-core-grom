@@ -43,7 +43,7 @@ public class TransactionDAO {
     public Transaction[] transactionList(String city) throws BadRequestException {
         int count = 0;
         for (Transaction transaction : transactions) {
-            if (transaction.getCity().equals(city)) {
+            if (transaction != null && transaction.getCity().equals(city)) {
                 count++;
             }
         }
@@ -53,7 +53,7 @@ public class TransactionDAO {
         Transaction[] tr = new Transaction[count];
         count = 0;
         for (Transaction transaction : transactions) {
-            if (transaction.getCity().equals(city)) {
+            if (transaction != null && transaction.getCity().equals(city)) {
                 tr[count] = transaction;
                 count++;
             }
@@ -64,16 +64,16 @@ public class TransactionDAO {
     public Transaction[] transactionList(int amount) throws LimitExceeded {
         int count = 0;
         for (Transaction transaction : transactions) {
-            if (transaction.getAmount() < amount) {
+            if (transaction != null && transaction.getAmount() < amount) {
                 count++;
             }
         }
         if (count == 0)
-            throw new LimitExceeded("Amount limit exceeded");
+            throw new LimitExceeded("Not transaction for selected amount");
         Transaction[] tr = new Transaction[count];
         count = 0;
         for (Transaction transaction : transactions)
-            if (transaction.getAmount() < amount) {
+            if (transaction != null && transaction.getAmount() < amount) {
                 tr[count] = transaction;
                 count++;
             }
@@ -117,6 +117,8 @@ public class TransactionDAO {
     }
 
     private int validate(Transaction transaction) throws Exception {
+        if (transaction == null)
+            throw new BadRequestException("error: null transaction");
         if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount())
             throw new LimitExceeded("Transaction limit exceed " + transaction.getId() + ". Can't be save");
 

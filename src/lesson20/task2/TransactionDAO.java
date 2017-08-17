@@ -145,14 +145,16 @@ public class TransactionDAO {
             }
         }
         if (count1 == 0)
-            throw new BadRequestException("Transaction forbid in selected city");
+            throw new BadRequestException("Transaction with id: " + transaction.getId() +
+                    " forbid in selected city");
 
         for (int i = 0; i < transactions.length; i++) {
             if (transactions[i] == null) {
                 return i;
             }
         }
-        throw new InternalServerException("Place not enough in server");
+        throw new InternalServerException("Place not enough in server for transaction with id: " +
+                transaction.getId());
     }
 }
 

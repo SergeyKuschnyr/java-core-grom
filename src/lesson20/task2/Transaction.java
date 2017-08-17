@@ -1,5 +1,8 @@
 package lesson20.task2;
 
+import lesson20.task2.Exception.BadRequestException;
+import lesson20.task2.Exception.LimitExceeded;
+
 import java.util.Date;
 
 /**
@@ -12,11 +15,24 @@ public class Transaction {
     private String description;
     private TransactionType type;
     private Date dateCreated;
+    private Utils utils = new Utils();
 
-    public Transaction(long id, String city, int amount, String description, TransactionType type, Date dateCreated) {
+    public Transaction(long id, String city, int amount, String description, TransactionType type,
+                       Date dateCreated) throws BadRequestException{
         this.id = id;
-        this.city = city;
+        int index = 0;
+        for (String curCity : utils.getCities())
+            if (curCity.equals(city)) {
+                this.city = city;
+                index++;
+            }
+        if (index == 0)
+            throw new BadRequestException("Transactions is impossible in selected city");
+
+        if (utils.getLimitSimpleTransactionAmount() < amount)
+            throw new LimitExceeded("Transaction amount exceed");
         this.amount = amount;
+
         this.description = description;
         this.type = type;
         this.dateCreated = dateCreated;

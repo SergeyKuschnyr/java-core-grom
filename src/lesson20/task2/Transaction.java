@@ -15,24 +15,11 @@ public class Transaction {
     private String description;
     private TransactionType type;
     private Date dateCreated;
-    private Utils utils = new Utils();
 
-    public Transaction(long id, String city, int amount, String description, TransactionType type,
-                       Date dateCreated) throws BadRequestException{
+    public Transaction(long id, String city, int amount, String description, TransactionType type, Date dateCreated) {
         this.id = id;
-        int index = 0;
-        for (String curCity : utils.getCities())
-            if (curCity.equals(city)) {
-                this.city = city;
-                index++;
-            }
-        if (index == 0)
-            throw new BadRequestException("Transactions is impossible in selected city");
-
-        if (utils.getLimitSimpleTransactionAmount() < amount)
-            throw new LimitExceeded("Transaction amount exceed");
+        this.city = city;
         this.amount = amount;
-
         this.description = description;
         this.type = type;
         this.dateCreated = dateCreated;

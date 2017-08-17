@@ -19,8 +19,25 @@ public class TransactionDAO {
         return transactions[validate(transaction)];
     }
 
-    public Transaction[] transactionList() {
-        return transactions;
+    public Transaction[] transactionList() throws BadRequestException {
+        int count = 0;
+        for (Transaction transaction : transactions) {
+            if (transaction != null) {
+                count++;
+            }
+        }
+        if (count == 0)
+            throw new BadRequestException("Transactions list is empty");
+
+        Transaction[] tr = new Transaction[count];
+        count = 0;
+        for (Transaction transaction : transactions) {
+            if (transaction != null) {
+                tr[count] = transaction;
+                count++;
+            }
+        }
+        return tr;
     }
 
     public Transaction[] transactionList(String city) throws BadRequestException {
@@ -32,13 +49,15 @@ public class TransactionDAO {
         }
         if (count == 0)
             throw new BadRequestException("Transaction is impossible for select city ");
+
         Transaction[] tr = new Transaction[count];
         count = 0;
-        for (Transaction transaction : transactions)
+        for (Transaction transaction : transactions) {
             if (transaction.getCity().equals(city)) {
                 tr[count] = transaction;
                 count++;
             }
+        }
         return tr;
     }
 

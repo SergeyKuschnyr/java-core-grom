@@ -27,14 +27,12 @@ public class Demo {
             controller.save(transaction3);
             controller.save(transaction4);
             controller.save(transaction5);
-        } catch (Exception e) {
-            System.out.println("error");
-        }
-
-        //System.out.println(Arrays.toString(controller.transactionList()));
 
         for (Transaction transaction : controller.transactionList())
             if (transaction != null)
                 System.out.println(transaction.getId());
+        } catch (Exception e) {
+            System.out.println("error");
+        }
     }
 }

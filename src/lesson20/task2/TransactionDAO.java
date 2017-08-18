@@ -2,6 +2,7 @@ package lesson20.task2;
 
 import lesson20.task2.Exception.BadRequestException;
 import lesson20.task2.Exception.InternalServerException;
+import lesson20.task2.Exception.ItemNotFoundException;
 import lesson20.task2.Exception.LimitExceeded;
 
 import java.util.Calendar;
@@ -19,7 +20,7 @@ public class TransactionDAO {
         return transactions[validate(transaction)];
     }
 
-    public Transaction[] transactionList() throws BadRequestException {
+    public Transaction[] transactionList() throws ItemNotFoundException {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null) {
@@ -27,7 +28,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new BadRequestException("Transactions list is empty");
+            throw new ItemNotFoundException("Transactions list is empty");
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -40,7 +41,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(String city) throws BadRequestException {
+    public Transaction[] transactionList(String city) throws ItemNotFoundException {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getCity().equals(city)) {
@@ -48,7 +49,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new BadRequestException("Transaction is impossible for select city ");
+            throw new ItemNotFoundException("Transaction is impossible for select city ");
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -61,7 +62,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(int amount) throws LimitExceeded {
+    public Transaction[] transactionList(int amount) throws ItemNotFoundException {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getAmount() < amount) {
@@ -69,7 +70,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new LimitExceeded("Not transaction for selected amount");
+            throw new ItemNotFoundException("Not transaction for selected amount");
         Transaction[] tr = new Transaction[count];
         count = 0;
         for (Transaction transaction : transactions)
@@ -129,11 +130,11 @@ public class TransactionDAO {
             count++;
         }
 
-        if (sum > utils.getLimitSimpleTransactionAmount())
+        if (sum > utils.getLimitTransactionsPerDayAmount())
             throw new LimitExceeded("Transaction limit per day amount exceed " + transaction.getId() +
                     ". Can't be save");
 
-        if (count > utils.getLimitSimpleTransactionAmount())
+        if (count > utils.getLimitTransactionsPerDayCount())
             throw new LimitExceeded("Transaction limit per day count exceed " + transaction.getId() +
                     ". Can't be save");
 

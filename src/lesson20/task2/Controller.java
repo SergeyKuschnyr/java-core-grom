@@ -1,9 +1,5 @@
 package lesson20.task2;
 
-import lesson20.task2.Exception.BadRequestException;
-import lesson20.task2.Exception.ItemNotFoundException;
-import lesson20.task2.Exception.LimitExceeded;
-
 /**
  * Created by Kushn_000 on 15.08.2017.
  */
@@ -14,15 +10,15 @@ public class Controller {
         return  transactionDAO.save(transaction);
     }
 
-    public Transaction[] transactionList() throws ItemNotFoundException{
+    public Transaction[] transactionList() {
         return  transactionDAO.transactionList();
     }
 
-    public Transaction[] transactionList(String city) throws ItemNotFoundException{
+    public Transaction[] transactionList(String city) {
         return  transactionDAO.transactionList(city);
     }
 
-    public Transaction[] transactionList(int amount) throws ItemNotFoundException{
+    public Transaction[] transactionList(int amount) {
         return  transactionDAO.transactionList(amount);
     }
 }

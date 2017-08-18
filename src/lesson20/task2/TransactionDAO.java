@@ -2,7 +2,6 @@ package lesson20.task2;
 
 import lesson20.task2.Exception.BadRequestException;
 import lesson20.task2.Exception.InternalServerException;
-import lesson20.task2.Exception.ItemNotFoundException;
 import lesson20.task2.Exception.LimitExceeded;
 
 import java.util.Calendar;
@@ -20,7 +19,7 @@ public class TransactionDAO {
         return transactions[validate(transaction)];
     }
 
-    public Transaction[] transactionList() throws ItemNotFoundException {
+    public Transaction[] transactionList() {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null) {
@@ -28,7 +27,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new ItemNotFoundException("Transactions list is empty");
+            return  null;
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -41,7 +40,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(String city) throws ItemNotFoundException {
+    public Transaction[] transactionList(String city) {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getCity().equals(city)) {
@@ -49,7 +48,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new ItemNotFoundException("Transaction is impossible for select city ");
+            return null;
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -62,7 +61,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(int amount) throws ItemNotFoundException {
+    public Transaction[] transactionList(int amount) {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getAmount() < amount) {
@@ -70,7 +69,8 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new ItemNotFoundException("Not transaction for selected amount");
+            return  null;
+
         Transaction[] tr = new Transaction[count];
         count = 0;
         for (Transaction transaction : transactions)

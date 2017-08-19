@@ -34,18 +34,27 @@ public class Demo {
 //            controller.save(transaction1);
 //            controller.save(transaction3);
 
-            for (Transaction transaction : controller.transactionList())
-                if (transaction != null)
-                    System.out.println(transaction.getId());
+            System.out.println("test1  " + controller.transactionList()[0]);
+            System.out.println("test2  " + controller.transactionList()[1]);
+            System.out.println("test3  " + controller.transactionList()[2]);
+            System.out.println("test4  " + controller.transactionList()[3]);
+            System.out.println("test5  " + controller.transactionList()[4]);
+
+
+//            System.out.println(Arrays.toString(controller.transactionList()));
+//
+//            for (Transaction transaction : controller.transactionList())
+//                if (transaction != null)
+//                    System.out.println("id: " + transaction.getId());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        try {
-            controller.save(transaction1);
-        } catch (Exception e) {
-            System.out.println("error: " + e.getMessage());
-        }
+//        try {
+//            controller.save(transaction1);
+//        } catch (Exception e) {
+//            System.out.println("error: " + e.getMessage());
+//        }
     }
 }

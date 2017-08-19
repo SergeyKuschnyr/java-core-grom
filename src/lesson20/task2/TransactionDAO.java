@@ -15,9 +15,31 @@ public class TransactionDAO {
     private Utils utils = new Utils();
 
     public Transaction save(Transaction transaction) throws Exception {
-        int index = validate(transaction);
-        transactions[index] = transaction;
-        return transactions[index];
+        if (transaction == null){
+            return null;
+        }
+
+        for (Transaction tr : transactions) {
+            if (tr != null && tr.equals(transaction)) {
+                throw new BadRequestException("Transaction with id: " + transaction.getId() + " already exist");
+            }
+        }
+
+        int index = 0;
+        for (int i = 0; i < transactions.length; i++) {
+            if (transactions[i] == null) {
+                index = (i + 1);
+                break;
+            }
+        }
+        if (index == 0)
+            throw new InternalServerException("Place not enough in server for transaction with id: " +
+                    transaction.getId());
+
+        validate(transaction);
+
+        transactions[index - 1] = transaction;
+        return transactions[index - 1];
     }
 
     public Transaction[] transactionList() {
@@ -118,9 +140,8 @@ public class TransactionDAO {
         return result;
     }
 
-    private int validate(Transaction transaction) throws Exception {
-//        if (transaction == null)
-//            throw new BadRequestException("error: null transaction");
+    private void validate(Transaction transaction) throws Exception {
+        //////////////////////////  1
         if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount())
             throw new LimitExceeded("Transaction limit exceed " + transaction.getId() + ". Can't be save");
 
@@ -130,37 +151,24 @@ public class TransactionDAO {
             sum += tr.getAmount();
             count++;
         }
-
+        /////////////////////////   2
         if (sum > utils.getLimitTransactionsPerDayAmount())
             throw new LimitExceeded("Transaction limit per day amount exceed " + transaction.getId() +
                     ". Can't be save");
-
+        ////////////////////////    3
         if (count > utils.getLimitTransactionsPerDayCount())
             throw new LimitExceeded("Transaction limit per day count exceed " + transaction.getId() +
                     ". Can't be save");
-
-        int count1 = 0;
+        ////////////////////////    4
+        count = 0;
         for (String city : utils.getCities()) {
             if (city.equals(transaction.getCity())) {
-                count1++;
+                count++;
                 break;
             }
         }
-        if (count1 == 0)
+        if (count == 0)
             throw new BadRequestException("Transaction with id: " + transaction.getId() +
                     " forbid in selected city");
-        for (int i = 0; i < transactions.length; i++) {
-            if (transactions[i] != null && transactions[i].equals(transaction)) {
-                throw new BadRequestException("Transaction with id: " + transaction.getId() + " already exist");
-            }
-        }
-
-        for (int i = 0; i < transactions.length; i++) {
-            if (transactions[i] == null) {
-                return i;
-            }
-        }
-        throw new InternalServerException("Place not enough in server for transaction with id: " +
-                transaction.getId());
     }
 }

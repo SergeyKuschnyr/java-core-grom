@@ -30,14 +30,16 @@ public class Demo {
             controller.save(transaction4);
             controller.save(transaction5);
 
+            controller.save(transaction1);
+            controller.save(transaction3);
+
+
             for (Transaction transaction : controller.transactionList())
                 if (transaction != null)
                     System.out.println(transaction.getId());
 
-
-
         } catch (Exception e) {
-            System.out.println("error");
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -27,7 +27,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            return  null;
+            return null;
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -69,7 +69,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            return  null;
+            return null;
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -118,8 +118,8 @@ public class TransactionDAO {
     }
 
     private int validate(Transaction transaction) throws Exception {
-        if (transaction == null)
-            throw new BadRequestException("error: null transaction");
+//        if (transaction == null)
+//            throw new BadRequestException("error: null transaction");
         if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount())
             throw new LimitExceeded("Transaction limit exceed " + transaction.getId() + ". Can't be save");
 
@@ -149,6 +149,17 @@ public class TransactionDAO {
             throw new BadRequestException("Transaction with id: " + transaction.getId() +
                     " forbid in selected city");
 
+        for (int i = 0; transactions != null && i < transactions.length; i++) {
+            if (transactions[i] != null &&
+                    transactions[i].getId() == transaction.getId() &&
+                    transactions[i].getCity() == transaction.getCity() &&
+                    transactions[i].getAmount() == transaction.getAmount() &&
+                    transactions[i].getType() == transaction.getType() &&
+                    transactions[i].getDescription() == transaction.getDescription()) {
+                throw new BadRequestException("Transaction with id: " + transaction.getId() + " already exist");
+            }
+        }
+
         for (int i = 0; i < transactions.length; i++) {
             if (transactions[i] == null) {
                 return i;
@@ -158,4 +169,3 @@ public class TransactionDAO {
                 transaction.getId());
     }
 }
-

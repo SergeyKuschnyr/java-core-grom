@@ -15,8 +15,9 @@ public class TransactionDAO {
     private Utils utils = new Utils();
 
     public Transaction save(Transaction transaction) throws Exception {
-        transactions[validate(transaction)] = transaction;
-        return transactions[validate(transaction)];
+        int index = validate(transaction);
+        transactions[index] = transaction;
+        return transactions[index];
     }
 
     public Transaction[] transactionList() {
@@ -148,17 +149,11 @@ public class TransactionDAO {
         if (count1 == 0)
             throw new BadRequestException("Transaction with id: " + transaction.getId() +
                     " forbid in selected city");
-
-//        for (int i = 0; transactions != null && i < transactions.length; i++) {
-//            if (transactions[i] != null &&
-//                    transactions[i].getId() == transaction.getId() &&
-//                    transactions[i].getCity() == transaction.getCity() &&
-//                    transactions[i].getAmount() == transaction.getAmount() &&
-//                    transactions[i].getType() == transaction.getType() &&
-//                    transactions[i].getDescription() == transaction.getDescription()) {
-//                throw new BadRequestException("Transaction with id: " + transaction.getId() + " already exist");
-//            }
-//        }
+        for (int i = 0; i < transactions.length; i++) {
+            if (transactions[i] != null && transactions[i].equals(transaction)) {
+                throw new BadRequestException("Transaction with id: " + transaction.getId() + " already exist");
+            }
+        }
 
         for (int i = 0; i < transactions.length; i++) {
             if (transactions[i] == null) {

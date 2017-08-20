@@ -15,7 +15,7 @@ public class TransactionDAO {
     private Utils utils = new Utils();
 
     public Transaction save(Transaction transaction) throws Exception {
-        if (transaction == null){
+        if (transaction == null) {
             return null;
         }
 
@@ -25,21 +25,12 @@ public class TransactionDAO {
             }
         }
 
-        int index = 0;
-        for (int i = 0; i < transactions.length; i++) {
-            if (transactions[i] == null) {
-                index = (i + 1);
-                break;
-            }
-        }
-        if (index == 0)
-            throw new InternalServerException("Place not enough in server for transaction with id: " +
-                    transaction.getId());
+        int index = nullPositionSearch(transaction);
 
         validate(transaction);
 
-        transactions[index - 1] = transaction;
-        return transactions[index - 1];
+        transactions[index] = transaction;
+        return transactions[index];
     }
 
     public Transaction[] transactionList() {
@@ -152,9 +143,10 @@ public class TransactionDAO {
             count++;
         }
         /////////////////////////   2
-        if (sum > utils.getLimitTransactionsPerDayAmount())
+        if (sum > utils.getLimitTransactionsPerDayAmount()) {
             throw new LimitExceeded("Transaction limit per day amount exceed " + transaction.getId() +
                     ". Can't be save");
+        }
         ////////////////////////    3
         if (count > utils.getLimitTransactionsPerDayCount())
             throw new LimitExceeded("Transaction limit per day count exceed " + transaction.getId() +
@@ -170,5 +162,15 @@ public class TransactionDAO {
         if (count == 0)
             throw new BadRequestException("Transaction with id: " + transaction.getId() +
                     " forbid in selected city");
+    }
+
+    private int nullPositionSearch(Transaction transaction) throws InternalServerException{
+        for (int i = 0; i < transactions.length; i++) {
+            if (transactions[i] == null) {
+                return i;
+            }
+        }
+        throw new InternalServerException("Place not enough on server for transaction with id: " +
+                transaction.getId());
     }
 }

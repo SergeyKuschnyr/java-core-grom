@@ -15,11 +15,11 @@ public class Demo {
                 TransactionType.INCOME, new Date(2017, 8, 12));
         Transaction transaction2 = new Transaction(1235L, "Odessa", 10, "qwerty2",
                 TransactionType.INCOME, new Date(2017, 4, 17));
-        Transaction transaction3 = new Transaction(1236L, "Kiev", 20, "qwerty3",
-                TransactionType.INCOME, new Date(2017, 5, 7));
+        Transaction transaction3 = new Transaction(1236L, "Kiev", 40, "qwerty3",
+                TransactionType.INCOME, new Date(2017, 3, 20));
         Transaction transaction4 = new Transaction(1237L, "Kiev", 40, "qwerty4",
-                TransactionType.OUTCOME, new Date(2017, 1, 2));
-        Transaction transaction5 = new Transaction(1238L, "Odessa", 30, "qwerty5",
+                TransactionType.OUTCOME, new Date(2017, 3, 20));
+        Transaction transaction5 = new Transaction(1238L, "Odessa", 40, "qwerty5",
                 TransactionType.OUTCOME, new Date(2017, 3, 20));
 
 
@@ -31,17 +31,13 @@ public class Demo {
             controller.save(transaction3);
             controller.save(transaction4);
             controller.save(transaction5);
-//            controller.save(transaction1);
+            System.out.println(Arrays.toString(controller.transactionList()));
+
+//            controller.save(null);
 //            controller.save(transaction3);
+            System.out.println();
 
-            System.out.println("test1  " + controller.transactionList()[0]);
-            System.out.println("test2  " + controller.transactionList()[1]);
-            System.out.println("test3  " + controller.transactionList()[2]);
-            System.out.println("test4  " + controller.transactionList()[3]);
-            System.out.println("test5  " + controller.transactionList()[4]);
-
-
-//            System.out.println(Arrays.toString(controller.transactionList()));
+            System.out.println(Arrays.toString(controller.transactionList()));
 //
 //            for (Transaction transaction : controller.transactionList())
 //                if (transaction != null)

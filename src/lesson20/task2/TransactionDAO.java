@@ -25,9 +25,9 @@ public class TransactionDAO {
             }
         }
 
-        int index = nullPositionSearch(transaction);
-
         validate(transaction);
+
+        int index = nullPositionSearch(transaction);
 
         transactions[index] = transaction;
         return transactions[index];
@@ -143,28 +143,22 @@ public class TransactionDAO {
             count++;
         }
         /////////////////////////   2
-        if (sum > utils.getLimitTransactionsPerDayAmount()) {
+        if (sum + transaction.getAmount() > utils.getLimitTransactionsPerDayAmount()) {
             throw new LimitExceeded("Transaction limit per day amount exceed " + transaction.getId() +
                     ". Can't be save");
         }
         ////////////////////////    3
-        if (count > utils.getLimitTransactionsPerDayCount())
+        if (count + 1 > utils.getLimitTransactionsPerDayCount())
             throw new LimitExceeded("Transaction limit per day count exceed " + transaction.getId() +
                     ". Can't be save");
         ////////////////////////    4
-        count = 0;
-        for (String city : utils.getCities()) {
-            if (city.equals(transaction.getCity())) {
-                count++;
-                break;
-            }
-        }
-        if (count == 0)
+        if (!transactionToCityEnable(transaction)){
             throw new BadRequestException("Transaction with id: " + transaction.getId() +
                     " forbid in selected city");
+        }
     }
 
-    private int nullPositionSearch(Transaction transaction) throws InternalServerException{
+    private int nullPositionSearch(Transaction transaction) throws InternalServerException {
         for (int i = 0; i < transactions.length; i++) {
             if (transactions[i] == null) {
                 return i;
@@ -172,5 +166,14 @@ public class TransactionDAO {
         }
         throw new InternalServerException("Place not enough on server for transaction with id: " +
                 transaction.getId());
+    }
+
+    private boolean transactionToCityEnable(Transaction transaction) throws BadRequestException{
+        for (String city : utils.getCities()) {
+            if (city.equals(transaction.getCity())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

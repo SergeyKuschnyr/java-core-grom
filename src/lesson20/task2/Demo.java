@@ -19,7 +19,7 @@ public class Demo {
                 TransactionType.INCOME, new Date(2017, 3, 20));
         Transaction transaction4 = new Transaction(1237L, "Kiev", 40, "qwerty4",
                 TransactionType.OUTCOME, new Date(2017, 3, 20));
-        Transaction transaction5 = new Transaction(1238L, "Odessa", 40, "qwerty5",
+        Transaction transaction5 = new Transaction(1238L, "Dnepr", 10, "qwerty5",
                 TransactionType.OUTCOME, new Date(2017, 3, 20));
 
 

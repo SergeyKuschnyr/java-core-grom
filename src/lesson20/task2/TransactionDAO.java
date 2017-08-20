@@ -16,7 +16,7 @@ public class TransactionDAO {
 
     public Transaction save(Transaction transaction) throws Exception {
         if (transaction == null) {
-            return null;
+            throw new BadRequestException("The attempt to save null exception");
         }
 
         for (Transaction tr : transactions) {
@@ -143,16 +143,18 @@ public class TransactionDAO {
             count++;
         }
         /////////////////////////   2
-        if (sum + transaction.getAmount() > utils.getLimitTransactionsPerDayAmount()) {
-            throw new LimitExceeded("Transaction limit per day amount exceed " + transaction.getId() +
+        if (count + 1 > utils.getLimitTransactionsPerDayCount()) {
+            throw new LimitExceeded("Transaction limit per day count exceed " + transaction.getId() +
                     ". Can't be save");
         }
         ////////////////////////    3
-        if (count + 1 > utils.getLimitTransactionsPerDayCount())
-            throw new LimitExceeded("Transaction limit per day count exceed " + transaction.getId() +
+        if (sum + transaction.getAmount() > utils.getLimitTransactionsPerDayAmount()) {
+            System.out.println(sum + transaction.getAmount());
+            throw new LimitExceeded("Transaction limit per day amount exceed " + transaction.getId() +
                     ". Can't be save");
+        }
         ////////////////////////    4
-        if (!transactionToCityEnable(transaction)){
+        if (!transactionToCityEnable(transaction)) {
             throw new BadRequestException("Transaction with id: " + transaction.getId() +
                     " forbid in selected city");
         }
@@ -168,7 +170,7 @@ public class TransactionDAO {
                 transaction.getId());
     }
 
-    private boolean transactionToCityEnable(Transaction transaction) throws BadRequestException{
+    private boolean transactionToCityEnable(Transaction transaction) throws BadRequestException {
         for (String city : utils.getCities()) {
             if (city.equals(transaction.getCity())) {
                 return true;

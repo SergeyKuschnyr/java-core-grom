@@ -34,7 +34,7 @@ public class TransactionDAO {
         return transactions[index];
     }
 
-    public Transaction[] transactionList() throws NothingFoundException{
+    public Transaction[] transactionList() throws BadRequestException{
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null) {
@@ -42,7 +42,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new NothingFoundException("Transaction list is empty");
+            throw new BadRequestException("Transaction list is empty");
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -55,7 +55,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(String city) throws NothingFoundException{
+    public Transaction[] transactionList(String city) throws BadRequestException{
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getCity().equals(city)) {
@@ -63,7 +63,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new  NothingFoundException("No transaction for select city");
+            throw new  BadRequestException("No transaction for select city");
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -76,7 +76,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(int amount) throws NothingFoundException{
+    public Transaction[] transactionList(int amount) throws BadRequestException{
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getAmount() < amount) {
@@ -84,7 +84,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new NothingFoundException("No transaction for select amount");
+            throw new BadRequestException("No transaction for select amount");
 
         Transaction[] tr = new Transaction[count];
         count = 0;

@@ -55,7 +55,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(String city) throws BadRequestException{
+    public Transaction[] transactionList(String city) {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getCity().equals(city)) {
@@ -76,7 +76,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(int amount) throws BadRequestException{
+    public Transaction[] transactionList(int amount) {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getAmount() < amount) {

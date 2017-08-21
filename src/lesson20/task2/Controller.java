@@ -12,15 +12,15 @@ public class Controller {
         return transactionDAO.save(transaction);
     }
 
-    public Transaction[] transactionList() throws BadRequestException{
+    public Transaction[] transactionList() {
             return transactionDAO.transactionList();
     }
 
-    public Transaction[] transactionList(String city) throws BadRequestException{
+    public Transaction[] transactionList(String city) {
         return transactionDAO.transactionList(city);
     }
 
-    public Transaction[] transactionList(int amount) throws BadRequestException{
+    public Transaction[] transactionList(int amount) {
         return transactionDAO.transactionList(amount);
     }
 }

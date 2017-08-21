@@ -34,7 +34,7 @@ public class TransactionDAO {
         return transactions[index];
     }
 
-    public Transaction[] transactionList() throws BadRequestException{
+    public Transaction[] transactionList() {
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null) {
@@ -42,7 +42,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new BadRequestException("Transaction list is empty");
+            return new Transaction[0];
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -63,7 +63,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new  BadRequestException("No transaction for select city");
+            return new Transaction[0];
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -84,7 +84,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            throw new BadRequestException("No transaction for select amount");
+            return new Transaction[0];
 
         Transaction[] tr = new Transaction[count];
         count = 0;

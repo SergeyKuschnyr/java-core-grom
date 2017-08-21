@@ -79,7 +79,7 @@ public class TransactionDAO {
     public Transaction[] transactionList(int amount) {
         int count = 0;
         for (Transaction transaction : transactions) {
-            if (transaction != null && transaction.getAmount() < amount) {
+            if (transaction != null && transaction.getAmount() <= amount) {
                 count++;
             }
         }
@@ -89,7 +89,7 @@ public class TransactionDAO {
         Transaction[] tr = new Transaction[count];
         count = 0;
         for (Transaction transaction : transactions)
-            if (transaction != null && transaction.getAmount() < amount) {
+            if (transaction != null && transaction.getAmount() <= amount) {
                 tr[count] = transaction;
                 count++;
             }

@@ -3,6 +3,7 @@ package lesson20.task2;
 import lesson20.task2.Exception.BadRequestException;
 import lesson20.task2.Exception.InternalServerException;
 import lesson20.task2.Exception.LimitExceeded;
+import lesson20.task2.Exception.NothingFoundException;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -33,7 +34,7 @@ public class TransactionDAO {
         return transactions[index];
     }
 
-    public Transaction[] transactionList() {
+    public Transaction[] transactionList() throws NothingFoundException{
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null) {
@@ -41,7 +42,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            return null;
+            throw new NothingFoundException("Transaction list is empty");
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -54,7 +55,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(String city) {
+    public Transaction[] transactionList(String city) throws NothingFoundException{
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getCity().equals(city)) {
@@ -62,7 +63,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            return null;
+            throw new  NothingFoundException("No transaction for select city");
 
         Transaction[] tr = new Transaction[count];
         count = 0;
@@ -75,7 +76,7 @@ public class TransactionDAO {
         return tr;
     }
 
-    public Transaction[] transactionList(int amount) {
+    public Transaction[] transactionList(int amount) throws NothingFoundException{
         int count = 0;
         for (Transaction transaction : transactions) {
             if (transaction != null && transaction.getAmount() < amount) {
@@ -83,7 +84,7 @@ public class TransactionDAO {
             }
         }
         if (count == 0)
-            return null;
+            throw new NothingFoundException("No transaction for select amount");
 
         Transaction[] tr = new Transaction[count];
         count = 0;

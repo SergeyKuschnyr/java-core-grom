@@ -29,8 +29,14 @@ public class UserRepository {
     }
 
     public static User update(User user) {
-        for (int i = 0; i < users.length; i++) {
-            if (users[i] != null && user != null && users[i].getId() == user.getId()) {
+        if (user == null)
+            return null;
+        System.out.println("test1");
+        for (int i = 0; users != null && i < users.length; i++) {
+            System.out.println("test2");
+//            System.out.println("users[" + i + "]: " + users[i].getId() + " --> " + "user: " + user.getId());
+            if (users[i].getId() == user.getId()) {
+                System.out.println("test3");
                 users[i] = new User(12345l, "Vyacheslav", "asdfgh");
                 return user;
             }
@@ -52,6 +58,8 @@ public class UserRepository {
     }
 
     private static boolean findOfEmptyPlace(User[] inputUserArr) {
+        if (inputUserArr == null)
+            return false;
         for (User user : inputUserArr)
             if (user == null)
                 return true;

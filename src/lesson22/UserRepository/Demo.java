@@ -8,6 +8,7 @@ import java.util.Arrays;
 public class Demo {
     public static void main(String[] args) {
 
+        UserRepository userRepository = new UserRepository();
         User user1 = new User(1001L, "Daniil", "2545336kjhkj");
         UserRepository.save(user1);
         System.out.println(Arrays.deepToString(UserRepository.getUsers()));
@@ -19,6 +20,5 @@ public class Demo {
         User user3 = new User(1001L, "Test", "2545336kjhkj");
         UserRepository.update(user3);
         System.out.println(Arrays.deepToString(UserRepository.getUsers()));
-
     }
 }

@@ -27,7 +27,7 @@ public class Solution {
 
         int[] intArray = new int[count - 1];
         count = 0;
-        boolean flag = false;
+        int index = 0;
 
         for (String str : strings) {
             char[] chars = str.toCharArray();
@@ -35,18 +35,20 @@ public class Solution {
                 continue;
             for (char c : chars) {
                 if (!Character.isDigit(c)) {
-                    flag = true;
+                    index++;
                     break;
                 }
             }
-            if (!flag){
+            if (index == 0) {
                 intArray[count] = Integer.parseInt(str);
                 count++;
             }
-            flag = false;
+            index = 0;
         }
         return intArray;
     }
 }
+
+
 
 

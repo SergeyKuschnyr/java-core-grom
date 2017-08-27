@@ -1,10 +1,9 @@
-package lesson25;
+package lesson25.task1;
 
 /**
  * Created by Kushn_000 on 25.08.2017.
  */
 public class GeneralDAO {
-
     private void print(Order order){
         System.out.println("order is: " + order.toString());
     }

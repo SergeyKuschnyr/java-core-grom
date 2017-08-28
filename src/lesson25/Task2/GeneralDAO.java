@@ -1,8 +1,5 @@
 package lesson25.Task2;
 
-import lesson25.task1.IdEntity;
-import lesson25.task1.Order;
-
 import java.util.Arrays;
 
 /**

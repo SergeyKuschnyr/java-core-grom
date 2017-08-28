@@ -1,7 +1,5 @@
 package lesson25.Task2;
 
-import java.util.Arrays;
-
 /**
  * Created by Kushn_000 on 25.08.2017.
  */

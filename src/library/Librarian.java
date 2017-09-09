@@ -4,41 +4,77 @@ package library;
  * Created by Kushn_000 on 07.09.2017.
  */
 public class Librarian {
+    private int id;
     private String name;
-    private String education;
-    private int continuousService;
-    private int startYear;
+    private String password;
+    private String email;
+    private String address;
+    private String city;
+    private String contact;
 
-    public Librarian(String name, String education, int continuousService, int startYear) {
+    public Librarian(int id, String name, String email, String address, String city, String contact, String password) {
+        this.id = id;
         this.name = name;
-        this.education = education;
-        this.continuousService = continuousService;
-        this.startYear = startYear;
+        this.password = password;
+        this.email = email;
+        this.address = address;
+        this.city = city;
+        this.contact = contact;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getEducation() {
-        return education;
+    public String getPassword() {
+        return password;
     }
 
-    public int getContinuousService() {
-        return continuousService;
+    public String getEmail() {
+        return email;
     }
 
-    public int getStartYear() {
-        return startYear;
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Librarian librarian = (Librarian) o;
+
+        return id == librarian.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 
     @Override
     public String toString() {
         return "Librarian{" +
-                "name='" + name + '\'' +
-                ", education='" + education + '\'' +
-                ", continuousService=" + continuousService +
-                ", startYear=" + startYear +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", contact='" + contact + '\'' +
                 '}';
     }
 }

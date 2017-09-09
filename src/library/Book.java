@@ -1,51 +1,55 @@
 package library;
 
+import java.util.Date;
+
 /**
  * Created by Kushn_000 on 07.09.2017.
  */
 public class Book {
     private int id;
-    private String author;
+    private String callno;
     private String name;
-    private int yearOfIssue;
-    private int countOfPage;
+    private String author;
+    private String published;
+    private int issued;
+    private Date addedDate;
 
-    public Book(int id, String author, String name, int yearIssue, int countPage) {
+    public Book(int id, String callno, String name, String author, String published, int issued, Date addedDate) {
         this.id = id;
-        this.author = author;
+        this.callno = callno;
         this.name = name;
-        this.yearOfIssue = yearIssue;
-        this.countOfPage = countPage;
+        this.author = author;
+        this.published = published;
+        this.issued = issued;
+        this.addedDate = addedDate;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getCallno() {
+        return callno;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getYearOfIssue() {
-        return yearOfIssue;
+    public String getAuthor() {
+        return author;
     }
 
-    public int getCountOfPage() {
-        return countOfPage;
+    public String getPublished() {
+        return published;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "author='" + author + '\'' +
-                ", name='" + name + '\'' +
-                ", yearOfIssue=" + yearOfIssue +
-                ", countOfPage=" + countOfPage +
-                '}';
+    public int getIssued() {
+        return issued;
+    }
+
+    public Date getAddedDate() {
+        return addedDate;
     }
 
     @Override
@@ -55,20 +59,26 @@ public class Book {
 
         Book book = (Book) o;
 
-        if (id != book.id) return false;
-        if (yearOfIssue != book.yearOfIssue) return false;
-        if (countOfPage != book.countOfPage) return false;
-        if (!author.equals(book.author)) return false;
-        return name.equals(book.name);
+        return callno.equals(book.callno);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + author.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + yearOfIssue;
-        result = 31 * result + countOfPage;
-        return result;
+        return callno.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", callno='" + callno + '\'' +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", published='" + published + '\'' +
+                ", issued=" + issued +
+                ", addedDate=" + addedDate +
+                '}';
     }
 }
+
+

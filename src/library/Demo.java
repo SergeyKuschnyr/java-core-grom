@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Kushn_000 on 08.09.2017.
  */
 public class Demo {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         Book book1 = new Book(1001, "Dos1", "Tishit..", "Sholokhov",
                 "Zorya", 1990, new Date(2000, 9, 23));
         Book book2 = new Book(1002, "Dos2", "Ottsi..", "Turgenev",
@@ -21,25 +21,37 @@ public class Demo {
 
         //Book[] books = {book1, book2, book3, book4, book5};
 
-        Librarian librarian1 = new Librarian(1001, "Olya", "q@mail.com",
+        User librarian1 = new User(1001, "Olya", "q@mail.com",
                 "Sagaydachnogo", "Kiev", "+380507874523", "qwerty1");
-        Librarian librarian2 = new Librarian(1002, "Kolya", "w@mail.com",
+        User librarian2 = new User(1002, "Kolya", "w@mail.com",
                 "Sagaydachnogo", "Kiev", "+380507874523", "qwerty2");
-        Librarian librarian3 = new Librarian(1003, "Vasya", "e@mail.com",
+        User librarian3 = new User(1003, "Vasya", "e@mail.com",
                 "Sagaydachnogo", "Kiev", "+380507874523", "qwerty3");
-//        Librarian librarian4 = new Librarian(1004, "Petya", "r@mail.com",
+//        User librarian4 = new User(1004, "Petya", "r@mail.com",
 //                "Sagaydachnogo", "Kiev", "+380507874523", "qwerty4");
-//        Librarian librarian5 = new Librarian(1005, "Egor", "t@mail.com",
+//        User librarian5 = new User(1005, "Egor", "t@mail.com",
 //                "Sagaydachnogo", "Kiev", "+380507874523", "qwerty5");
 
-        GeneralDAO<Book> generalDAO = new GeneralDAO();
-        generalDAO.add(book1);
-        generalDAO.add(book2);
-        generalDAO.add(book3);
+        GeneralDAO<Book> generalDAO = new BookDAO();
+        //System.out.println(Arrays.toString(generalDAO.getTs()));
+        BookDAO bookDAO = new BookDAO();
+        System.out.println(Arrays.toString(generalDAO.getTs()));
+        try {
+            generalDAO.add(book1);
+            generalDAO.add(book2);
+            generalDAO.add(book3);
+//            System.out.println(Arrays.toString(bookDAO.getTs()));
+        } catch (Exception e) {
+            System.out.println("Error1");
+        }
+
+        System.out.println(Arrays.toString(generalDAO.getTs()));
+
 //        generalDAO.add(book4);
 //        generalDAO.add(book5);
+        System.out.println();
 
-        GeneralDAO<Librarian> generalDAO2 = new GeneralDAO();
+        GeneralDAO<User> generalDAO2 = new GeneralDAO();
         generalDAO2.add(librarian1);
         generalDAO2.add(librarian2);
         generalDAO2.add(librarian3);
@@ -47,36 +59,41 @@ public class Demo {
 //        generalDAO2.add(librarian5);
 
         System.out.println(Arrays.toString(generalDAO.getAll()));
-        System.out.println(Arrays.toString(generalDAO2.getAll()));
+        //System.out.println(Arrays.toString(generalDAO2.getTs()));
+
+//        bookDAO.issue(book3, UserType.LIBRARIAN);
+
+//        System.out.println("generalDAO.getAll()");
+//        System.out.println(Arrays.toString(generalDAO2.getAll()));
+//        System.out.println("bookDAO.getAll()");
+//        System.out.println(Arrays.toString(bookDAO.getAll()));
 
         System.out.println();
 
-//        System.out.println("выдача");
-//        generalDAO.issue(book3, Users.LIBRARIAN);
-//        System.out.println(Arrays.toString(generalDAO.getAll()));
-//
-//        System.out.println();
-//
-//        System.out.println(Arrays.toString(generalDAO.getIssuedBooks(Users.LIBRARIAN)));
-//
-//        System.out.println();
-//
-//        System.out.println("возврат");
-//        generalDAO.returnBook(book3, Users.LIBRARIAN);
-//        System.out.println(Arrays.toString(generalDAO.getAll()));
-//
-//        System.out.println();
-//
-//        System.out.println(Arrays.toString(generalDAO.getIssuedBooks(Users.LIBRARIAN)));
+            System.out.println("выдача");
+            bookDAO.issue(book3, UserType.LIBRARIAN);
+            System.out.println(Arrays.toString(generalDAO.getAll()));
 
-        System.out.println("librarian");
-        generalDAO2.del(librarian3, Users.LIBRARIAN);
-        System.out.println(Arrays.toString(generalDAO2.getAll()));
-        System.out.println();
-        System.out.println("admin");
-        generalDAO2.del(librarian3, Users.ADMIN);
-        System.out.println(Arrays.toString(generalDAO2.getAll()));
+            System.out.println();
 
+        //try {
+            System.out.println("возврат");
+            //generalDAO.returnBook(book3, UserType.LIBRARIAN);
+            //System.out.println(Arrays.toString(bookDAO.getAll()));
 
+            //System.out.println();
+
+            //System.out.println(Arrays.toString(bookDAO.getIssuedBooks(UserType.LIBRARIAN)));
+//        } catch (Exception e) {
+//            System.out.println("Error3");
+//        }
+
+//        System.out.println("librarian");
+//        generalDAO2.del(librarian3, UserType.LIBRARIAN);
+//        System.out.println(Arrays.toString(generalDAO2.getAll()));
+//        System.out.println();
+//        System.out.println("admin");
+//        generalDAO2.del(librarian3, UserType.ADMIN);
+//        System.out.println(Arrays.toString(generalDAO2.getAll()));
     }
 }

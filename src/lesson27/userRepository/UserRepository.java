@@ -42,25 +42,15 @@ public class UserRepository {
         if (id == 0)
             return;
         for (int i = 0; i < users.size(); i++)
-            if (users.get(i) != null && users.get(i).getId() == id)
+            if (users.get(i).getId() == id)
                 users.remove(i);
     }
 
     public User findById(long id) {
         for (int i = 0; i < users.size(); i++)
-            if (users.get(i) != null && users.get(i).getId() == id)
+            if (users.get(i).getId() == id)
                 return users.get(i);
         return null;
-    }
-
-    //////////////////////////////////////////////////////////////
-    private boolean findOfEmptyPlace(ArrayList<User> arrayList) {
-        if (arrayList == null)
-            return false;
-        for (User user : arrayList)
-            if (user == null)
-                return true;
-        return false;
     }
 
     private boolean findOfDuplicate(User inputUserArr) {

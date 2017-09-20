@@ -16,29 +16,27 @@ public class Demo {
         ArrayList<User> arrayList = new ArrayList<>();
 
         UserRepository userRepository = new UserRepository(arrayList);
-        //////////save check////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-        System.out.println("Added new users and return type check");
+
+        System.out.println("Save method check");
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
 
         userRepository.print(userRepository.getUsers());
         System.out.println();
-/////////////////////////////////////////////////////////////////////////////////
+
         System.out.println("Added same user check");
         userRepository.save(user1);
 
         userRepository.print(userRepository.getUsers());
         System.out.println();
-////////////////////////////////////////////////////////////////////////////////////
+
         System.out.println("Added null-user");
         userRepository.save(null);
 
         userRepository.print(userRepository.getUsers());
         System.out.println();
 
-        // update check///////////////////////////////////////////////////////////
         System.out.println("update method check");
 
         System.out. println("user exist");
@@ -59,8 +57,6 @@ public class Demo {
         userRepository.print(userRepository.getUsers());
         System.out.println();
 
-        // delete method check//////////////////////////////////////////////////
-
         System.out.println("delete method check");
         userRepository.delete(123456l);
         userRepository.print(userRepository.getUsers());
@@ -72,11 +68,9 @@ public class Demo {
 
         userRepository.save(user4);
 
-        // findById check
+        System.out.println("findById method check");
         System.out.println(userRepository.findById(12345678));
         System.out.println(userRepository.findById(0));
-
-
     }
 }
 

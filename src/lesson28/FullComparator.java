@@ -7,8 +7,10 @@ import java.util.Comparator;
  */
 public class FullComparator implements Comparator<Capability> {
     @Override
-    public int compare(Capability o1, Capability o2) {
+    public int compare(Capability o1, Capability o2) throws NullPointerException{
         System.out.println("FullComparator i used");
+        if (o1 == null || o2 == null)
+            throw new NullPointerException("One or more the fields of collection is null");
         if (!o1.getChannelName().equals(o2.getChannelName()))
             return o1.getChannelName().compareTo(o2.getChannelName());
         if (!o1.getDateCreated().equals(o2.getDateCreated()))

@@ -66,8 +66,7 @@ public class LinkedListTest {
 
         System.out.println("Iterator-----------------------------------");
         Iterator<Order> iterator = hashSet.iterator();
-        for (Object hs : hashSet)
-            if (iterator.hasNext()) {
+        for (; iterator.hasNext(); ) {
                 System.out.println(iterator.next());
             }
 

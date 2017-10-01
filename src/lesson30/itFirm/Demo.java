@@ -1,4 +1,4 @@
-package Firm;
+package lesson30.itFirm;
 
 /**
  * Created by Kushn_000 on 29.09.2017.

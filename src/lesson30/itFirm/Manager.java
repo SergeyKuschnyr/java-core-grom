@@ -1,4 +1,4 @@
-package Firm;
+package lesson30.itFirm;
 
 import java.util.ArrayList;
 

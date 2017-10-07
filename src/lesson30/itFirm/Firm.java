@@ -10,4 +10,11 @@ public class Firm {
     Date dateFoundation;
     ArrayList<Department> departments = new ArrayList();
     ArrayList<Customer> customers = new ArrayList();
+
+    public Firm(Date dateFoundation, ArrayList<Department> departments, ArrayList<Customer> customers) {
+        this.dateFoundation = dateFoundation;
+        this.departments = departments;
+        this.customers = customers;
+    }
 }
+

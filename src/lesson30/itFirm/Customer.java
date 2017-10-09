@@ -32,4 +32,13 @@ public class Customer implements Comparable<Customer>{
     public int compareTo(Customer cstm){
         return this.getName().compareTo(cstm.getName());
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", monthlyPay=" + monthlyPay +
+                '}' + "\n";
+    }
 }

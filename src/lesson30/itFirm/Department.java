@@ -11,6 +11,7 @@ public class Department implements Comparable<Department> {
 
     public Department(DepartmentType type) {
         this.type = type;
+        //this.employees = null;
     }
 
     public TreeSet<Employee> getEmployees() {
@@ -19,6 +20,10 @@ public class Department implements Comparable<Department> {
 
     public void setEmployees(TreeSet<Employee> employees) {
         this.employees = employees;
+    }
+
+    public DepartmentType getType() {
+        return type;
     }
 
     @Override
@@ -33,14 +38,19 @@ public class Department implements Comparable<Department> {
 
         Department that = (Department) o;
 
-        if (type != that.type) return false;
-        return employees.equals(that.employees);
+        return type == that.type;
     }
 
     @Override
     public int hashCode() {
-        int result = type.hashCode();
-        result = 31 * result + employees.hashCode();
-        return result;
+        return type.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "type=" + type +
+                ", employees=" + employees +
+                '}';
     }
 }

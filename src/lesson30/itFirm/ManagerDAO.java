@@ -8,6 +8,14 @@ import java.util.TreeSet;
 public class ManagerDAO {
     public TreeSet<Manager> managers;
 
+    public ManagerDAO(TreeSet<Manager> managers) {
+        this.managers = managers;
+    }
+
+    public TreeSet<Manager> getManagers() {
+        return managers;
+    }
+
     public TreeSet teamLeadsByEmployee(Employee employee){  //список руководителей для заданного сотрудника
         TreeSet<Manager> tempEmpl = new TreeSet<>();       // (по всем проектам, в которых он участвует)
         for (Manager manager : managers){

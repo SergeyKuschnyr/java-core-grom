@@ -14,7 +14,6 @@ public class Manager implements Comparable<Manager>{
         this.name = name;
         this.projects = projects;
     }
-
     public String getName() {
         return name;
     }
@@ -26,5 +25,13 @@ public class Manager implements Comparable<Manager>{
     @Override
     public int compareTo(Manager mngr) {
         return this.getName().compareTo(mngr.getName());
+    }
+
+    @Override
+    public String toString() {
+        return "Manager{" +
+                "name='" + name + '\'' +
+                ", projects=" + projects +
+                '}';
     }
 }

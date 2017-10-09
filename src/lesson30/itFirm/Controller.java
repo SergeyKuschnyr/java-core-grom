@@ -7,20 +7,23 @@ import java.util.TreeSet;
  * Created by Kushn_000 on 02.10.2017.
  */
 public class Controller {
-    private EmployeeDAO employeeDAO = new EmployeeDAO();
-    private ManagerDAO managerDAO = new ManagerDAO();
-    private ProjectDAO projectDAO = new ProjectDAO();
+    private EmployeeDAO employeeDAO;
+    private ManagerDAO managerDAO;
+    private ProjectDAO projectDAO;
 
-    public Controller(EmployeeDAO employeeDAO) {
+    public Controller(EmployeeDAO employeeDAO, ManagerDAO managerDAO, ProjectDAO projectDAO) {
         this.employeeDAO = employeeDAO;
+        this.managerDAO = managerDAO;
+        this.projectDAO = projectDAO;
     }
 
+    //////////////////////////////////////////////////////////////////////////
     //    - public HashSet employeesByProject(Project project) {  //- список сотрудников, работающих над заданным проектом
     public TreeSet employeesByProject(Project project){
         return employeeDAO.employeesByProject(project);
     }
 //    - projectsByEmployee(Employee employee) список проектов, в которых участвует заданный сотрудник
-    public TreeSet projectsByEMployee(Employee employee){
+    public TreeSet projectsByEmployee(Employee employee){
         return employeeDAO.projectsByEmployee(employee);
     }
 //    - employeesByDepartmentWithoutProject() - список сотрудников из заданного отдела, не участвующих ни в одном проекте

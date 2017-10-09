@@ -6,8 +6,6 @@ package lesson30.itFirm;
 public class Project implements Comparable<Project>{
     private String name;
     private Customer customer;
-    //private ArrayList<Employee> employees;
-    //private Manager manager;
 
     public Project(String name, Customer customer) {
         this.name = name;

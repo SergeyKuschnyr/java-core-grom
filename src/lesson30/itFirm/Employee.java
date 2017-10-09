@@ -1,8 +1,6 @@
 package lesson30.itFirm;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -16,11 +14,13 @@ public class Employee implements Comparable<Employee> {
     private Department department;
     private TreeSet<Project> projects;
 
-    public Employee(String firstName, String lastName, Date dateHired, Position position, TreeSet<Project> projects) {
+    public Employee(String firstName, String lastName, Date dateHired, Position position,
+                    TreeSet<Project> projects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateHired = dateHired;
         this.position = position;
+        //this.department = null;
         this.projects = projects;
     }
 
@@ -28,13 +28,17 @@ public class Employee implements Comparable<Employee> {
         return department;
     }
 
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public TreeSet<Project> getProjects() {
         return projects;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
+//    public void setDepartment(Department department) {
+//        this.department = department;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -71,7 +75,7 @@ public class Employee implements Comparable<Employee> {
                 ", position=" + position +
                 ", department=" + department +
                 ", projects=" + projects +
-                '}';
+                '}' + "\n";
     }
 
     @Override

@@ -20,6 +20,7 @@ public class EmployeeDAO {
         return employees;
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     // список сотрудников, работающих над заданным проектом
     public TreeSet employeesByProject(Project project) {
         TreeSet<Employee> outProject = new TreeSet<>();
@@ -41,15 +42,8 @@ public class EmployeeDAO {
     //список сотрудников из заданного отдела, не участвующих ни в одном проекте
     public TreeSet employeesByDepartmentWithoutProject(Department department) {
         TreeSet<Employee> tempEmpl = new TreeSet<>();
-//        System.out.println("TEST1"); ////////////////////
-//        System.out.println(this.employees);  ////////////////////
         for (Employee employee : employees) {
-            System.out.println("TEST2: " + employee.getDepartment());  ///////////////
-            if (employee.
-                    getDepartment().
-                    equals(department)) {
-                System.out.println("Quantity if project: " + employee.getProjects());
-                System.out.println();
+            if (employee.getDepartment().equals(department)) {
                 if (employee.getProjects().size() == 0) {
                     tempEmpl.add(employee);
                 }
@@ -79,6 +73,8 @@ public class EmployeeDAO {
             for (Project project : employee.getProjects()) {
                 for (Project project1 : lead.getProjects()) {
                     if (project.equals(project1)) {
+                        System.out.println("TEST");
+
                         tempEmpl.add(employee);
                     }
                 }

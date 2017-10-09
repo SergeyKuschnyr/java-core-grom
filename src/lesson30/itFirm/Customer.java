@@ -7,8 +7,6 @@ public class Customer implements Comparable<Customer>{
     private String name;
     private String country;
     private int monthlyPay;
-    //private ArrayList<Project> projects;
-
 
     public Customer(String name, String country, int monthlyPay) {
         this.name = name;
@@ -18,14 +16,6 @@ public class Customer implements Comparable<Customer>{
 
     public String getName() {
         return name;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public int getMonthlyPay() {
-        return monthlyPay;
     }
 
     @Override

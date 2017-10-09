@@ -74,6 +74,9 @@ public class Demo {
         Manager manager2 = new Manager("Kshistoff", projects1);
         Manager manager3 = new Manager("Derevyanko", projects3);
         TreeSet<Manager> managers = new TreeSet<>();
+        managers.add(manager1);
+        managers.add(manager2);
+        managers.add(manager3);
         ManagerDAO managerDAO = new ManagerDAO(managers);
 
         Controller controller = new Controller(employeeDAO, managerDAO, projectDAO);
@@ -102,14 +105,15 @@ public class Demo {
         System.out.println("список подчиненных для заданного руководителя (по всем проектам, которыми он руководит)");
         System.out.println(controller.employeesByTeamLead(manager1));
         System.out.println();
+
         System.out.println("список проектов, в которых участвует заданный сотрудник");
         System.out.println(controller.projectsByEmployee(employee3));
         System.out.println();
-////////////////////////////////////////////////////////////////////////////////////////////////////
+
         System.out.println("список сотрудников, не участвующих ни в одном проекте");
         System.out.println(controller.employeesWithoutProject());
         System.out.println();
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+
         System.out.println("список руководителей для заданного сотрудника");
         System.out.println(controller.teamLeadsByEmployee(employee3));
         System.out.println();
@@ -118,6 +122,5 @@ public class Demo {
         System.out.println(controller.projectsByCustomer(customer2));
         System.out.println();
 
-//        - projectsByCustomer(Customer customer) - список проектов, выполняемых для заданного заказчика
     }
 }

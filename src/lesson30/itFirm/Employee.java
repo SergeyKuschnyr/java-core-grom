@@ -20,7 +20,6 @@ public class Employee implements Comparable<Employee> {
         this.lastName = lastName;
         this.dateHired = dateHired;
         this.position = position;
-        //this.department = null;
         this.projects = projects;
     }
 
@@ -35,10 +34,6 @@ public class Employee implements Comparable<Employee> {
     public TreeSet<Project> getProjects() {
         return projects;
     }
-
-//    public void setDepartment(Department department) {
-//        this.department = department;
-//    }
 
     @Override
     public boolean equals(Object o) {

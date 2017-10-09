@@ -11,19 +11,10 @@ public class Department implements Comparable<Department> {
 
     public Department(DepartmentType type) {
         this.type = type;
-        //this.employees = null;
     }
 
     public TreeSet<Employee> getEmployees() {
         return employees;
-    }
-
-    public void setEmployees(TreeSet<Employee> employees) {
-        this.employees = employees;
-    }
-
-    public DepartmentType getType() {
-        return type;
     }
 
     @Override

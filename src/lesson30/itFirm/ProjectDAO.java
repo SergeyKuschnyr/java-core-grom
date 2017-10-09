@@ -1,6 +1,5 @@
 package lesson30.itFirm;
 
-import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -13,14 +12,8 @@ public class ProjectDAO {
         this.projects = projects;
     }
 
-    public ProjectDAO() {
-    }
-
-    public TreeSet<Project> getProjects() {
-        return projects;
-    }
-
-    public TreeSet projectsByCustomer(Customer customer){  // список проектов, выполняемых для заданного заказчика
+    // список проектов, выполняемых для заданного заказчика
+    public TreeSet projectsByCustomer(Customer customer){
         TreeSet<Project> tempPrj = new TreeSet<>();
         for (Project project : projects){
             if (project.getCustomer().equals(customer)){

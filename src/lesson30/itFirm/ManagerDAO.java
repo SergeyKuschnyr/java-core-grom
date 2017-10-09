@@ -12,12 +12,9 @@ public class ManagerDAO {
         this.managers = managers;
     }
 
-    public TreeSet<Manager> getManagers() {
-        return managers;
-    }
-
-    public TreeSet teamLeadsByEmployee(Employee employee){  //список руководителей для заданного сотрудника
-        TreeSet<Manager> tempEmpl = new TreeSet<>();       // (по всем проектам, в которых он участвует)
+    //список руководителей для заданного сотрудника (по всем проектам, в которых он участвует)
+    public TreeSet teamLeadsByEmployee(Employee employee){
+        TreeSet<Manager> tempEmpl = new TreeSet<>();
         for (Manager manager : managers){
             for (Project project : manager.getProjects()){
                 for (Project project1 : employee.getProjects()){

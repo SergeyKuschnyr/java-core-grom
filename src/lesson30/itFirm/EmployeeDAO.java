@@ -82,9 +82,7 @@ public class EmployeeDAO {
         }
         for (Employee employee : employees) {
             if (employee.getPosition() != Position.TEAM_LEAD) {
-                if (isEqualsProject(employee, lead)){
-                    tempEmpl.add(employee);
-                }
+                isEqualsProjects(employee, lead, tempEmpl);
             }
         }
         return tempEmpl;
@@ -101,9 +99,7 @@ public class EmployeeDAO {
         }
         for (Employee employee1 : employees) {
             if (employee1.getPosition() == Position.TEAM_LEAD) {
-                if (isEqualsProject(employee1, employee)){
-                    tempEmpl.add(employee1);
-                }
+                isEqualsProjects(employee1, employee, tempEmpl);
             }
         }
         return tempEmpl;
@@ -116,9 +112,7 @@ public class EmployeeDAO {
             return tempEmpl;
         }
         for (Employee employee : employees) {
-            if (isEqualsProject(employee, empl)){
-                tempEmpl.add(employee);
-            }
+            isEqualsProjects(employee, empl, tempEmpl);
         }
         return tempEmpl;
     }
@@ -139,15 +133,15 @@ public class EmployeeDAO {
         return tempEmpl;
     }
 
-    private Boolean isEqualsProject(Employee employee1, Employee employee2) {
+    private TreeSet isEqualsProjects(Employee employee1, Employee employee2, TreeSet ts) {
         for (Project project : employee1.getProjects()) {
             for (Project project1 : employee2.getProjects()) {
                 if (project.equals(project1)) {
-                    return true;
+                    ts.add(employee1);
                 }
             }
         }
-        return false;
+        return ts;
     }
 }
 

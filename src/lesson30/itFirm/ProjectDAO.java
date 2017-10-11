@@ -15,6 +15,9 @@ public class ProjectDAO {
     // список проектов, выполняемых для заданного заказчика
     public TreeSet projectsByCustomer(Customer customer){
         TreeSet<Project> tempPrj = new TreeSet<>();
+        if (customer == null){
+            return tempPrj;
+        }
         for (Project project : projects){
             if (project.getCustomer().equals(customer)){
                 tempPrj.add(project);
@@ -22,5 +25,4 @@ public class ProjectDAO {
         }
         return tempPrj;
     }
-
 }

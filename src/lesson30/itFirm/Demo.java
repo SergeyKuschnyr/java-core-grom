@@ -43,23 +43,23 @@ public class Demo {
         projects3.add(project6);
         projects3.add(project2);
 
-        Department department2 = new Department(DepartmentType.DEVELOPMENT_TYPE);
-        Department department3 = new Department(DepartmentType.ANALYTICAL_TYPE);
-        Department department4 = new Department(DepartmentType.DESIGNERS_TYPE);
-        Department department5 = new Department(DepartmentType.FINANCIAL_TYPE);
-        Department department6 = new Department(DepartmentType.MANAGMENT_TYPE);
-        Department department7 = new Department(DepartmentType.OTHER);
-        TreeSet<Department> departments = new TreeSet<>();
-        departments.add(department2);
-        departments.add(department3);
-        departments.add(department4);
-        departments.add(department5);
-        departments.add(department6);
-        departments.add(department7);
-        DepartmentDAO departmentDAO = new DepartmentDAO(departments);
+//        Department department2 = new Department(DepartmentType.DEVELOPMENT_TYPE);
+//        Department department3 = new Department(DepartmentType.ANALYTICAL_TYPE);
+//        Department department4 = new Department(DepartmentType.DESIGNERS_TYPE);
+//        Department department5 = new Department(DepartmentType.FINANCIAL_TYPE);
+//        Department department6 = new Department(DepartmentType.MANAGMENT_TYPE);
+//        Department department7 = new Department(DepartmentType.OTHER);
+//        TreeSet<Department> departments = new TreeSet<>();
+//        departments.add(department2);
+//        departments.add(department3);
+//        departments.add(department4);
+//        departments.add(department5);
+//        departments.add(department6);
+//        departments.add(department7);
+//        DepartmentDAO departmentDAO = new DepartmentDAO(departments);
 
         Employee employee1 = new Employee("Oleg", "Kozlov", new Date(),
-                Position.DEVELOPER, projects1);
+                Position.TEAM_LEAD, projects1);
         Employee employee2 = new Employee("Victor", "Sidorov", new Date(),
                 Position.DEVELOPER, projects2);
         Employee employee3 = new Employee("Boris", "Egorov", new Date(),
@@ -70,25 +70,16 @@ public class Demo {
         employees.add(employee3);
         EmployeeDAO employeeDAO = new EmployeeDAO(employees);
 
-        Manager manager1 = new Manager("Collins", projects2);
-        Manager manager2 = new Manager("Kshistoff", projects1);
-        Manager manager3 = new Manager("Derevyanko", projects3);
-        TreeSet<Manager> managers = new TreeSet<>();
-        managers.add(manager1);
-        managers.add(manager2);
-        managers.add(manager3);
-        ManagerDAO managerDAO = new ManagerDAO(managers);
+        Controller controller = new Controller(employeeDAO, projectDAO);
 
-        Controller controller = new Controller(employeeDAO, managerDAO, projectDAO);
+        employee1.setDepartment(new Department(DepartmentType.DEVELOPMENT_TYPE));
+        employee2.setDepartment(new Department(DepartmentType.DEVELOPMENT_TYPE));
+        employee3.setDepartment(new Department(DepartmentType.DEVELOPMENT_TYPE));
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         System.out.println("список сотрудников, работающих над заданным проектом");
         System.out.println(controller.employeesByProject(project1));
         System.out.println();
-
-        employee1.setDepartment(new Department(DepartmentType.DEVELOPMENT_TYPE));
-        employee2.setDepartment(new Department(DepartmentType.DEVELOPMENT_TYPE));
-        employee3.setDepartment(new Department(DepartmentType.DEVELOPMENT_TYPE));
 
         System.out.println("список сотрудников из заданного отдела, не участвующих ни в одном проекте");
         System.out.println(controller.employeesByDepartmentWithoutProject(new Department(DepartmentType.DEVELOPMENT_TYPE)));
@@ -103,7 +94,7 @@ public class Demo {
         System.out.println();
 
         System.out.println("список подчиненных для заданного руководителя (по всем проектам, которыми он руководит)");
-        System.out.println(controller.employeesByTeamLead(manager1));
+        System.out.println(controller.employeesByTeamLead(employee1));
         System.out.println();
 
         System.out.println("список проектов, в которых участвует заданный сотрудник");
@@ -121,6 +112,5 @@ public class Demo {
         System.out.println("список проектов, выполняемых для заданного заказчика");
         System.out.println(controller.projectsByCustomer(customer2));
         System.out.println();
-
     }
 }

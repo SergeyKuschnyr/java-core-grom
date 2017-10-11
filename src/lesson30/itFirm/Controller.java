@@ -1,6 +1,5 @@
 package lesson30.itFirm;
 
-import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -8,12 +7,10 @@ import java.util.TreeSet;
  */
 public class Controller {
     private EmployeeDAO employeeDAO;
-    private ManagerDAO managerDAO;
     private ProjectDAO projectDAO;
 
-    public Controller(EmployeeDAO employeeDAO, ManagerDAO managerDAO, ProjectDAO projectDAO) {
+    public Controller(EmployeeDAO employeeDAO, ProjectDAO projectDAO) {
         this.employeeDAO = employeeDAO;
-        this.managerDAO = managerDAO;
         this.projectDAO = projectDAO;
     }
 
@@ -37,13 +34,13 @@ public class Controller {
     }
 
     //  список подчиненных для заданного руководителя (по всем проектам, которыми он руководит)
-    public TreeSet employeesByTeamLead(Manager lead){
+    public TreeSet employeesByTeamLead(Employee lead){
         return employeeDAO.employeesByTeamLead(lead);
     }
 
     //  список руководителей для заданного сотрудника (по всем проектам, в которых он участвует)
     public TreeSet teamLeadsByEmployee(Employee employee){
-        return managerDAO.teamLeadsByEmployee(employee);
+        return employeeDAO.teamLeadsByEmployee(employee);
     }
 
     //  список сотрудников, участвующих в тех же проектах, что и заданный сотрудник

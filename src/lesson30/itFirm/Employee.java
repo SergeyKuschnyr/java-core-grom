@@ -35,6 +35,10 @@ public class Employee implements Comparable<Employee> {
         return projects;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

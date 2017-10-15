@@ -1,25 +1,18 @@
 package lesson30.itFirm;
 
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
  * Created by Kushn_000 on 29.09.2017.
  */
-public class Department implements Comparable<Department> {
+public class Department {
     private DepartmentType type;
-    private TreeSet<Employee> employees;
+    private HashSet<Employee> employees;
 
-    public Department(DepartmentType type) {
+    public Department(DepartmentType type, HashSet<Employee> employees) {
         this.type = type;
-    }
-
-    public TreeSet<Employee> getEmployees() {
-        return employees;
-    }
-
-    @Override
-    public int compareTo(Department dept) {
-        return this.type.compareTo(dept.type);
+        this.employees = employees;
     }
 
     @Override
@@ -29,12 +22,15 @@ public class Department implements Comparable<Department> {
 
         Department that = (Department) o;
 
-        return type == that.type;
+        if (type != that.type) return false;
+        return employees.equals(that.employees);
     }
 
     @Override
     public int hashCode() {
-        return type.hashCode();
+        int result = type.hashCode();
+        result = 31 * result + employees.hashCode();
+        return result;
     }
 
     @Override

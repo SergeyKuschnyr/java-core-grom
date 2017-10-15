@@ -1,27 +1,29 @@
 package lesson30.itFirm;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
  * Created by Kushn_000 on 02.10.2017.
  */
 public class EmployeeDAO {
-    private TreeSet<Employee> employees;
+    private HashSet<Employee> employees;
 
-    public EmployeeDAO(TreeSet employees) {
+    public EmployeeDAO(HashSet employees) {
         this.employees = employees;
     }
 
     public EmployeeDAO() {
     }
 
-    public TreeSet<Employee> getEmployees() {
+    public HashSet<Employee> getEmployees() {
         return employees;
     }
 
     // список сотрудников, работающих над заданным проектом
-    public TreeSet employeesByProject(Project project) {
-        TreeSet<Employee> outProject = new TreeSet<>();
+    public ArrayList employeesByProject(Project project) {
+        ArrayList<Employee> outProject = new ArrayList<>();
         if (project == null) {
             return outProject;
         }
@@ -36,8 +38,8 @@ public class EmployeeDAO {
     }
 
     // список проектов, в которых участвует заданный сотрудник
-    public TreeSet projectsByEmployee(Employee employee) {
-        TreeSet<Project> projects = new TreeSet<>();
+    public HashSet projectsByEmployee(Employee employee) {
+        HashSet<Project> projects = new HashSet<>();
         if (employee == null) {
             return projects;
         }
@@ -45,8 +47,8 @@ public class EmployeeDAO {
     }
 
     //список сотрудников из заданного отдела, не участвующих ни в одном проекте
-    public TreeSet employeesByDepartmentWithoutProject(Department department) {
-        TreeSet<Employee> tempEmpl = new TreeSet<>();
+    public ArrayList employeesByDepartmentWithoutProject(Department department) {
+        ArrayList<Employee> tempEmpl = new ArrayList<>();
         if (department == null) {
             return tempEmpl;
         }
@@ -61,8 +63,8 @@ public class EmployeeDAO {
     }
 
     // список сотрудников, не участвующих ни в одном проекте
-    public TreeSet employeesWithoutProject() {
-        TreeSet<Employee> tempEmpl = new TreeSet<>();
+    public ArrayList employeesWithoutProject() {
+        ArrayList<Employee> tempEmpl = new ArrayList<>();
         for (Employee employee : employees) {
             if (employee.getProjects().size() == 0) {
                 tempEmpl.add(employee);
@@ -72,8 +74,8 @@ public class EmployeeDAO {
     }
 
     // список подчиненных для заданного руководителя (по всем проектам, которыми он руководит)
-    public TreeSet employeesByTeamLead(Employee lead) {
-        TreeSet<Employee> tempEmpl = new TreeSet<>();
+    public ArrayList employeesByTeamLead(Employee lead) {
+        ArrayList<Employee> tempEmpl = new ArrayList<>();
         if (lead == null) {
             return tempEmpl;
         }
@@ -89,8 +91,8 @@ public class EmployeeDAO {
     }
 
     //список руководителей для заданного сотрудника (по всем проектам, в которых он участвует)
-    public TreeSet teamLeadsByEmployee(Employee employee) {
-        TreeSet<Employee> tempEmpl = new TreeSet<>();
+    public ArrayList teamLeadsByEmployee(Employee employee) {
+        ArrayList<Employee> tempEmpl = new ArrayList<>();
         if (employee == null) {
             return tempEmpl;
         }
@@ -106,8 +108,8 @@ public class EmployeeDAO {
     }
 
     // список сотрудников, участвующих в тех же проектах, что и заданный сотрудник
-    public TreeSet employeesByProjectEmployee(Employee empl) {
-        TreeSet<Employee> tempEmpl = new TreeSet<>();
+    public ArrayList employeesByProjectEmployee(Employee empl) {
+        ArrayList<Employee> tempEmpl = new ArrayList<>();
         if (empl == null) {
             return tempEmpl;
         }
@@ -118,8 +120,8 @@ public class EmployeeDAO {
     }
 
     //  список сотрудников, участвующих в проектах, выполняемых для заданного заказчика
-    public TreeSet employeesByCustomerProjects(Customer customer) {
-        TreeSet<Employee> tempEmpl = new TreeSet<>();
+    public ArrayList employeesByCustomerProjects(Customer customer) {
+        ArrayList<Employee> tempEmpl = new ArrayList<>();
         if (customer == null) {
             return tempEmpl;
         }
@@ -133,7 +135,7 @@ public class EmployeeDAO {
         return tempEmpl;
     }
 
-    private TreeSet isEqualsProjects(Employee employee1, Employee employee2, TreeSet ts) {
+    private ArrayList isEqualsProjects(Employee employee1, Employee employee2, ArrayList ts) {
         for (Project project : employee1.getProjects()) {
             for (Project project1 : employee2.getProjects()) {
                 if (project.equals(project1)) {

@@ -1,5 +1,8 @@
 package lesson30.itFirm;
 
+import java.util.AbstractSet;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -15,45 +18,45 @@ public class Controller {
     }
 
     //- список сотрудников, работающих над заданным проектом
-    public TreeSet employeesByProject(Project project){
+    public ArrayList employeesByProject(Project project){
         return employeeDAO.employeesByProject(project);
     }
 
     //  список проектов, в которых участвует заданный сотрудник
-    public TreeSet projectsByEmployee(Employee employee){
+    public HashSet projectsByEmployee(Employee employee){
         return employeeDAO.projectsByEmployee(employee);
     }
 
     //  список сотрудников из заданного отдела, не участвующих ни в одном проекте
-    public TreeSet employeesByDepartmentWithoutProject(Department department){
+    public ArrayList employeesByDepartmentWithoutProject(Department department){
         return employeeDAO.employeesByDepartmentWithoutProject(department);
     }
     //  список сотрудников, не участвующих ни в одном проекте
-    public TreeSet employeesWithoutProject(){
+    public ArrayList employeesWithoutProject(){
         return employeeDAO.employeesWithoutProject();
     }
 
     //  список подчиненных для заданного руководителя (по всем проектам, которыми он руководит)
-    public TreeSet employeesByTeamLead(Employee lead){
+    public ArrayList employeesByTeamLead(Employee lead){
         return employeeDAO.employeesByTeamLead(lead);
     }
 
     //  список руководителей для заданного сотрудника (по всем проектам, в которых он участвует)
-    public TreeSet teamLeadsByEmployee(Employee employee){
+    public ArrayList teamLeadsByEmployee(Employee employee){
         return employeeDAO.teamLeadsByEmployee(employee);
     }
 
     //  список сотрудников, участвующих в тех же проектах, что и заданный сотрудник
-    public TreeSet employeesByProjectEmployee(Employee employee){
+    public ArrayList employeesByProjectEmployee(Employee employee){
         return employeeDAO.employeesByProjectEmployee(employee);
     }
     //  список проектов, выполняемых для заданного заказчика
-    public TreeSet projectsByCustomer(Customer customer){
+    public ArrayList projectsByCustomer(Customer customer){
         return projectDAO.projectsByCustomer(customer);
     }
 
     //  список сотрудников, участвующих в проектах, выполняемых для заданного заказчика
-    public TreeSet employeesByCustomerProjects(Customer customer){
+    public ArrayList employeesByCustomerProjects(Customer customer){
         return employeeDAO.employeesByCustomerProjects(customer);
     }
 }

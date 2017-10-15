@@ -1,21 +1,22 @@
 package lesson30.itFirm;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
  * Created by Kushn_000 on 29.09.2017.
  */
-public class Employee implements Comparable<Employee> {
+public class Employee {
     private String firstName;
     private String lastName;
     private Date dateHired;
     private Position position;
     private Department department;
-    private TreeSet<Project> projects;
+    private HashSet<Project> projects;
 
     public Employee(String firstName, String lastName, Date dateHired, Position position,
-                    TreeSet<Project> projects) {
+                    HashSet<Project> projects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateHired = dateHired;
@@ -31,7 +32,7 @@ public class Employee implements Comparable<Employee> {
         this.department = department;
     }
 
-    public TreeSet<Project> getProjects() {
+    public HashSet<Project> getProjects() {
         return projects;
     }
 
@@ -75,16 +76,5 @@ public class Employee implements Comparable<Employee> {
                 ", department=" + department +
                 ", projects=" + projects +
                 '}' + "\n";
-    }
-
-    @Override
-    public int compareTo(Employee empl) {
-        if (!this.firstName.equals(empl.firstName)) {
-            return this.firstName.compareTo(empl.firstName);
-        }
-        if (!this.lastName.equals(empl.lastName)) {
-            return this.lastName.compareTo(empl.lastName);
-        }
-        return 0;
     }
 }

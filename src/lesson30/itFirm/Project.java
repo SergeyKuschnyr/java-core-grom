@@ -3,7 +3,7 @@ package lesson30.itFirm;
 /**
  * Created by Kushn_000 on 29.09.2017.
  */
-public class Project implements Comparable<Project>{
+public class Project {
     private String name;
     private Customer customer;
 
@@ -36,11 +36,6 @@ public class Project implements Comparable<Project>{
         int result = name.hashCode();
         result = 31 * result + customer.hashCode();
         return result;
-    }
-
-    @Override
-    public int compareTo(Project prjt) {
-        return this.getName().compareTo(prjt.getName());
     }
 
     @Override

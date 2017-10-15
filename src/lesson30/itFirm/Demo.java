@@ -1,13 +1,13 @@
 package lesson30.itFirm;
 
-import java.util.Date;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by Kushn_000 on 29.09.2017.
  */
 public class Demo {
     public static void main(String[] args) {
+
         Customer customer1 = new Customer("Billy", "USA", 30000);
         Customer customer2 = new Customer("Gerry", "USA", 30000);
         Customer customer3 = new Customer("Rayan", "Australia", 30000);
@@ -21,7 +21,7 @@ public class Demo {
         Project project4 = new Project("Pay System", customer4);
         Project project5 = new Project("Auto Shop", customer5);
         Project project6 = new Project("Real Adviser", customer6);
-        TreeSet<Project> projects = new TreeSet<>();
+        HashSet<Project> projects = new HashSet<>();
         projects.add(project1);
         projects.add(project2);
         projects.add(project3);
@@ -30,15 +30,15 @@ public class Demo {
         projects.add(project6);
         ProjectDAO projectDAO = new ProjectDAO(projects);
 
-        TreeSet <Project> projects1 = new TreeSet<>();
+        HashSet <Project> projects1 = new HashSet<>();
         projects1.add(project1);
         projects1.add(project2);
         projects1.add(project4);
-        TreeSet <Project> projects2 = new TreeSet<>();
+        HashSet <Project> projects2 = new HashSet<>();
         projects2.add(project3);
         projects2.add(project4);
         projects2.add(project1);
-        TreeSet <Project> projects3 = new TreeSet<>();
+        HashSet <Project> projects3 = new HashSet<>();
         projects3.add(project5);
         projects3.add(project6);
         projects3.add(project2);
@@ -64,7 +64,16 @@ public class Demo {
                 Position.DEVELOPER, projects2);
         Employee employee3 = new Employee("Boris", "Egorov", new Date(),
                 Position.DEVELOPER, projects3);
-        TreeSet<Employee> employees = new TreeSet<>();
+
+        Department department1 = new Department(DepartmentType.DEVELOPMENT_TYPE, new HashSet<Employee>());
+        Department department2 = new Department(DepartmentType.MANAGMENT_TYPE, new HashSet<Employee>());
+        Department department3 = new Department(DepartmentType.DESIGNERS_TYPE, new HashSet<Employee>());
+
+        employee1.setDepartment(department1);
+        employee2.setDepartment(department2);
+        employee3.setDepartment(department3);
+
+        HashSet<Employee> employees = new HashSet<>();
         employees.add(employee1);
         employees.add(employee2);
         employees.add(employee3);
@@ -72,9 +81,7 @@ public class Demo {
 
         Controller controller = new Controller(employeeDAO, projectDAO);
 
-        employee1.setDepartment(new Department(DepartmentType.DEVELOPMENT_TYPE));
-        employee2.setDepartment(new Department(DepartmentType.DEVELOPMENT_TYPE));
-        employee3.setDepartment(new Department(DepartmentType.DEVELOPMENT_TYPE));
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         System.out.println("список сотрудников, работающих над заданным проектом");
@@ -82,7 +89,7 @@ public class Demo {
         System.out.println();
 
         System.out.println("список сотрудников из заданного отдела, не участвующих ни в одном проекте");
-        System.out.println(controller.employeesByDepartmentWithoutProject(new Department(DepartmentType.DEVELOPMENT_TYPE)));
+        System.out.println(controller.employeesByDepartmentWithoutProject(department1));
         System.out.println();
 
         System.out.println("список сотрудников, участвующих в проектах, выполняемых для заданного заказчика");

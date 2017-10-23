@@ -50,6 +50,10 @@ public class Solution {
 
     private void deleteWrongWord(String[] strArray) {
         for (int i = 0; i < strArray.length; i++) {
+            if (strArray[i].length() <= 2){
+                strArray[i] = null;
+                continue;
+            }
             char[] chars = strArray[i].toCharArray();
             for (char ch : chars) {
                 if (Character.isDigit(ch)) {

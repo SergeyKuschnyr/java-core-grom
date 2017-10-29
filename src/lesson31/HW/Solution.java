@@ -6,24 +6,25 @@ import java.util.*;
  * Created by Kushn_000 on 22.10.2017.
  */
 public class Solution {
-    public Hashtable<Character, Integer> countSymbols(String text) {
+
+    public Map<Character, Integer> countSymbols(String text) {
 
         char[] chars = text.toCharArray();
-        Hashtable<Character, Integer> tempChar = new Hashtable<>();
-
-        // Создаю массив ссылок, чтобы далее иметь одинаковые куски кода и заменить их методом (collectionCreating)
-        Character[] characters = new Character[chars.length];
-        for (int i = 0; i < characters.length; i++) {
-            characters[i] = chars[i];
-        }
+        Map<Character, Integer> tempChar = new Hashtable<>();
 
         int count = 0;
 
-        for (int i = 0; i < characters.length; i++) {
-            if (characters[i] != null && Character.isLetter(characters[i])) {
-                collectionCreating(characters, i, count, tempChar);
+        for (int i = 0; i < chars.length; i++) {
+            if (Character.isLetter(chars[i])) {
+                for (int j = i + 1; j < chars.length; j++) {
+                    if (chars[i] == chars[j]) {
+                        count++;
+                        chars[j] = ' ';
+                    }
+                }
+                tempChar.put(chars[i], count + 1);
             }
-            characters[i] = ' ';
+            chars[i] = ' ';
             count = 0;
         }
         return tempChar;
@@ -31,16 +32,21 @@ public class Solution {
 
     public Map words(String text) {
         String[] strArray = text.split(" ");
-        Hashtable<String, Integer> strInfo = new Hashtable<>();
+        Map<String, Integer> strInfo = new Hashtable<>();
 
-        // Помещаю часть кода в метод, так думаю понятнее и читабельнее
         deleteWrongWord(strArray);
 
         int count = 0;
 
         for (int i = 0; i < strArray.length; i++) {
             if (strArray[i] != null) {
-                collectionCreating(strArray, i, count, strInfo);
+                for (int j = i + 1; j < strArray.length; j++) {
+                    if (strArray[i].equals(strArray[j])) {
+                        count++;
+                        strArray[j] = null;
+                    }
+                }
+                strInfo.put(strArray[i], count + 1);
             }
             strArray[i] = null;
             count = 0;
@@ -50,27 +56,21 @@ public class Solution {
 
     private void deleteWrongWord(String[] strArray) {
         for (int i = 0; i < strArray.length; i++) {
-            if (strArray[i].length() <= 2){
+            if (strArray[i].length() <= 2) {
                 strArray[i] = null;
                 continue;
             }
-            char[] chars = strArray[i].toCharArray();
-            for (char ch : chars) {
-                if (Character.isDigit(ch)) {
-                    strArray[i] = null;
-                    break;
+            if (!Character.isLetter(strArray[i].charAt(strArray[i].length() - 1))) {
+                strArray[i] = strArray[i].substring(0, (strArray[i].length() - 1));
+            }
+            for (int j = 0; j < strArray[i].length(); j++) {
+                if (!Character.isLetter(strArray[i].charAt(j))) {
+                    if (!(strArray[i].charAt(j) == '-')) {
+                        strArray[i] = null;
+                        break;
+                    }
                 }
             }
         }
-    }
-
-    private <T> void collectionCreating(T[] t, int i, int count, Hashtable tempChar) {
-        for (int j = i + 1; j < t.length; j++) {
-            if (t[i].equals(t[j])) {
-                count++;
-                t[j] = null;
-            }
-        }
-        tempChar.put(t[i], count + 1);
     }
 }

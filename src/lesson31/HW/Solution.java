@@ -47,22 +47,21 @@ public class Solution {
             if (strings.get(i).length() <= 2) {
                 strings.remove(i);
                 i--;
+                continue;
             }
-        }
 
-        for (int j = 0; j < strings.size(); j++) {
-            if (!Character.isLetter(strings.get(j).charAt(strings.get(j).length() - 1))) {
+            if (!Character.isLetter(strings.get(i).charAt(strings.get(i).length() - 1))) {
                 String tempStr;
-                tempStr = strings.get(j);
-                strings.remove(j);
-                strings.add(j, tempStr.substring(0, tempStr.length() - 1));
+                tempStr = strings.get(i);
+                strings.remove(i);
+                strings.add(i, tempStr.substring(0, tempStr.length() - 1));
+                i--;
+                continue;
             }
-        }
 
-        for (int j = 0; j < strings.size(); j++) {
-            if (!wordValidate(strings.get(j))) {
-                strings.remove(j);
-                j--;
+            if (!wordValidate(strings.get(i))) {
+                strings.remove(i);
+                i--;
             }
         }
     }

@@ -8,8 +8,8 @@ import java.util.*;
 public class Solution {
 
     public Map<Character, Integer> countSymbols(String text) {
-
         char[] chars = text.toCharArray();
+
         ArrayList<Character> characterArrayList = new ArrayList<>();
         for (char ch : chars) {
             characterArrayList.add(ch);
@@ -25,8 +25,8 @@ public class Solution {
     }
 
     public Map words(String text) {
-
         String[] strings = text.split(" ");
+
         ArrayList<String> stringAL = new ArrayList<>();
         for (String str : strings) {
             stringAL.add(str);
@@ -34,36 +34,41 @@ public class Solution {
 
         Map<String, Integer> htArray = new Hashtable<>();
 
-        for (int i = 0; i < stringAL.size(); i++) {
-            if (stringAL.get(i).length() <= 2) {
-                stringAL.remove(i);
-                continue;
+        badWordSearch(stringAL);
+
+        for (String string : stringAL) {
+            if (wordValidate(string)) {
+                htArray.put(string, htArray.get(string) == null ? 1 : htArray.get(string) + 1);
             }
-            if (!Character.isLetter(stringAL.get(i).charAt(stringAL.get(i).length() - 1))) {
-                String str = stringAL.get(i);
-                stringAL.remove(i);
-                if (stringAL.get(i).length() - 1 >= i) {
-                    stringAL.set(i, str.substring(0, (str.length() - 2)));
-                }
-                stringAL.add(str.substring(0, (str.length() - 2)));
-            }
-            if (digitInWord(stringAL.get(i))) {
-                stringAL.remove(i);
-                continue;
-            }
-            htArray.put(stringAL.get(i), htArray.get(stringAL.get(i)) == null ? 1 : htArray.get(stringAL.get(i)) + 1);
         }
         return htArray;
     }
 
-    private boolean digitInWord(String string) {
+    private void badWordSearch(ArrayList<String> strings) {
+        for (int i = 0; i < strings.size(); i++) {
+            if (strings.get(i).length() <= 2) {
+                strings.remove(i);
+                i--;
+            }
+        }
+
+        for (int j = 0; j < strings.size(); j++) {
+            if (!Character.isLetter(strings.get(j).charAt(strings.get(j).length() - 1))) {
+                String tempStr;
+                tempStr = strings.get(j);
+                strings.remove(j);
+                strings.add(j, tempStr.substring(0, tempStr.length() - 1));
+            }
+        }
+    }
+
+    private boolean wordValidate(String string) {
         char[] chars = string.toCharArray();
         for (char ch : chars) {
             if (!Character.isLetter(ch) && ch != '-') {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }
-

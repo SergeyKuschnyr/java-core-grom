@@ -37,9 +37,7 @@ public class Solution {
         badWordSearch(stringAL);
 
         for (String string : stringAL) {
-            if (wordValidate(string)) {
-                htArray.put(string, htArray.get(string) == null ? 1 : htArray.get(string) + 1);
-            }
+            htArray.put(string, htArray.get(string) == null ? 1 : htArray.get(string) + 1);
         }
         return htArray;
     }
@@ -58,6 +56,13 @@ public class Solution {
                 tempStr = strings.get(j);
                 strings.remove(j);
                 strings.add(j, tempStr.substring(0, tempStr.length() - 1));
+            }
+        }
+
+        for (int j = 0; j < strings.size(); j++) {
+            if (!wordValidate(strings.get(j))) {
+                strings.remove(j);
+                j--;
             }
         }
     }

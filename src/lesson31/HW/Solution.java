@@ -51,10 +51,8 @@ public class Solution {
             }
 
             if (!Character.isLetter(strings.get(i).charAt(strings.get(i).length() - 1))) {
-                String tempStr;
-                tempStr = strings.get(i);
+                strings.add(strings.get(i).substring(0, strings.get(i).length() - 1));
                 strings.remove(i);
-                strings.add(i, tempStr.substring(0, tempStr.length() - 1));
                 i--;
                 continue;
             }

@@ -1,4 +1,4 @@
-package lesson32;
+package lesson32.readingNumber;
 
 import java.io.BufferedReader;
 import java.io.IOException;

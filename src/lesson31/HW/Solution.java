@@ -7,18 +7,27 @@ import java.util.*;
 public class Solution {
 
     public Map<Character, Integer> countSymbols(String text) {
-        char[] chars = text.toCharArray();
-
         ArrayList<Character> characterArrayList = new ArrayList<>();
-        for (char ch : chars) {
+        for (char ch : text.toCharArray()) {
             characterArrayList.add(ch);
         }
-
+        Collections.sort(characterArrayList);
         Map<Character, Integer> tempChar = new Hashtable<>();
 
-        for (Character ch : characterArrayList) {
-            if (Character.isLetter(ch))
-                tempChar.put(ch, tempChar.get(ch) == null ? 1 : tempChar.get(ch) + 1);
+        char ch = characterArrayList.get(0);
+        int counter = 0;
+
+        for (int i = 0; i < characterArrayList.size(); i++){
+            if (ch == characterArrayList.get(i)){
+                counter++;
+                if (i == characterArrayList.size() - 1){
+                    tempChar.put(ch, counter);
+                }
+            }else {
+                tempChar.put(ch, counter);
+                counter = 1;
+                ch = characterArrayList.get(i);
+            }
         }
         return tempChar;
     }

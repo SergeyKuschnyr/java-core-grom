@@ -21,7 +21,7 @@ public class Solution {
             String[] strings = br.readLine().split(" ");
 
             for (String str : strings) {
-                if (!str.isEmpty() && hasNumberAtWord(str)) {
+                if (!str.isEmpty() && !hasNumberAtWord(str)) {
                     intAL.add(Integer.parseInt(str));
                 }
             }

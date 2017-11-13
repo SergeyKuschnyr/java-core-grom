@@ -20,12 +20,20 @@ public class Solution {
             System.out.println("Input 10 numbers: ");
             String[] strings = br.readLine().split(" ");
 
-            createArrayList(strings, intAL);
+            for (String str : strings) {
+                if (!str.isEmpty() && hasNumberAtWord(str)) {
+                    intAL.add(Integer.parseInt(str));
+                }
+            }
 
             if (!validator(intAL)) {
                 System.out.println("Your numbers are wrong. You have " + (2 - i) + " attempts to try again");
             } else {
-                sumCounting(intAL);
+                int sum = 0;
+                for (Integer integer : intAL) {
+                    sum += integer;
+                }
+                System.out.println("Sum: " + sum);
                 break;
             }
             intAL.clear();
@@ -46,18 +54,12 @@ public class Solution {
         return true;
     }
 
-    private void sumCounting(ArrayList<Integer> intAL) {
-        int sum = 0;
-        for (Integer integer : intAL) {
-            sum += integer;
+    private boolean hasNumberAtWord(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isLetter(str.charAt(i))) {
+                return false;
+            }
         }
-        System.out.println("Sum: " + sum);
-    }
-
-    private void createArrayList(String[] strings, ArrayList intAL){
-        for (String str : strings) {
-            if (!str.isEmpty())
-                intAL.add( Integer.parseInt(str));
-        }
+        return true;
     }
 }

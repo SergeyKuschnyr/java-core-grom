@@ -27,6 +27,10 @@ public class Solution {
             }
 
             if (!validator(intAL)) {
+                if (i == 2){
+                    System.out.println("Your numbers are wrong. Number of attempts exceeded");
+                    break;
+                }
                 System.out.println("Your numbers are wrong. You have " + (2 - i) + " attempts to try again");
             } else {
                 int sum = 0;

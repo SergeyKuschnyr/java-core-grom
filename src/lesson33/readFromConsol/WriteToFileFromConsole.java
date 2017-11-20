@@ -13,6 +13,10 @@ public class WriteToFileFromConsole {
         BufferedReader br = new BufferedReader(reader);
         String content = "";
 
+        if (!doesFileExist(path)){
+            return;
+        }
+
         System.out.println("Enter file content to write in the file:");
 
         try {
@@ -25,10 +29,6 @@ public class WriteToFileFromConsole {
         } finally {
             IOUtils.closeQuietly(br);
             IOUtils.closeQuietly(reader);
-        }
-
-        if (!doesFileExist(path)){
-            return;
         }
 
         FileWriter writer = null;
@@ -49,13 +49,6 @@ public class WriteToFileFromConsole {
     }
 
     private boolean doesFileExist(String path) {
-        String path2 = path.substring(0, path.lastIndexOf('/'));
-        File file = new File(path2);
-        if (!file.isDirectory()) {
-            System.out.println("Can't write to file2 with path " + path);
-            return false;
-        }
-
         File file2 = new File(path);
         if (!file2.exists()) {
             System.out.println("File with path " + path + " not found");
@@ -63,26 +56,4 @@ public class WriteToFileFromConsole {
         }
         return true;
     }
-
-//    private void doesFileExist(String path){
-//        String path2 = path.substring(0, path.lastIndexOf('/'));
-//        File file = new File(path2);
-//        try {
-//            if (!file.isDirectory()) {
-//                throw new Exception("Can't write to file2 with path " + path);
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Error: " + e.getMessage());
-//            return;
-//        }
-//
-//        File file2 = new File(path);
-//        try {
-//            if (!file2.exists()) {
-//                throw new FileNotFoundException("File with path " + path + " not found");
-//            }
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Error: " + e.getMessage());
-//        }
-//    }
 }

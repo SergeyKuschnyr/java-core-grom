@@ -9,15 +9,32 @@ import java.io.*;
  */
 public class WriteToFileFromConsole {
     void writeToFileFromConsole(String path) {
-        InputStreamReader reader = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(reader);
         String content = "";
 
-        if (!doesFileExist(path)){
+        if (!doesFileExist(path)) {
             return;
         }
 
         System.out.println("Enter file content to write in the file:");
+
+        content = readFromKeyboard();
+
+        writeToFile(path, content);
+    }
+
+    private boolean doesFileExist(String path) {
+        File file2 = new File(path);
+        if (!file2.exists()) {
+            System.out.println("File with path " + path + " not found");
+            return false;
+        }
+        return true;
+    }
+
+    private String readFromKeyboard() {
+        String content = "";
+        InputStreamReader reader = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(reader);
 
         try {
             String str;
@@ -30,7 +47,10 @@ public class WriteToFileFromConsole {
             IOUtils.closeQuietly(br);
             IOUtils.closeQuietly(reader);
         }
+        return content;
+    }
 
+    private void writeToFile(String path, String content) {
         FileWriter writer = null;
         BufferedWriter bufferedWriter = null;
 
@@ -46,14 +66,5 @@ public class WriteToFileFromConsole {
             IOUtils.closeQuietly(bufferedWriter);
             IOUtils.closeQuietly(writer);
         }
-    }
-
-    private boolean doesFileExist(String path) {
-        File file2 = new File(path);
-        if (!file2.exists()) {
-            System.out.println("File with path " + path + " not found");
-            return false;
-        }
-        return true;
     }
 }

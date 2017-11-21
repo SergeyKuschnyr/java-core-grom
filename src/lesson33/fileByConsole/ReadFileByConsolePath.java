@@ -9,12 +9,19 @@ import java.io.*;
  */
 public class ReadFileByConsolePath {
     void readFileByConsolePath(){
-        InputStreamReader reader = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(reader);
         String path = "";
 
         System.out.println("Please, enter file path to read:");
 
+        path = readPathFromConsole();
+
+        writeFileContent(path);
+    }
+
+    private String readPathFromConsole(){
+        InputStreamReader reader = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(reader);
+        String path = "";
         try {
             path = br.readLine();
         } catch (IOException e) {
@@ -23,7 +30,10 @@ public class ReadFileByConsolePath {
             IOUtils.closeQuietly(br);
             IOUtils.closeQuietly(reader);
         }
+        return path;
+    }
 
+    private void writeFileContent(String path){
         FileReader fileReader;
         try {
             fileReader = new FileReader(path);

@@ -1,6 +1,6 @@
-package lesson34;
+package lesson34.copyFileContent;
 
-import java.io.IOException;
+import lesson34.Solution;
 
 /**
  * Created by Kushn_000 on 23.11.2017.

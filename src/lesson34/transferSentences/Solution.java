@@ -12,25 +12,38 @@ public class Solution {
     void transferSentences(String fileFromPath, String fileToPath, String word) throws Exception {
         validate(fileFromPath, fileToPath);
 
-        handlingOfFiles(fileFromPath, fileToPath, word);
+        handlingFiles(fileFromPath, fileToPath, word);
     }
 
-    private void handlingOfFiles(String fileFromPath, String fileToPath, String word) {
-        File file = new File(fileFromPath.substring(0, fileFromPath.lastIndexOf('/')) + "/" +
-                "testtemp.txt");
-        try (FileReader fileReader = new FileReader(fileFromPath);
-             FileWriter fileWriter = new FileWriter(fileToPath, true);
-             FileWriter fileWriter1 = new FileWriter(file)) {
+    private void handlingFiles(String fileFromPath, String fileToPath, String word) {
+        FileReader fileReader = null;
+        FileWriter fileWriter = null;
+        FileWriter fileWriter1 = null;
+        File file = null;
+        try {
+            fileReader = new FileReader(fileFromPath);
+            fileWriter = new FileWriter(fileToPath, true);
+            file = new File(fileFromPath.substring(0, fileFromPath.lastIndexOf('/')) + "/" +
+                    "testtemp.txt");
+            fileWriter1 = new FileWriter(file);
 
             int ch = 0;
             String string = "";
 
-            writingInFiles(ch, fileReader, string, word, fileWriter, fileWriter1);
+            writingToFiles(ch,fileReader, string, word, fileWriter, fileWriter1);
 
         } catch (FileNotFoundException e) {
             System.out.println("File: " + fileFromPath + "not found");
         } catch (IOException e) {
             System.out.println("Can't write to file: " + fileToPath);
+        } finally {
+            try {
+                fileReader.close();
+                fileWriter.close();
+                fileWriter1.close();
+            } catch (IOException e) {
+                System.out.println("Can't close file");
+            }
         }
 
         try {
@@ -41,8 +54,8 @@ public class Solution {
         file.renameTo(new File(fileFromPath));
     }
 
-    private void writingInFiles(int ch, FileReader fileReader, String string, String word, FileWriter fileWriter,
-                                FileWriter fileWriter1) throws IOException {
+    private void writingToFiles(int ch, FileReader fileReader, String string, String word, FileWriter fileWriter,
+                                FileWriter fileWriter1) throws IOException{
         while ((ch = fileReader.read()) != -1) {
             if ((char) ch != '.') {
                 string += ((char) ch);

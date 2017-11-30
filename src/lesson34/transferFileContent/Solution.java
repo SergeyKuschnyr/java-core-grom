@@ -17,12 +17,12 @@ public class Solution {
         try (BufferedReader br = new BufferedReader(new FileReader(fileFromPath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                res.append('\n');  // ??????????????????????????????????
+                res.append('\n');
                 res.append(line);
             }
             new FileWriter(fileFromPath).close();
         } catch (FileNotFoundException e) {
-            System.err.println("File does not exist");
+            System.err.println("File " + fileFromPath + " does not exist");
         } catch (IOException e) {
             System.err.println("Read from file" + fileFromPath + "failed");
         }
@@ -33,7 +33,7 @@ public class Solution {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileToPath, true))) {
             bufferedWriter.append(res);
         } catch (Exception e) {
-            System.err.println("Can't write to file");
+            System.err.println("Can't write to file: " + fileToPath);
         }
     }
 
@@ -59,12 +59,3 @@ public class Solution {
     }
 }
 
-
-//try {
-//        PrintWriter printWriter = new PrintWriter(fileFromPath);
-//        }catch (FileNotFoundException e){
-//
-//        }
-//                System.getProperty(" ");
-//res.replace(res.length() - 1, res.length(), "");
-//            bufferedWriter.append("\n");    // ??????????????????????????

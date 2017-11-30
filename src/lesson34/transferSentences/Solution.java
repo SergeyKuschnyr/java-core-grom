@@ -3,7 +3,6 @@ package lesson34.transferSentences;
 import java.io.*;
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -13,47 +12,48 @@ public class Solution {
     void transferSentences(String fileFromPath, String fileToPath, String word) throws Exception {
         validate(fileFromPath, fileToPath);
 
-        handlingFiles(fileFromPath, fileToPath, word);
+        handlingOfFiles(fileFromPath, fileToPath, word);
     }
 
-    private void handlingFiles(String fileFromPath, String fileToPath, String word) {
-        try {
-            FileReader fileReader = new FileReader(fileFromPath);
-            FileWriter fileWriter = new FileWriter(fileToPath, true);
-            File file = new File(fileFromPath.substring(0, fileFromPath.lastIndexOf('/')) + "/" + "testtemp.txt");
-            FileWriter fileWriter1 = new FileWriter(file);
+    private void handlingOfFiles(String fileFromPath, String fileToPath, String word) {
+        File file = new File(fileFromPath.substring(0, fileFromPath.lastIndexOf('/')) + "/" +
+                "testtemp.txt");
+        try (FileReader fileReader = new FileReader(fileFromPath);
+             FileWriter fileWriter = new FileWriter(fileToPath, true);
+             FileWriter fileWriter1 = new FileWriter(file)) {
 
-            int ch;
+            int ch = 0;
             String string = "";
 
-            while ((ch = fileReader.read()) != -1) {
-                if ((char) ch != '.') {
-                    string += ((char) ch);
-                } else if (string.contains(word) && string.length() > 10) {
-                    fileWriter.append(string + ".");
-                    string = "";
-                } else {
-                    fileWriter1.append(string + ".");
-                    string = "";
-                }
-            }
+            writingInFiles(ch, fileReader, string, word, fileWriter, fileWriter1);
+
         } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("File: " + fileFromPath + "not found");
         } catch (IOException e) {
-            System.out.println("Writing failure to file");
-        } finally {
-            try {
-                fileWriter.close();
-                fileReader.close();
-                fileWriter1.close();
-            }catch (Exception e){
-                System.out.println("Error");
-            }
+            System.out.println("Can't write to file: " + fileToPath);
         }
 
-        Path fileToDeletePath = Paths.get(fileFromPath);
-        Files.delete(fileToDeletePath);
+        try {
+            Files.delete(Paths.get(fileFromPath));
+        } catch (IOException e) {
+            System.out.println("Can't delete file: " + fileFromPath);
+        }
         file.renameTo(new File(fileFromPath));
+    }
+
+    private void writingInFiles(int ch, FileReader fileReader, String string, String word, FileWriter fileWriter,
+                                FileWriter fileWriter1) throws IOException {
+        while ((ch = fileReader.read()) != -1) {
+            if ((char) ch != '.') {
+                string += ((char) ch);
+            } else if (string.contains(word) && string.length() > 10) {
+                fileWriter.append(string + ".");
+                string = "";
+            } else {
+                fileWriter1.append(string + ".");
+                string = "";
+            }
+        }
     }
 
     private void validate(String fileFromPath, String fileToPath) throws Exception {

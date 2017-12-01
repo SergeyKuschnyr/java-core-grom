@@ -27,10 +27,7 @@ public class Solution {
                     "testtemp.txt");
             fileWriter1 = new FileWriter(file);
 
-            int ch = 0;
-            String string = "";
-
-            writingToFiles(ch,fileReader, string, word, fileWriter, fileWriter1);
+            writingToFiles(fileReader, word, fileWriter, fileWriter1);
 
         } catch (FileNotFoundException e) {
             System.out.println("File: " + fileFromPath + "not found");
@@ -54,8 +51,10 @@ public class Solution {
         file.renameTo(new File(fileFromPath));
     }
 
-    private void writingToFiles(int ch, FileReader fileReader, String string, String word, FileWriter fileWriter,
+    private void writingToFiles(FileReader fileReader, String word, FileWriter fileWriter,
                                 FileWriter fileWriter1) throws IOException{
+        int ch = 0;
+        String string = "";
         while ((ch = fileReader.read()) != -1) {
             if ((char) ch != '.') {
                 string += ((char) ch);

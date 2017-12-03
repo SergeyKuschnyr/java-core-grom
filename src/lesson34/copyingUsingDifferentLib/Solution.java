@@ -1,5 +1,7 @@
 package lesson34.copyingUsingDifferentLib;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.*;
 import java.io.File;
 
@@ -24,9 +26,11 @@ public class Solution {
             System.out.println("Error: " + e.getMessage());
         }
     }
-//    public void copyFileContentApacheIO(String fileFromPath, String fileToPath){
-//
-//    }
+    public void copyFileContentApacheIO(String fileFromPath, String fileToPath) throws IOException{
+        File file1 = new File(fileFromPath);
+        File file2 = new File(fileToPath);
+        FileUtils.writeStringToFile(file2,FileUtils.readFileToString(file1));
+    }
 
     private void validate(String fileFromPath, String fileToPath) throws Exception {
         File fileFrom = new File(fileFromPath);

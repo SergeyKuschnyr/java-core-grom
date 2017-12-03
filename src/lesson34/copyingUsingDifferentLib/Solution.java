@@ -1,6 +1,7 @@
 package lesson34.copyingUsingDifferentLib;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.io.File;
@@ -10,8 +11,8 @@ import java.io.File;
  */
 public class Solution {
     public void copyFileContent(String fileFromPath, String fileToPath) {
-        try (   BufferedReader fileReader = new BufferedReader(new FileReader(new File(fileFromPath)));
-                BufferedWriter fileWriter = new BufferedWriter(new FileWriter(new File(fileToPath)))) {
+        try (BufferedReader fileReader = new BufferedReader(new FileReader(new File(fileFromPath)));
+             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(new File(fileToPath)))) {
 
             validate(fileFromPath, fileToPath);
 
@@ -26,10 +27,19 @@ public class Solution {
             System.out.println("Error: " + e.getMessage());
         }
     }
-    public void copyFileContentApacheIO(String fileFromPath, String fileToPath) throws IOException{
+
+    public void copyFileContentApacheIO(String fileFromPath, String fileToPath) {
         File file1 = new File(fileFromPath);
         File file2 = new File(fileToPath);
-        FileUtils.writeStringToFile(file2,FileUtils.readFileToString(file1));
+        try {
+            validate(fileFromPath, fileToPath);
+            FileUtils.writeStringToFile(file2, FileUtils.readFileToString(file1));
+        }catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }finally {
+            IOUtils.closeQuietly();
+            IOUtils.closeQuietly();
+        }
     }
 
     private void validate(String fileFromPath, String fileToPath) throws Exception {

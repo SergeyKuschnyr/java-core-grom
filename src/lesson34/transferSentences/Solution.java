@@ -4,6 +4,7 @@ import java.io.*;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 /**
  * Created by Kushn_000 on 26.11.2017.
@@ -25,7 +26,7 @@ public class Solution {
             fileWriter = new FileWriter(fileToPath, true);
             file = new File(fileFromPath.substring(0, fileFromPath.lastIndexOf('/')) + "/" +
                     "testtemp.txt");
-            fileWriter1 = new FileWriter(file);
+            fileWriter1 = new FileWriter(file, true);
 
             writingToFiles(fileReader, word, fileWriter, fileWriter1);
 
@@ -39,7 +40,7 @@ public class Solution {
                 fileWriter.close();
                 fileWriter1.close();
             } catch (IOException e) {
-                System.out.println("Can't close file");
+                System.out.println("Can't close stream");
             }
         }
 
@@ -52,20 +53,38 @@ public class Solution {
     }
 
     private void writingToFiles(FileReader fileReader, String word, FileWriter fileWriter,
-                                FileWriter fileWriter1) throws IOException{
-        int ch = 0;
+                                FileWriter fileWriter1) throws IOException {
+
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
         String string = "";
-        while ((ch = fileReader.read()) != -1) {
-            if ((char) ch != '.') {
-                string += ((char) ch);
-            } else if (string.contains(word) && string.length() > 10) {
-                fileWriter.append(string + ".");
-                string = "";
+        String stringCollector = "";
+        while ((string = bufferedReader.readLine()) != null) {
+            stringCollector += string;
+            stringCollector += "\n";
+        }
+        stringCollector = stringCollector.substring(0,stringCollector.length() - 1);
+
+        for (String string1 : stringCollector.split("\\.")) {
+            if (string1.contains(word) && string1.length() > 10) {
+                fileWriter.append(string1 + ".");
             } else {
-                fileWriter1.append(string + ".");
-                string = "";
+                fileWriter1.append(string1 + ".");
             }
         }
+
+//        int ch = 0;
+//        String string = "";
+//        while ((ch = fileReader.read()) != -1) {
+//            if ((char) ch != '.') {
+//                string += ((char) ch);
+//            } else if (string.contains(word) && string.length() > 10) {
+//                fileWriter.append(string + ".");
+//                string = "";
+//            } else {
+//                fileWriter1.append(string + ".");
+//                string = "";
+//            }
+//        }
     }
 
     private void validate(String fileFromPath, String fileToPath) throws Exception {

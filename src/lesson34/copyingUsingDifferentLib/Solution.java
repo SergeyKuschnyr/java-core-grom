@@ -2,6 +2,7 @@ package lesson34.copyingUsingDifferentLib;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
 
 import java.io.*;
 import java.io.File;
@@ -34,11 +35,8 @@ public class Solution {
         try {
             validate(fileFromPath, fileToPath);
             FileUtils.writeStringToFile(file2, FileUtils.readFileToString(file1));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
-        }finally {
-            IOUtils.closeQuietly();
-            IOUtils.closeQuietly();
         }
     }
 

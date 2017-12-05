@@ -1,31 +1,24 @@
 package lesson34.copyingUsingDifferentLib;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.LineIterator;
 
 import java.io.*;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Created by Kushn_000 on 30.11.2017.
  */
 public class Solution {
     public void copyFileContent(String fileFromPath, String fileToPath) {
-        try (BufferedReader fileReader = new BufferedReader(new FileReader(new File(fileFromPath)));
-             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(new File(fileToPath)))) {
-
+        try (FileWriter fileWriter = new FileWriter(new File(fileToPath))){
             validate(fileFromPath, fileToPath);
-
-            StringBuffer stringBuffer = new StringBuffer();
-            String string = "";
-            while ((string = fileReader.readLine()) != null) {
-                stringBuffer.append(string + "\n");
-            }
-            stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-            fileWriter.append(stringBuffer.substring(0));
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            for (String string : Files.readAllLines(Paths.get(fileFromPath))){
+            fileWriter.append(string);
+        }
+        }catch (Exception e){
+            System.out.println("Write to file failure");
         }
     }
 

@@ -4,20 +4,21 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.io.File;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 /**
  * Created by Kushn_000 on 30.11.2017.
  */
 public class Solution {
     public void copyFileContent(String fileFromPath, String fileToPath) {
-        try (FileWriter fileWriter = new FileWriter(new File(fileToPath))){
-            validate(fileFromPath, fileToPath);
-            for (String string : Files.readAllLines(Paths.get(fileFromPath))){
-            fileWriter.append(string);
-        }
-        }catch (Exception e){
+        try {
+        validate(fileFromPath, fileToPath);
+        CopyOption copyOption = StandardCopyOption.REPLACE_EXISTING;
+        Files.copy(Paths.get(fileFromPath), Paths.get(fileToPath), copyOption);
+        } catch (Exception e) {
             System.out.println("Write to file failure");
         }
     }

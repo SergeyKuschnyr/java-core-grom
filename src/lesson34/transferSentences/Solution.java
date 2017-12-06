@@ -1,89 +1,54 @@
 package lesson34.transferSentences;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.*;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * Created by Kushn_000 on 26.11.2017.
  */
 public class Solution {
-    void transferSentences(String fileFromPath, String fileToPath, String word) throws Exception {
-        validate(fileFromPath, fileToPath);
-
-        handlingFiles(fileFromPath, fileToPath, word);
+    void transferSentences(String fileFromPath, String fileToPath, String word) {
+        try {
+            validate(fileFromPath, fileToPath);
+            String fileContent = readFromFile(fileFromPath).toString();
+            String[] sentences = fileContent.split(".");
+            FileUtils.copyFile(new File(""), new File(""));
+            StringBuilder sentencesWithWord = new StringBuilder();
+            for (String sentence : sentences) {
+                if (sentence.contains(word) && sentence.length() > 10) {
+                    sentencesWithWord.append(sentence).append(".");
+                    fileContent = fileContent.replace(sentencesWithWord + ".", "");
+                }
+            }
+            writeToFiles(fileFromPath, fileContent);
+            writeToFiles(fileToPath, sentencesWithWord);
+        } catch (Exception e) {
+            System.out.println("Write to file failure");
+        }
+    }
+    private StringBuffer readFromFile(String path) throws IOException {
+        StringBuffer res = new StringBuffer();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                res.append(line);
+                res.append("\n");
+            }
+            res.replace(res.length() - 1, res.length(), "");
+        } catch (IOException e) {
+            throw new IOException("Reading from line " + path + "failure", e);
+        }
+        return res;
     }
 
-    private void handlingFiles(String fileFromPath, String fileToPath, String word) {
-        FileReader fileReader = null;
-        FileWriter fileWriter = null;
-        FileWriter fileWriter1 = null;
-        File file = null;
-        try {
-            fileReader = new FileReader(fileFromPath);
-            fileWriter = new FileWriter(fileToPath, true);
-            file = new File(fileFromPath.substring(0, fileFromPath.lastIndexOf('/')) + "/" +
-                    "testtemp.txt");
-            fileWriter1 = new FileWriter(file, true);
-
-            writingToFiles(fileReader, word, fileWriter, fileWriter1);
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File: " + fileFromPath + "not found");
+    private <T extends CharSequence> void writeToFiles(String path, T contentToWrite) throws IOException {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))) {
+            bufferedWriter.append(contentToWrite);
         } catch (IOException e) {
-            System.out.println("Can't write to file: " + fileToPath);
-        } finally {
-            try {
-                fileReader.close();
-                fileWriter.close();
-                fileWriter1.close();
-            } catch (IOException e) {
-                System.out.println("Can't close stream");
-            }
+            throw new IOException("Can't write to file" + path, e);
         }
-
-        try {
-            Files.delete(Paths.get(fileFromPath));
-        } catch (IOException e) {
-            System.out.println("Can't delete file: " + fileFromPath);
-        }
-        file.renameTo(new File(fileFromPath));
-    }
-
-    private void writingToFiles(FileReader fileReader, String word, FileWriter fileWriter,
-                                FileWriter fileWriter1) throws IOException {
-
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String string = "";
-        String stringCollector = "";
-        while ((string = bufferedReader.readLine()) != null) {
-            stringCollector += string;
-            stringCollector += "\n";
-        }
-        stringCollector = stringCollector.substring(0,stringCollector.length() - 1);
-
-        for (String string1 : stringCollector.split("\\.")) {
-            if (string1.contains(word) && string1.length() > 10) {
-                fileWriter.append(string1 + ".");
-            } else {
-                fileWriter1.append(string1 + ".");
-            }
-        }
-
-//        int ch = 0;
-//        String string = "";
-//        while ((ch = fileReader.read()) != -1) {
-//            if ((char) ch != '.') {
-//                string += ((char) ch);
-//            } else if (string.contains(word) && string.length() > 10) {
-//                fileWriter.append(string + ".");
-//                string = "";
-//            } else {
-//                fileWriter1.append(string + ".");
-//                string = "";
-//            }
-//        }
     }
 
     private void validate(String fileFromPath, String fileToPath) throws Exception {
@@ -107,4 +72,3 @@ public class Solution {
         }
     }
 }
-

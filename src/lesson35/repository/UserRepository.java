@@ -1,13 +1,11 @@
 package lesson35.repository;
 
 import lesson35.model.User;
-import lesson35.model.UserType;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 
 /**
  * Created by Kushn_000 on 10.12.2017.

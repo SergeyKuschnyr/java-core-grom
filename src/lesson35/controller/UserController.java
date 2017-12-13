@@ -3,8 +3,6 @@ package lesson35.controller;
 import lesson35.model.User;
 import lesson35.service.UserService;
 
-import java.util.Map;
-
 /**
  * Created by Kushn_000 on 10.12.2017.
  */

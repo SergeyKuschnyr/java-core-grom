@@ -17,6 +17,9 @@ public class UserRepository {
     private File userFile;
     private File IDFile;
 
+    public UserRepository() {
+    }
+
     public UserRepository(File userFile, File IDFile) throws IOException{
         if (!userFile.exists())
             this.userFile = new File(userFile.getPath());

@@ -2,7 +2,9 @@ package lesson35.repository;
 
 import lesson35.model.User;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
 import java.io.File;
 
@@ -17,82 +19,120 @@ public class UserRepository {
     private File userFile;
     private File IDFile;
 
-    public UserRepository() {
+    public File getUserFile() {
+        return userFile;
     }
 
-    public UserRepository(File userFile, File IDFile) throws IOException{
+    public File getIDFile() {
+        return IDFile;
+    }
+
+    public void setUserFile(File userFile) {
         if (!userFile.exists())
             this.userFile = new File(userFile.getPath());
-        if (!IDFile.exists()) {
-            this.IDFile = new File(IDFile.getPath());
-            FileWriter fileWriter = new FileWriter(IDFile);
-            fileWriter.append("100");
+    }
+
+    public void setIDFile(File IDFile) {
+        if (IDFile.exists()) {
+            return;
+        }
+        this.IDFile = new File(IDFile.getPath());
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+        try {
+            fileWriter = new FileWriter(IDFile);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.append("100");
+        } catch (IOException e) {
+            System.out.println("Can not create the file: " + IDFile.getPath());
+        } finally {
+            IOUtils.closeQuietly(bufferedWriter);
+            IOUtils.closeQuietly(fileWriter);
         }
     }
 
-    public User registerUser(User user) throws Exception{
-        regUserValidate(user, userFile);
-
-        FileWriter fileWriter = new FileWriter(userFile);
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        bufferedWriter.append(setUserID()).append(',');
-        bufferedWriter.append(user.getUserName()).append(',');
-        bufferedWriter.append(user.getPassword()).append(',');
-        bufferedWriter.append(user.getCountry()).append("\n");
-        return user;
+    public long registerUser(User user) throws InstanceAlreadyExistsException{
+        if (!registrationValidate(user, userFile)) {
+            throw new InstanceAlreadyExistsException("User with name " + user.getUserName() + " already existed");
+        }
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+        try {
+            fileWriter = new FileWriter(userFile, true);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.append(setUserID()).append(',');
+            bufferedWriter.append(user.getUserName()).append(',');
+            bufferedWriter.append(user.getPassword()).append(',');
+            bufferedWriter.append(user.getCountry()).append("\n");
+        } catch (IOException e) {
+            System.out.println("Can not to file " + userFile.getPath());
+        } finally {
+            IOUtils.closeQuietly(bufferedWriter);
+            IOUtils.closeQuietly(fileWriter);
+        }
+        return user.getId();
     }
 
-    public void login(String userName, String password)throws Exception{
+    public void login(String userName, String password) throws Exception {
         //проверить есть ли юзер в базе по имени юзера и паролю
         //
-        if (!loginValidate(userName,password)){
+        if (!loginValidate(userName, password)) {
             throw new Exception("Name or password is wrong");
         }
 
     }
-    public void logout(){
+
+    public void logout() {
 
     }
 
-    private CharSequence setUserID() throws Exception{
-        String string = Long.toString(Long.parseLong(FileUtils.readFileToString(IDFile)) + 1);
-        FileUtils.writeStringToFile(IDFile, string);
+    private String setUserID() {
+        String string = null;
+        try {
+            string = Long.toString(Long.parseLong(FileUtils.readFileToString(IDFile)) + 1);
+            FileUtils.writeStringToFile(IDFile, string);
+        } catch (IOException e) {
+            System.out.println("Can not read from file or write to file " + IDFile);
+        }
         return string;
     }
 
-    private void regUserValidate(User user, File userFile) throws Exception{
-        FileReader fileReader = new FileReader(userFile);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String userDB;
-        while ((userDB = bufferedReader.readLine()) != null){
-            String[] userInfo = userDB.split(",");
-            if (user.getUserName() == userInfo[1]){
-                throw new Exception("Error: User with name " + user.getUserName() + " already existed");
-            }
+    private boolean registrationValidate(User user, File userFile) {
+        if (userFile.length() == 0) {
+            return true;
         }
-        while ((userDB = bufferedReader.readLine()) != null){
-            String[] userInfo = userDB.split(",");
-            if (user.getPassword() != userInfo[2]){
-                throw new Exception("Error: Password" + user.getPassword() + " already existed. Choice other");
+        FileReader fileReader = null;
+        BufferedReader bufferedReader = null;
+        try {
+            fileReader = new FileReader(userFile);
+            bufferedReader = new BufferedReader(fileReader);
+            String userDB;
+            while ((userDB = bufferedReader.readLine()) != null) {
+                String[] userInfo = userDB.split(",");
+                if (user.getUserName() == userInfo[1]) {
+                    return false;
+                }
             }
+        } catch (IOException e) {
+            System.out.println("registrationValidate method: Can not read file " + userFile.getPath());
+        } finally {
+            IOUtils.closeQuietly(bufferedReader);
+            IOUtils.closeQuietly(fileReader);
         }
+        return true;
     }
 
-    private boolean loginValidate(String userName, String password) throws Exception{
+    private boolean loginValidate(String userName, String password) throws Exception {
         FileReader fileReader = new FileReader(userFile);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String userDB;
-        while ((userDB = bufferedReader.readLine()) != null){
+        while ((userDB = bufferedReader.readLine()) != null) {
             String[] userInfo = userDB.split(",");
-            if (userName == userInfo[1] && password == userInfo[2]){
+            if (userName == userInfo[1] && password == userInfo[2]) {
                 return true;
             }
         }
         return false;
     }
-
-//    public ArrayList readUsersDB() throws IOException{
-//        return new ArrayList(Arrays.asList(FileUtils.readFileToString(userFile).split("\\n")));
-//    }
 }
 

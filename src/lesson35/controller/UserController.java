@@ -3,20 +3,28 @@ package lesson35.controller;
 import lesson35.model.User;
 import lesson35.service.UserService;
 
+import javax.management.InstanceAlreadyExistsException;
+
 /**
  * Created by Kushn_000 on 10.12.2017.
  */
 public class UserController {
     UserService userService = new UserService();
 
-    public User registerUser(User user) throws Exception{
+    public long registerUser(User user) throws InstanceAlreadyExistsException{
         return userService.registerUser(user);
     }
 
-    public void login(String userName, String password){
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void login(String userName, String password)throws Exception{
+        userService.login(userName, password);
 
     }
     public void logout(){
+        userService.logout();
 
     }
 }

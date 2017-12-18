@@ -3,7 +3,8 @@ package lesson35.service;
 import lesson35.model.User;
 import lesson35.repository.UserRepository;
 
-import java.io.IOException;
+import javax.management.InstanceAlreadyExistsException;
+import java.io.File;
 
 /**
  * Created by Kushn_000 on 10.12.2017.
@@ -11,9 +12,21 @@ import java.io.IOException;
 public class UserService {
     UserRepository userRepository = new UserRepository();
 
-    public User registerUser(User user) throws Exception {
+    public long registerUser(User user) throws InstanceAlreadyExistsException{
         //check business logic
         //if logic ok
         return userRepository.registerUser(user);
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
+    public void login (String userName, String password)throws Exception{
+        userRepository.login(userName, password);
+    }
+
+    public void logout(){
+        userRepository.logout();
     }
 }

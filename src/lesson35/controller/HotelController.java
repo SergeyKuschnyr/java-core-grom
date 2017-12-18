@@ -1,21 +1,35 @@
 package lesson35.controller;
 
 import lesson35.model.Hotel;
+import lesson35.service.HotelService;
+
+import java.io.File;
+import java.util.Map;
 
 /**
  * Created by Kushn_000 on 10.12.2017.
  */
 public class HotelController {
-    public void findHotelByName(String name){
+    HotelService hotelService = new HotelService();
 
+    public HotelService getHotelService() {
+        return hotelService;
     }
-    public void findHotelByCity(String city){
 
+    public Map findHotelByName(String name){
+        return hotelService.findHotelByName(name);
     }
-    public void addHotel(Hotel hotel){      //admin
 
+    public Map findHotelByCity(String city){
+        return hotelService.findHotelByCity(city);
     }
-    public void deleteHotel(Hotel hotel){   //admin
 
+    public Hotel addHotel(Hotel hotel){      //admin
+        return hotelService.addHotel(hotel);
     }
+
+    public long deleteHotel(long hotel){   //admin
+        return hotelService.deleteHotel(hotel);
+    }
+
 }

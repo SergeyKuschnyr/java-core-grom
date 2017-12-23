@@ -1,30 +1,25 @@
 package lesson35.repository;
 
 import lesson35.model.User;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Set;
 
 
 /**
  * Created by Kushn_000 on 10.12.2017.
  */
 public class UserRepository {
-    //reading file
-    //handling date - mapping date
-
     private File userFile;
-    private File IDFile;
+    private Set<Long> IDCollection = new HashSet<>();
 
     public File getUserFile() {
         return userFile;
-    }
-
-    public File getIDFile() {
-        return IDFile;
     }
 
     public void setUserFile(File userFile) {
@@ -32,24 +27,12 @@ public class UserRepository {
             this.userFile = new File(userFile.getPath());
     }
 
-    public void setIDFile(File IDFile) {
-        if (IDFile.exists()) {
-            return;
-        }
-        this.IDFile = new File(IDFile.getPath());
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(IDFile))) {
-            bufferedWriter.append("100");
-        } catch (IOException e) {
-            System.out.println("Can not create the file: " + IDFile.getPath());
-        }
-    }
-
     public long registerUser(User user) throws InstanceAlreadyExistsException {
         if (!registrationValidate(user, userFile)) {
             throw new InstanceAlreadyExistsException("User with name " + user.getUserName() + " already existed");
         }
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userFile, true))) {
-            bufferedWriter.append(setUserID()).append(',');
+            bufferedWriter.append(IDSetup()).append(',');
             bufferedWriter.append(user.getUserName()).append(',');
             bufferedWriter.append(user.getPassword()).append(',');
             bufferedWriter.append(user.getCountry()).append("\n");
@@ -72,29 +55,27 @@ public class UserRepository {
 
     }
 
-    private String setUserID() {
-        String string = null;
-        try {
-            string = Long.toString(Long.parseLong(FileUtils.readFileToString(IDFile)) + 1);
-            FileUtils.writeStringToFile(IDFile, string);
-        } catch (IOException e) {
-            System.out.println("Can not read from file or write to file " + IDFile);
+    private String IDSetup() {
+        while (true) {
+            long value = Long.valueOf(new Random().nextInt(1000));
+            if (IDCollection.add(value)) {
+                return Long.toString(value);
+            }
         }
-        return string;
     }
 
     private boolean registrationValidate(User user, File userFile) {
-        if (user == null){
+        if (user == null) {
             return false;
         }
-        if (userFile == null ||userFile.length() == 0) {
+        if (userFile == null || userFile.length() == 0) {
             return true;
         }
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userFile))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userFile))) {
             String userDB;
             while ((userDB = bufferedReader.readLine()) != null) {
                 String[] userInfo = userDB.split(",");
-                if (user.getUserName().equals(userInfo[1]) && user.getTYPE().toString() == userInfo[4]) {
+                if (user.getUserName().equals(userInfo[1]) && user.getTYPE().toString().equals(userInfo[4])) {
                     return false;
                 }
             }
@@ -110,7 +91,7 @@ public class UserRepository {
         String userDB;
         while ((userDB = bufferedReader.readLine()) != null) {
             String[] userInfo = userDB.split(",");
-            if (userName == userInfo[1] && password == userInfo[2]) {
+            if (userName.equals(userInfo[1]) && password.equals(userInfo[2])) {
                 return true;
             }
         }

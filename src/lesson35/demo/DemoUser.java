@@ -19,7 +19,7 @@ public class DemoUser {
 
         UserController userController = new UserController();
         userController.getUserService().getUserRepository().setUserFile(userFile);
-        userController.getUserService().getUserRepository().setIDFile(IDFile);
+        //userController.getUserService().getUserRepository().setIDFile(IDFile);
 
         User user1 = new User("John", "pass111", "USA", UserType.USER_TYPE);
         User user2 = new User("Bill", "pass222", "USA", UserType.USER_TYPE);

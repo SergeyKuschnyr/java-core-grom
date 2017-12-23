@@ -3,6 +3,7 @@ package lesson35.service;
 import lesson35.model.Hotel;
 import lesson35.repository.HotelRepository;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.util.Map;
 
 /**
@@ -21,7 +22,7 @@ public class HotelService {
     public Map findHotelByCity(String city){
         return hotelRepository.findHotelByCity(city);
     }
-    public Hotel addHotel(Hotel hotel){      //admin
+    public Hotel addHotel(Hotel hotel) throws InstanceAlreadyExistsException{      //admin
         return hotelRepository.addHotel(hotel);
     }
     public long deleteHotel(long hotel){   //admin

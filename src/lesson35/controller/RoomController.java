@@ -4,6 +4,7 @@ import lesson35.model.Filter;
 import lesson35.model.Room;
 import lesson35.service.RoomService;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.io.IOException;
 import java.util.Map;
 
@@ -12,14 +13,19 @@ import java.util.Map;
  */
 public class RoomController {
     RoomService roomService = new RoomService();
-    public Map findRooms(Filter filter) throws IOException{
+
+    public RoomService getRoomService() {
+        return roomService;
+    }
+
+    public Map findRooms(Filter filter) {
         roomService.findRooms(filter);
         return null;
     }
-    public void addRoom(Room room) throws IOException{       // Admin
+    public void addRoom(Room room) throws InstanceAlreadyExistsException{       // Admin
         roomService.addRoom(room);
     }
-    public void deleteRoom(Room room){    // Admin
-        roomService.deleteRoom(room);
+    public void deleteRoom(long ID){    // Admin
+        roomService.deleteRoom(ID);
     }
 }

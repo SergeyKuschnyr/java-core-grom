@@ -3,6 +3,7 @@ package lesson35.controller;
 import lesson35.model.Hotel;
 import lesson35.service.HotelService;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.io.File;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public class HotelController {
         return hotelService.findHotelByCity(city);
     }
 
-    public Hotel addHotel(Hotel hotel){      //admin
+    public Hotel addHotel(Hotel hotel) throws InstanceAlreadyExistsException{      //admin
         return hotelService.addHotel(hotel);
     }
 

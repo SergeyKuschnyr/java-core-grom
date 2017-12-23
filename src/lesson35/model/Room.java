@@ -55,4 +55,16 @@ public class Room {
     public void setId(long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "numberOfGuests=" + numberOfGuests +
+                ", price=" + price +
+                ", breakfastIncluded=" + breakfastIncluded +
+                ", petsAllowed=" + petsAllowed +
+                ", dateAvailableFrom=" + dateAvailableFrom +
+                ", hotel=" + hotel +
+                '}';
+    }
 }

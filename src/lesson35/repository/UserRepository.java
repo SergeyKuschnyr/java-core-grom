@@ -37,38 +37,24 @@ public class UserRepository {
             return;
         }
         this.IDFile = new File(IDFile.getPath());
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-        try {
-            fileWriter = new FileWriter(IDFile);
-            bufferedWriter = new BufferedWriter(fileWriter);
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(IDFile))) {
             bufferedWriter.append("100");
         } catch (IOException e) {
             System.out.println("Can not create the file: " + IDFile.getPath());
-        } finally {
-            IOUtils.closeQuietly(bufferedWriter);
-            IOUtils.closeQuietly(fileWriter);
         }
     }
 
-    public long registerUser(User user) throws InstanceAlreadyExistsException{
+    public long registerUser(User user) throws InstanceAlreadyExistsException {
         if (!registrationValidate(user, userFile)) {
             throw new InstanceAlreadyExistsException("User with name " + user.getUserName() + " already existed");
         }
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-        try {
-            fileWriter = new FileWriter(userFile, true);
-            bufferedWriter = new BufferedWriter(fileWriter);
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userFile, true))) {
             bufferedWriter.append(setUserID()).append(',');
             bufferedWriter.append(user.getUserName()).append(',');
             bufferedWriter.append(user.getPassword()).append(',');
             bufferedWriter.append(user.getCountry()).append("\n");
         } catch (IOException e) {
             System.out.println("Can not to file " + userFile.getPath());
-        } finally {
-            IOUtils.closeQuietly(bufferedWriter);
-            IOUtils.closeQuietly(fileWriter);
         }
         return user.getId();
     }
@@ -98,26 +84,22 @@ public class UserRepository {
     }
 
     private boolean registrationValidate(User user, File userFile) {
-        if (userFile.length() == 0) {
+        if (user == null){
+            return false;
+        }
+        if (userFile == null ||userFile.length() == 0) {
             return true;
         }
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
-        try {
-            fileReader = new FileReader(userFile);
-            bufferedReader = new BufferedReader(fileReader);
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userFile))){
             String userDB;
             while ((userDB = bufferedReader.readLine()) != null) {
                 String[] userInfo = userDB.split(",");
-                if (user.getUserName() == userInfo[1]) {
+                if (user.getUserName().equals(userInfo[1]) && user.getTYPE().toString() == userInfo[4]) {
                     return false;
                 }
             }
         } catch (IOException e) {
             System.out.println("registrationValidate method: Can not read file " + userFile.getPath());
-        } finally {
-            IOUtils.closeQuietly(bufferedReader);
-            IOUtils.closeQuietly(fileReader);
         }
         return true;
     }

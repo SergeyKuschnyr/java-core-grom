@@ -19,8 +19,7 @@ public class RoomService {
     }
 
     public Map findRooms(Filter filter) {
-        roomRepository.findRooms(filter);
-        return null;
+        return roomRepository.findRooms(filter);
     }
     public Room addRoom(Room room) throws InstanceAlreadyExistsException{       // Admin
         return roomRepository.addRoom(room);

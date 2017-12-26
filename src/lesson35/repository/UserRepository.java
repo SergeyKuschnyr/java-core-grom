@@ -1,43 +1,42 @@
 package lesson35.repository;
 
 import lesson35.model.User;
+import lesson35.model.UserType;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
 import java.io.File;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Set;
+import java.util.ArrayList;
 
 
 /**
  * Created by Kushn_000 on 10.12.2017.
  */
-public class UserRepository {
-    private File userFile;
-    private Set<Long> IDCollection = new HashSet<>();
+public class UserRepository extends GeneralRepository{
+    private File userDB;
 
-    public File getUserFile() {
-        return userFile;
+    public File getUserDB() {
+        return userDB;
     }
 
-    public void setUserFile(File userFile) {
-        if (!userFile.exists())
-            this.userFile = new File(userFile.getPath());
+    public void setUserDB(File userDB) {
+        if (!userDB.exists())
+            this.userDB = new File(userDB.getPath());
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public long registerUser(User user) throws InstanceAlreadyExistsException {
-        if (!registrationValidate(user, userFile)) {
+        if (!registrationValidate(user, userDB)) {
             throw new InstanceAlreadyExistsException("User with name " + user.getUserName() + " already existed");
         }
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userFile, true))) {
-            bufferedWriter.append(IDSetup()).append(',');
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
+            bufferedWriter.append(setID()).append(',');
             bufferedWriter.append(user.getUserName()).append(',');
             bufferedWriter.append(user.getPassword()).append(',');
-            bufferedWriter.append(user.getCountry()).append("\n");
+            bufferedWriter.append(user.getCountry()).append(',');
+            bufferedWriter.append(user.getTYPE().toString()).append("\n");
         } catch (IOException e) {
-            System.out.println("Can not to file " + userFile.getPath());
+            System.out.println("Can not write to file " + userDB.getPath());
         }
         return user.getId();
     }
@@ -55,15 +54,6 @@ public class UserRepository {
 
     }
 
-    private String IDSetup() {
-        while (true) {
-            long value = Long.valueOf(new Random().nextInt(1000));
-            if (IDCollection.add(value)) {
-                return Long.toString(value);
-            }
-        }
-    }
-
     private boolean registrationValidate(User user, File userFile) {
         if (user == null) {
             return false;
@@ -71,31 +61,42 @@ public class UserRepository {
         if (userFile == null || userFile.length() == 0) {
             return true;
         }
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userFile))) {
-            String userDB;
-            while ((userDB = bufferedReader.readLine()) != null) {
-                String[] userInfo = userDB.split(",");
-                if (user.getUserName().equals(userInfo[1]) && user.getTYPE().toString().equals(userInfo[4])) {
-                    return false;
-                }
+        for (User user1 : creatingUserInstance()){
+            if (user1.equals(user)){
+                return false;
             }
-        } catch (IOException e) {
-            System.out.println("registrationValidate method: Can not read file " + userFile.getPath());
         }
         return true;
     }
 
-    private boolean loginValidate(String userName, String password) throws Exception {
-        FileReader fileReader = new FileReader(userFile);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String userDB;
-        while ((userDB = bufferedReader.readLine()) != null) {
-            String[] userInfo = userDB.split(",");
-            if (userName.equals(userInfo[1]) && password.equals(userInfo[2])) {
+    private boolean loginValidate(String userName, String password) {
+        if (userName == null || password == null){
+            return false;
+        }
+        for (User user : creatingUserInstance()){
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)){
                 return true;
             }
         }
         return false;
+    }
+
+    private ArrayList<User> creatingUserInstance() {
+        if (userDB == null || userDB.length() == 0){
+            return new ArrayList();
+        }
+        ArrayList<User> usersAL = new ArrayList();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB))){
+            String string = "";
+            while ((string = bufferedReader.readLine()) != null){
+                String[] strings = string.split(",");
+                User user = new User(strings[1], strings[2], strings[3], UserType.valueOf(strings[4]));
+                usersAL.add(user);
+            }
+        }catch (IOException e){
+            System.out.println("Can't read to file:" + userDB.getPath());
+        }
+        return usersAL;
     }
 }
 

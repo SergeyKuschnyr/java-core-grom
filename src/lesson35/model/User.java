@@ -40,4 +40,24 @@ public class User {
     public void setId(long id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
+        if (country != null ? !country.equals(user.country) : user.country != null) return false;
+        return TYPE == user.TYPE;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userName != null ? userName.hashCode() : 0;
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (TYPE != null ? TYPE.hashCode() : 0);
+        return result;
+    }
 }

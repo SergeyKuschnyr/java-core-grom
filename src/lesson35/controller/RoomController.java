@@ -19,13 +19,14 @@ public class RoomController {
     }
 
     public Map findRooms(Filter filter) {
-        roomService.findRooms(filter);
-        return null;
+        return roomService.findRooms(filter);
     }
-    public void addRoom(Room room) throws InstanceAlreadyExistsException{       // Admin
+
+    public void addRoom(Room room) throws InstanceAlreadyExistsException {       // Admin
         roomService.addRoom(room);
     }
-    public void deleteRoom(long ID){    // Admin
+
+    public void deleteRoom(long ID) {    // Admin
         roomService.deleteRoom(ID);
     }
 }

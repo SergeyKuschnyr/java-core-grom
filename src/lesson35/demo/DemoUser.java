@@ -6,8 +6,6 @@ import lesson35.model.UserType;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Created by Kushn_000 on 10.12.2017.
@@ -18,7 +16,7 @@ public class DemoUser {
         File IDFile = new File("C:/Lesson35_DBFile/IDFile.txt");
 
         UserController userController = new UserController();
-        userController.getUserService().getUserRepository().setUserFile(userFile);
+        userController.getUserService().getUserRepository().setUserDB(userFile);
         //userController.getUserService().getUserRepository().setIDFile(IDFile);
 
         User user1 = new User("John", "pass111", "USA", UserType.USER_TYPE);

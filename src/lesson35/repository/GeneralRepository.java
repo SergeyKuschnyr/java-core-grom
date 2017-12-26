@@ -5,11 +5,15 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by Kushn_000 on 17.12.2017.
  */
 public class GeneralRepository {
+    private Set<Long> IDCollection = new HashSet<>();
 
     public long deleteInstance(long ID, File DBFile) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DBFile));
@@ -35,6 +39,15 @@ public class GeneralRepository {
             System.out.println("Can't read DBFile " + DBFile.getPath());
         }
         return 0;
+    }
+
+    public String setID() {
+        while (true) {
+            long value = Long.valueOf(new Random().nextInt(1000));
+            if (IDCollection.add(value)) {
+                return Long.toString(value);
+            }
+        }
     }
 }
 

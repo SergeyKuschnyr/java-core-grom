@@ -15,8 +15,6 @@ public class DemoHotel {
 
         HotelController hotelController = new HotelController();
         HotelRepository.setHotelFile(new File("C:/Lesson35_DBFile/hotelFile.txt"));
-        hotelController.getHotelService().getHotelRepository().
-                setHotelIDFile(new File("C:/Lesson35_DBFile/hotelIDFile.txt"));
 
         Hotel hotel1 = new Hotel("Star", "Ukraine", "Kiev", "Vasilkovskaya");
         Hotel hotel2 = new Hotel("Sun", "Germany", "Bonn", "Bakha");
@@ -30,7 +28,7 @@ public class DemoHotel {
 
             hotelController.deleteHotel(103);
 
-            hotelController.addHotel(hotel3);
+//            hotelController.addHotel(hotel3);
             hotelController.addHotel(hotel4);
         } catch (InstanceAlreadyExistsException e) {
             System.out.println(e.getMessage());

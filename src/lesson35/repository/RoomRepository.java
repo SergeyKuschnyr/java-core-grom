@@ -2,34 +2,22 @@ package lesson35.repository;
 
 import lesson35.model.Filter;
 import lesson35.model.Room;
-import org.apache.commons.io.FileUtils;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Kushn_000 on 10.12.2017.
  */
 public class RoomRepository extends GeneralRepository {
-    private File roomFile;
-    private File roomIDFile;
-    //private HotelRepository hotelRepository = new HotelRepository();
+    private File roomDB;
 
-    public void setRoomFile(File roomFile) {
-        this.roomFile = roomFile;
+    public void setRoomDB(File roomDB) {
+        this.roomDB = roomDB;
     }
 
-    public void setRoomIDFile(File file) {
-        this.roomIDFile = file;
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(roomIDFile))) {
-            bufferedWriter.append("100");
-        } catch (IOException e) {
-            System.out.println("Can't write to the file " + roomIDFile.getPath());
-        }
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public Map findRooms(Filter filter) {
@@ -52,11 +40,11 @@ public class RoomRepository extends GeneralRepository {
     }
 
     public Room addRoom(Room room) throws InstanceAlreadyExistsException {
-        if (findInRoomDB(room, roomFile)) {
+        if (findInRoomDB(room, roomDB)) {
             throw new InstanceAlreadyExistsException("The room " + room.toString() + " already exist");
         }
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(roomFile, true))) {
-            bufferedWriter.append(setRoomID(roomIDFile)).append(',');
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(roomDB, true))) {
+            bufferedWriter.append(setID()).append(',');
             bufferedWriter.append(Integer.toString(room.getNumberOfGuests())).append(',');
             bufferedWriter.append(Double.toString(room.getPrice())).append(',');
             bufferedWriter.append(Boolean.toString(room.isBreakfastIncluded())).append(',');
@@ -72,12 +60,12 @@ public class RoomRepository extends GeneralRepository {
     }
 
     public long deleteRoom(long ID) {    // Admin
-        return deleteInstance(ID, roomFile);
+        return deleteInstance(ID, roomDB);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     private Map findRoomByHotel(String ID, Map findRoom) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(roomFile))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(roomDB))) {
             String string;
             while ((string = bufferedReader.readLine()) != null) {
                 String[] strings = string.split(",");
@@ -92,17 +80,6 @@ public class RoomRepository extends GeneralRepository {
 
         }
         return new HashMap();
-    }
-
-    private String setRoomID(File IDfile) {
-        String string = null;
-        try {
-            string = Long.toString(Long.parseLong(FileUtils.readFileToString(IDfile)) + 1);
-            FileUtils.writeStringToFile(IDfile, string);
-        } catch (IOException e) {
-            System.out.println("Can not read from DBFile or write to DBFile " + IDfile);
-        }
-        return string;
     }
 
     private boolean findInRoomDB(Room room, File roomFile) {

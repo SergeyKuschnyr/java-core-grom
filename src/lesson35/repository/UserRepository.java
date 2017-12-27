@@ -29,15 +29,7 @@ public class UserRepository extends GeneralRepository{
         if (!registrationValidate(user, userDB)) {
             throw new InstanceAlreadyExistsException("User with name " + user.getUserName() + " already existed");
         }
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
-            bufferedWriter.append(setID()).append(',');
-            bufferedWriter.append(user.getUserName()).append(',');
-            bufferedWriter.append(user.getPassword()).append(',');
-            bufferedWriter.append(user.getCountry()).append(',');
-            bufferedWriter.append(user.getTYPE().toString()).append("\n");
-        } catch (IOException e) {
-            System.out.println("Can not write to file " + userDB.getPath());
-        }
+        userDBUpdate(user);
         return user.getId();
     }
 
@@ -61,7 +53,7 @@ public class UserRepository extends GeneralRepository{
         if (userFile == null || userFile.length() == 0) {
             return true;
         }
-        for (User user1 : creatingUserInstance()){
+        for (User user1 : userInstanceDB()){
             if (user1.equals(user)){
                 return false;
             }
@@ -73,7 +65,7 @@ public class UserRepository extends GeneralRepository{
         if (userName == null || password == null){
             return false;
         }
-        for (User user : creatingUserInstance()){
+        for (User user : userInstanceDB()){
             if (user.getUserName().equals(userName) && user.getPassword().equals(password)){
                 return true;
             }
@@ -81,7 +73,7 @@ public class UserRepository extends GeneralRepository{
         return false;
     }
 
-    private ArrayList<User> creatingUserInstance() {
+    private ArrayList<User> userInstanceDB() {
         if (userDB == null || userDB.length() == 0){
             return new ArrayList();
         }
@@ -97,6 +89,18 @@ public class UserRepository extends GeneralRepository{
             System.out.println("Can't read to file:" + userDB.getPath());
         }
         return usersAL;
+    }
+
+    private void userDBUpdate(User user){
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
+            bufferedWriter.append(setID()).append(',');
+            bufferedWriter.append(user.getUserName()).append(',');
+            bufferedWriter.append(user.getPassword()).append(',');
+            bufferedWriter.append(user.getCountry()).append(',');
+            bufferedWriter.append(user.getTYPE().toString()).append("\n");
+        } catch (IOException e) {
+            System.out.println("Can not write to file " + userDB.getPath());
+        }
     }
 }
 

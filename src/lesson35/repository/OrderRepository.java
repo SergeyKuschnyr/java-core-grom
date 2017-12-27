@@ -1,7 +1,5 @@
 package lesson35.repository;
 
-import lesson35.model.Room;
-
 import java.io.File;
 
 /**
@@ -11,7 +9,7 @@ public class OrderRepository {
     private File orderDB;
     private RoomRepository roomRepository;
 
-    public void bookRoom(long roomId, long userId, long hotelId) {
+    public void bookRoom(long roomId, long userId) {
 
     }
 
@@ -20,7 +18,7 @@ public class OrderRepository {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    private void inputValidator(long roomId, long userId, long hotelId) {
+    private void inputValidator(long roomId, long userId) {
 
     }
 }

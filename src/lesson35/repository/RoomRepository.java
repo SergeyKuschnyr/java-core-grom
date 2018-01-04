@@ -2,6 +2,7 @@ package lesson35.repository;
 
 import lesson35.model.Filter;
 import lesson35.model.Room;
+import lesson35.model.UserType;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
@@ -18,6 +19,9 @@ public class RoomRepository extends GeneralRepository {
         this.roomDB = roomDB;
     }
 
+    public File getRoomDB() {
+        return roomDB;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     public Map findRooms(Filter filter) {
@@ -32,14 +36,17 @@ public class RoomRepository extends GeneralRepository {
             }
             return findRoom;
         } catch (FileNotFoundException e) {
-            System.out.println("File " +  "not found");
+            System.out.println("File " + "not found");
         } catch (IOException e) {
-            System.out.println("Can't read file " );
+            System.out.println("Can't read file ");
         }
         return new HashMap();
     }
 
-    public Room addRoom(Room room) throws InstanceAlreadyExistsException {
+    public Room addRoom(Room room) throws Exception {
+        if (UserRepository.getUser().getTYPE().equals(UserType.USER_TYPE)) {
+            throw new Exception("You haven't the right for using this function");
+        }
         if (findInRoomDB(room, roomDB)) {
             throw new InstanceAlreadyExistsException("The room " + room.toString() + " already exist");
         }
@@ -59,7 +66,10 @@ public class RoomRepository extends GeneralRepository {
         return room;
     }
 
-    public long deleteRoom(long ID) {    // Admin
+    public long deleteRoom(long ID) throws Exception {
+        if (UserRepository.getUser().getTYPE().equals(UserType.USER_TYPE)) {
+            throw new Exception("You haven't the right for using this function");
+        }
         return deleteInstance(ID, roomDB);
     }
 

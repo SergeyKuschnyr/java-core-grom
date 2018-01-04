@@ -13,11 +13,9 @@ import java.io.File;
 public class DemoUser {
     public static void main(String[] args) {
         File userFile = new File("C:/Lesson35_DBFile/userFile.txt");
-        File IDFile = new File("C:/Lesson35_DBFile/IDFile.txt");
 
         UserController userController = new UserController();
         userController.getUserService().getUserRepository().setUserDB(userFile);
-        //userController.getUserService().getUserRepository().setIDFile(IDFile);
 
         User user1 = new User("John", "pass111", "USA", UserType.USER_TYPE);
         User user2 = new User("Bill", "pass222", "USA", UserType.USER_TYPE);

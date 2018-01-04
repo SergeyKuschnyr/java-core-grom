@@ -12,16 +12,16 @@ import java.util.ArrayList;
 /**
  * Created by Kushn_000 on 10.12.2017.
  */
-public class UserRepository extends GeneralRepository{
-    private File userDB;
+public class UserRepository extends GeneralRepository {
+    private static File userDB;
+    private static User user;
 
-    public File getUserDB() {
+    public static File getUserDB() {
         return userDB;
     }
 
-    public void setUserDB(File userDB) {
-        if (!userDB.exists())
-            this.userDB = new File(userDB.getPath());
+    public static User getUser() {
+        return user;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,18 +34,18 @@ public class UserRepository extends GeneralRepository{
     }
 
     public void login(String userName, String password) throws Exception {
-        //проверить есть ли юзер в базе по имени юзера и паролю
-        //
-        if (!loginValidate(userName, password)) {
+        User user2 = loginValidate(userName, password);
+        if (user2 == null) {
             throw new Exception("Name or password is wrong");
         }
-
+        user = user2;
     }
 
     public void logout() {
-
+        user = null;
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private boolean registrationValidate(User user, File userFile) {
         if (user == null) {
             return false;
@@ -53,45 +53,45 @@ public class UserRepository extends GeneralRepository{
         if (userFile == null || userFile.length() == 0) {
             return true;
         }
-        for (User user1 : userInstanceDB()){
-            if (user1.equals(user)){
+        for (User user1 : userInstanceDB()) {
+            if (user1.equals(user)) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean loginValidate(String userName, String password) {
-        if (userName == null || password == null){
-            return false;
+    private User loginValidate(String userName, String password) {
+        if (userName == null || password == null) {
+            return null;
         }
-        for (User user : userInstanceDB()){
-            if (user.getUserName().equals(userName) && user.getPassword().equals(password)){
-                return true;
+        for (User user : userInstanceDB()) {
+            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
+                return user;
             }
         }
-        return false;
+        return null;
     }
 
     private ArrayList<User> userInstanceDB() {
-        if (userDB == null || userDB.length() == 0){
+        if (userDB == null || userDB.length() == 0) {
             return new ArrayList();
         }
         ArrayList<User> usersAL = new ArrayList();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB))) {
             String string = "";
-            while ((string = bufferedReader.readLine()) != null){
+            while ((string = bufferedReader.readLine()) != null) {
                 String[] strings = string.split(",");
                 User user = new User(strings[1], strings[2], strings[3], UserType.valueOf(strings[4]));
                 usersAL.add(user);
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Can't read to file:" + userDB.getPath());
         }
         return usersAL;
     }
 
-    private void userDBUpdate(User user){
+    private void userDBUpdate(User user) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
             bufferedWriter.append(setID()).append(',');
             bufferedWriter.append(user.getUserName()).append(',');

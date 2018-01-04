@@ -8,8 +8,8 @@ import lesson35.service.OrderService;
 public class OrderController {
     OrderService orderService = new OrderService();
 
-    public void bookRoom(long roomId, long userId, long hotelId){
-        orderService.bookRoom(roomId, userId, hotelId);
+    public void bookRoom(long roomId, long userId){
+        orderService.bookRoom(roomId, userId);
     }
     public void cancelReservation(long roomId, long userId){
         orderService.cancelReservation(roomId, userId);

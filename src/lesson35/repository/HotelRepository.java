@@ -1,6 +1,7 @@
 package lesson35.repository;
 
 import lesson35.model.Hotel;
+import lesson35.model.UserType;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
@@ -22,7 +23,10 @@ public class HotelRepository extends GeneralRepository{
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
-    public Hotel addHotel(Hotel hotel) throws InstanceAlreadyExistsException {
+    public Hotel addHotel(Hotel hotel) throws Exception {
+        if (UserRepository.getUser().getTYPE().equals(UserType.USER_TYPE)){
+            throw new Exception("You haven't the right for using this function");
+        }
         if (findInHotelDB(hotel, hotelDB)) {
             throw new InstanceAlreadyExistsException("The hotel " + hotel.getName() + " already exist");
         }
@@ -48,10 +52,13 @@ public class HotelRepository extends GeneralRepository{
         return findHotelByParam(city, 3);
     }
 
-    public long deleteHotel(long ID) {
+    public long deleteHotel(long ID) throws Exception{
+        if (UserRepository.getUser().getTYPE().equals(UserType.USER_TYPE)){
+            throw new Exception("You haven't the right for using this function");
+        }
         return deleteInstance(ID, hotelDB);
     }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private Map<String, String> findHotelByParam(String param, int x) {
         if (hotelDB == null || (hotelDB.length() == 0)) {
             return new HashMap<>();

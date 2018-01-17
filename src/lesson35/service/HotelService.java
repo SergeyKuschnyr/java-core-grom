@@ -22,10 +22,10 @@ public class HotelService {
     public Map findHotelByCity(String city){
         return hotelRepository.findHotelByCity(city);
     }
-    public Hotel addHotel(Hotel hotel) throws InstanceAlreadyExistsException{      //admin
+    public Hotel addHotel(Hotel hotel) throws Exception{
         return hotelRepository.addHotel(hotel);
     }
-    public long deleteHotel(long hotel){   //admin
+    public long deleteHotel(long hotel) throws Exception{
         return hotelRepository.deleteHotel(hotel);
     }
 }

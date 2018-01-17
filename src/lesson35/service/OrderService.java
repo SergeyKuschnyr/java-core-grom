@@ -8,10 +8,10 @@ import lesson35.repository.OrderRepository;
 public class OrderService {
     OrderRepository orderRepository = new OrderRepository();
 
-    public void bookRoom(long roomId, long userId){
+    public void bookRoom(long roomId, long userId) throws Exception{
         orderRepository.bookRoom(roomId, userId);
     }
-    public void cancelReservation(long roomId, long userId){
+    public void cancelReservation(long roomId, long userId) throws Exception{
         orderRepository.cancelReservation(roomId, userId);
     }
 }

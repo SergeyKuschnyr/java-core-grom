@@ -4,10 +4,12 @@ import lesson35.controller.RoomController;
 import lesson35.model.Filter;
 import lesson35.model.Hotel;
 import lesson35.model.Room;
+import lesson35.repository.GeneralRepository;
 import lesson35.repository.HotelRepository;
+import lesson35.repository.UserRepository;
 
-import javax.management.InstanceAlreadyExistsException;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -16,8 +18,9 @@ import java.util.Date;
 public class DemoRoom {
     public static void main(String[] args) {
         RoomController roomController = new RoomController();
-        HotelRepository.setHotelFile(new File("C:/Lesson35_DBFile/hotelFile.txt"));
-        roomController.getRoomService().getRoomRepository().setRoomDB(new File("C:/Lesson35_DBFile/roomFile.txt"));
+        HotelRepository.setHotelDB(new File("C:/Lesson35_DBFile/hotelDB.txt"));
+        roomController.getRoomService().getRoomRepository().setRoomDB(new File("C:/Lesson35_DBFile/roomDB.txt"));
+        UserRepository.setUserDB(new File("C:/Lesson35_DBFile/userDB.txt"));
 
         Hotel hotel11 = new Hotel("Hollywood", "USA", "Los Angeles", "67 avenue");
         hotel11.setId(107);
@@ -29,32 +32,37 @@ public class DemoRoom {
         hotel3.setId(104);
         //Hotel hotel4 = new Hotel("Star", "Germany", "Bonn", "Gete");
 
-
+//        HotelRepository hotelRepository = new HotelRepository();
+//        ArrayList hotelsAL = hotelRepository.instanceDB(new File("C:/Lesson35_DBFile/hotelDB.txt"));
 
         Room room1 = new Room(2, 20, false, false,
                 new Date(2017, 12, 17), hotel1);
         Room room2 = new Room(2, 30, true, false,
-                new Date(2017, 12, 27), hotel11);
+                new Date(2017, 12, 27), hotel2);
         Room room3 = new Room(4, 50, false, false,
                 new Date(2017, 12, 25), hotel3);
         Room room4 = new Room(3, 40, true,true,
-                new Date(2017, 12,27), hotel3);
+                new Date(2017, 12,27), (Hotel) hotel11);
 
         try {
             roomController.addRoom(room1);
             roomController.addRoom(room2);
             roomController.addRoom(room3);
             roomController.addRoom(room4);
-        } catch (InstanceAlreadyExistsException e) {
-            System.out.println(e.getMessage());
+            roomController.deleteRoom(room3.getId());
+        } catch (Exception e) {
+            System.out.println("ERRROR " + e.getMessage());
         }
 
-        roomController.deleteRoom(103);
 
         Filter filter = new Filter(2, 20,false, false,
                 new Date(2017, 12, 17), "USA", "San Francisco");
 
-        System.out.println("TEST: " + (roomController.findRooms(filter)));
+        try {
+            System.out.println("TEST: " + (roomController.findRooms(filter)));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 }

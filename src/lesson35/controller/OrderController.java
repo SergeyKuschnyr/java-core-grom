@@ -8,10 +8,10 @@ import lesson35.service.OrderService;
 public class OrderController {
     OrderService orderService = new OrderService();
 
-    public void bookRoom(long roomId, long userId){
+    public void bookRoom(long roomId, long userId) throws Exception{
         orderService.bookRoom(roomId, userId);
     }
-    public void cancelReservation(long roomId, long userId){
+    public void cancelReservation(long roomId, long userId) throws Exception{
         orderService.cancelReservation(roomId, userId);
     }
 }

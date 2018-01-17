@@ -3,8 +3,8 @@ package lesson35.demo;
 import lesson35.controller.HotelController;
 import lesson35.model.Hotel;
 import lesson35.repository.HotelRepository;
+import lesson35.repository.UserRepository;
 
-import javax.management.InstanceAlreadyExistsException;
 import java.io.File;
 
 /**
@@ -14,7 +14,8 @@ public class DemoHotel {
     public static void main(String[] args) {
 
         HotelController hotelController = new HotelController();
-        HotelRepository.setHotelFile(new File("C:/Lesson35_DBFile/hotelFile.txt"));
+        HotelRepository.setHotelDB(new File("C:/Lesson35_DBFile/hotelDB.txt"));
+        UserRepository.setUserDB(new File("C:/Lesson35_DBFile/userDB.txt"));
 
         Hotel hotel1 = new Hotel("Star", "Ukraine", "Kiev", "Vasilkovskaya");
         Hotel hotel2 = new Hotel("Sun", "Germany", "Bonn", "Bakha");
@@ -26,15 +27,22 @@ public class DemoHotel {
             hotelController.addHotel(hotel2);
             hotelController.addHotel(hotel3);
 
-            hotelController.deleteHotel(103);
+            hotelController.deleteHotel(hotel3.getId());
 
-//            hotelController.addHotel(hotel3);
+            hotelController.addHotel(hotel3);
             hotelController.addHotel(hotel4);
-        } catch (InstanceAlreadyExistsException e) {
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("error: " + e.getMessage());
         }
 
         System.out.println(hotelController.findHotelByName("Star"));
         System.out.println(hotelController.findHotelByCity("Bonn"));
     }
 }
+
+
+
+
+
+
+

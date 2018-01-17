@@ -60,4 +60,12 @@ public class User {
         result = 31 * result + (TYPE != null ? TYPE.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", TYPE=" + TYPE +
+                '}';
+    }
 }

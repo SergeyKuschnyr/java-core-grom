@@ -9,10 +9,14 @@ public class DemoOrder {
     public static void main(String[] args) {
         OrderController orderController = new OrderController();
 
-        orderController.bookRoom(123, 456);
-        orderController.bookRoom(12,45);
+        try {
+            orderController.bookRoom(123, 456);
+            orderController.bookRoom(12, 45);
 
-        orderController.cancelReservation(123, 456);
+            orderController.cancelReservation(123, 456);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 }

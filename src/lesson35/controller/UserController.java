@@ -11,7 +11,7 @@ import javax.management.InstanceAlreadyExistsException;
 public class UserController {
     UserService userService = new UserService();
 
-    public long registerUser(User user) throws InstanceAlreadyExistsException{
+    public long registerUser(User user) throws Exception{
         return userService.registerUser(user);
     }
 
@@ -23,7 +23,7 @@ public class UserController {
         userService.login(userName, password);
 
     }
-    public void logout(){
+    public void logout() throws Exception{
         userService.logout();
 
     }

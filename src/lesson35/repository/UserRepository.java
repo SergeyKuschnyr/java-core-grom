@@ -2,6 +2,7 @@ package lesson35.repository;
 
 import lesson35.model.User;
 import lesson35.model.UserType;
+import org.apache.commons.io.FileUtils;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
@@ -14,18 +15,26 @@ import java.util.ArrayList;
  */
 public class UserRepository extends GeneralRepository {
     private static File userDB;
-    private static User user;
+    private static File loginUserDB;
 
     public static File getUserDB() {
         return userDB;
     }
 
-    public static User getUser() {
-        return user;
+    public static File getLoginUserDB() {
+        return loginUserDB;
+    }
+
+    public static void setUserDB(File userDB) {
+        UserRepository.userDB = userDB;
+    }
+
+    public static void setLoginUserDB(File loginUserDB) {
+        UserRepository.loginUserDB = loginUserDB;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public long registerUser(User user) throws InstanceAlreadyExistsException {
+    public long registerUser(User user) throws Exception {
         if (!registrationValidate(user, userDB)) {
             throw new InstanceAlreadyExistsException("User with name " + user.getUserName() + " already existed");
         }
@@ -33,28 +42,57 @@ public class UserRepository extends GeneralRepository {
         return user.getId();
     }
 
-    public void login(String userName, String password) throws Exception {
+    public void login(String userName, String password) throws Exception{
         User user2 = loginValidate(userName, password);
         if (user2 == null) {
             throw new Exception("Name or password is wrong");
         }
-        user = user2;
-    }
-
-    public void logout() {
-        user = null;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private boolean registrationValidate(User user, File userFile) {
-        if (user == null) {
-            return false;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB));
+             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
+            String string = "";
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((string = bufferedReader.readLine()) != null) {
+                String[] strings = string.split(",");
+                if (strings[1].equals(userName) && strings[2].equals(password)) {
+                    string += ",*";
+                }
+                stringBuilder.append(string).append("\n");
+            }
+            FileUtils.write(new File(userDB.getPath()), "");
+            bufferedWriter.append(stringBuilder.toString());
+        } catch (IOException e) {
+            System.out.println("Can't handled file: " + userDB.getPath());
         }
-        if (userFile == null || userFile.length() == 0) {
+    }
+
+    public void logout(){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB));
+             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
+            String string = "";
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((string = bufferedReader.readLine()) != null) {
+                String[] strings = string.split(",");
+                if (strings.length == 6) {
+                    string = string.replace(",*", "");
+                }
+                stringBuilder.append(string).append("\n");
+            }
+            FileUtils.write(new File(userDB.getPath()), "");
+            bufferedWriter.append(stringBuilder.toString());
+        } catch (IOException e) {
+            System.out.println("Can't handled file: " + userDB.getPath());
+        }
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private boolean registrationValidate(User user, File userDB) throws Exception {
+        if (user == null || userDB == null) {
+            throw new Exception("Input date is error");
+        }
+        if (userDB.length() == 0) {
             return true;
         }
-        for (User user1 : userInstanceDB()) {
-            if (user1.equals(user)) {
+        for (int i = 0; i < instanceDB(userDB).size(); i++) {
+            if (user.equals(instanceDB(userDB).get(i))) {
                 return false;
             }
         }
@@ -65,31 +103,22 @@ public class UserRepository extends GeneralRepository {
         if (userName == null || password == null) {
             return null;
         }
-        for (User user : userInstanceDB()) {
-            if (user.getUserName().equals(userName) && user.getPassword().equals(password)) {
-                return user;
+        ArrayList<User> arrayList = instanceDB(userDB);
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i).getUserName().equals(userName) &&
+                    arrayList.get(i).getPassword().equals(password)) {
+                return arrayList.get(i);
             }
         }
         return null;
     }
 
-    private ArrayList<User> userInstanceDB() {
-        if (userDB == null || userDB.length() == 0) {
-            return new ArrayList();
-        }
-        ArrayList<User> usersAL = new ArrayList();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB))) {
-            String string = "";
-            while ((string = bufferedReader.readLine()) != null) {
-                String[] strings = string.split(",");
-                User user = new User(strings[1], strings[2], strings[3], UserType.valueOf(strings[4]));
-                usersAL.add(user);
-            }
-        } catch (IOException e) {
-            System.out.println("Can't read to file:" + userDB.getPath());
-        }
-        return usersAL;
-    }
+//    @Override
+//    public void instanceDBUpdate(String[] strings, ArrayList itemAL) {
+//        User user = new User(strings[1], strings[2], strings[3], UserType.valueOf(strings[4]));//////////
+//        user.setId(Long.parseLong(strings[0]));///////////////////////////////////////////////////////////
+//        itemAL.add(user);
+//    }
 
     private void userDBUpdate(User user) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
@@ -102,5 +131,26 @@ public class UserRepository extends GeneralRepository {
             System.out.println("Can not write to file " + userDB.getPath());
         }
     }
+
+//    public void login(String userName, String password) throws Exception {
+//        User user2 = loginValidate(userName, password);
+//        if (user2 == null) {
+//            throw new Exception("Name or password is wrong");
+//        }
+//        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(loginUserDB, true))) {
+//            bufferedWriter.append(Long.toString(user2.getId())).append(',');
+//            bufferedWriter.append(user2.getUserName()).append(',');
+//            bufferedWriter.append(user2.getPassword()).append(',');
+//            bufferedWriter.append(user2.getCountry()).append(',');
+//            bufferedWriter.append(user2.getTYPE().toString()).append("\n");
+//        } catch (Exception e) {
+//            System.out.println("Can't write to the file" + loginUserDB.getPath());
+//        }
+//    }
+
+//    public void logout() throws Exception {
+//        FileUtils.write(new File(loginUserDB.getPath()), "");
+//    }
 }
+
 

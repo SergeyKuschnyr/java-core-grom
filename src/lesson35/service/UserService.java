@@ -12,9 +12,7 @@ import java.io.File;
 public class UserService {
     UserRepository userRepository = new UserRepository();
 
-    public long registerUser(User user) throws InstanceAlreadyExistsException{
-        //check business logic
-        //if logic ok
+    public long registerUser(User user) throws Exception{
         return userRepository.registerUser(user);
     }
 
@@ -26,7 +24,7 @@ public class UserService {
         userRepository.login(userName, password);
     }
 
-    public void logout(){
+    public void logout() throws Exception{
         userRepository.logout();
     }
 }

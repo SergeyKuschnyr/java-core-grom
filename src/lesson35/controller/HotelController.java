@@ -25,11 +25,11 @@ public class HotelController {
         return hotelService.findHotelByCity(city);
     }
 
-    public Hotel addHotel(Hotel hotel) throws InstanceAlreadyExistsException{      //admin
+    public Hotel addHotel(Hotel hotel) throws Exception{
         return hotelService.addHotel(hotel);
     }
 
-    public long deleteHotel(long hotel){   //admin
+    public long deleteHotel(long hotel) throws Exception{
         return hotelService.deleteHotel(hotel);
     }
 

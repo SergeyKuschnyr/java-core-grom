@@ -18,13 +18,13 @@ public class RoomService {
         return roomRepository;
     }
 
-    public Map findRooms(Filter filter) {
+    public Map findRooms(Filter filter) throws Exception{
         return roomRepository.findRooms(filter);
     }
-    public Room addRoom(Room room) throws InstanceAlreadyExistsException{       // Admin
+    public Room addRoom(Room room) throws Exception{
         return roomRepository.addRoom(room);
     }
-    public long deleteRoom(long ID){    // Admin
+    public long deleteRoom(long ID) throws Exception{
         return roomRepository.deleteRoom(ID);
     }
 }

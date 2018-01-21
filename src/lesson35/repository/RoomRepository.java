@@ -1,11 +1,13 @@
 package lesson35.repository;
 
+import lesson19.hw1.*;
 import lesson35.model.Filter;
 import lesson35.model.Room;
 import lesson35.model.UserType;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -133,10 +135,11 @@ public class RoomRepository extends GeneralRepository {
     }
 
     public String userTypeValidate() throws Exception{
-        if (UserRepository.getUserDB() == null || UserRepository.getUserDB().length() == 0){
+        File file = new File((new UserRepository()).getPath().toString());
+        if (file == null || file.length() == 0){
             throw new Exception("ERROR: The DB not found or one is empty");
         }
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(UserRepository.getUserDB()))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
             String string = "";
             while ((string = bufferedReader.readLine()) != null){
                 if (string.split(",").length == 6){
@@ -144,7 +147,7 @@ public class RoomRepository extends GeneralRepository {
                 }
             }
         }catch (IOException e){
-            System.out.println("ERROR: Can't read from file" + UserRepository.getUserDB().getPath());
+            System.out.println("ERROR: Can't read from file" + file.getPath());
         }
         return null;
     }

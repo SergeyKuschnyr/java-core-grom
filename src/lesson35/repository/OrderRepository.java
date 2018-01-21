@@ -1,8 +1,11 @@
 package lesson35.repository;
 
+import lesson35.model.Order;
+import lesson35.model.User;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -29,7 +32,8 @@ public class OrderRepository extends GeneralRepository {
         if (roomId == 0 || userId == 0) {
             throw new Exception("Booking error: input date is error");
         }
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(UserRepository.getUserDB()))){
+        try (BufferedReader bufferedReader =
+                     new BufferedReader(new FileReader(new File((new UserRepository()).getPath().toString())))){
             String string = "";
             while ((string = bufferedReader.readLine()) != null){
                 if (string.split(",").length == 6){

@@ -20,7 +20,7 @@ public class DemoRoom {
         RoomController roomController = new RoomController();
         HotelRepository.setHotelDB(new File("C:/Lesson35_DBFile/hotelDB.txt"));
         roomController.getRoomService().getRoomRepository().setRoomDB(new File("C:/Lesson35_DBFile/roomDB.txt"));
-        UserRepository.setUserDB(new File("C:/Lesson35_DBFile/userDB.txt"));
+        (new UserRepository()).setUserDB(new File((new UserRepository()).getPath().toString()));
 
         Hotel hotel11 = new Hotel("Hollywood", "USA", "Los Angeles", "67 avenue");
         hotel11.setId(107);

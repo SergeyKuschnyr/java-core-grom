@@ -7,6 +7,8 @@ import org.apache.commons.io.FileUtils;
 import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 
@@ -14,23 +16,19 @@ import java.util.ArrayList;
  * Created by Kushn_000 on 10.12.2017.
  */
 public class UserRepository extends GeneralRepository {
-    private static File userDB;
-    private static File loginUserDB;
+    private File userDB ;
+    private Path path = Paths.get("C:/Lesson35_DBFile/userDB.txt");
 
-    public static File getUserDB() {
+    public File getUserDB() {
         return userDB;
     }
 
-    public static File getLoginUserDB() {
-        return loginUserDB;
+    public void setUserDB(File userDB) {
+        this.userDB = userDB;
     }
 
-    public static void setUserDB(File userDB) {
-        UserRepository.userDB = userDB;
-    }
-
-    public static void setLoginUserDB(File loginUserDB) {
-        UserRepository.loginUserDB = loginUserDB;
+    public Path getPath() {
+        return path;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,9 +40,8 @@ public class UserRepository extends GeneralRepository {
         return user.getId();
     }
 
-    public void login(String userName, String password) throws Exception{
-        User user2 = loginValidate(userName, password);
-        if (user2 == null) {
+    public void login(String userName, String password) throws Exception {
+        if (loginValidate(userName, password) == null) {
             throw new Exception("Name or password is wrong");
         }
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB));
@@ -61,11 +58,11 @@ public class UserRepository extends GeneralRepository {
             FileUtils.write(new File(userDB.getPath()), "");
             bufferedWriter.append(stringBuilder.toString());
         } catch (IOException e) {
-            System.out.println("Can't handled file: " + userDB.getPath());
+            System.out.println("Can't to handle file: " + userDB.getPath());
         }
     }
 
-    public void logout(){
+    public void logout() {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB));
              BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
             String string = "";
@@ -83,7 +80,23 @@ public class UserRepository extends GeneralRepository {
             System.out.println("Can't handled file: " + userDB.getPath());
         }
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public ArrayList instanceDB(ArrayList<String> strings) {
+        if (strings == null) {
+            return new ArrayList();
+        }
+        ArrayList instancesAL = new ArrayList();
+
+        for (String string : strings) {
+            String[] str = string.split(",");
+            User user = new User(str[1], str[2], str[3], UserType.valueOf(str[4]));//////////
+            user.setId(Long.parseLong(str[0]));///////////////////////////////////////////////////////////
+            instancesAL.add(user);
+        }
+        return instancesAL;
+    }
+
     private boolean registrationValidate(User user, File userDB) throws Exception {
         if (user == null || userDB == null) {
             throw new Exception("Input date is error");
@@ -91,19 +104,19 @@ public class UserRepository extends GeneralRepository {
         if (userDB.length() == 0) {
             return true;
         }
-        for (int i = 0; i < instanceDB(userDB).size(); i++) {
-            if (user.equals(instanceDB(userDB).get(i))) {
+        for (int i = 0; i < instanceDB(readFile(userDB)).size(); i++) {
+            if (user.equals(instanceDB(readFile(userDB)).get(i))) {
                 return false;
             }
         }
         return true;
     }
 
-    private User loginValidate(String userName, String password) {
+    private User loginValidate(String userName, String password) throws Exception {
         if (userName == null || password == null) {
             return null;
         }
-        ArrayList<User> arrayList = instanceDB(userDB);
+        ArrayList<User> arrayList = instanceDB(readFile(userDB));
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i).getUserName().equals(userName) &&
                     arrayList.get(i).getPassword().equals(password)) {
@@ -120,7 +133,7 @@ public class UserRepository extends GeneralRepository {
 //        itemAL.add(user);
 //    }
 
-    private void userDBUpdate(User user) {
+    public void userDBUpdate(User user) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
             bufferedWriter.append(setID()).append(',');
             bufferedWriter.append(user.getUserName()).append(',');

@@ -1,15 +1,8 @@
 package lesson35.repository;
 
-import lesson35.model.Hotel;
-import lesson35.model.Room;
-import lesson35.model.User;
-import lesson35.model.UserType;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.lang.reflect.Field;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -17,6 +10,25 @@ import java.util.*;
  */
 public class GeneralRepository {
     private Set<Long> IDCollection = new HashSet<>();
+
+    public ArrayList<String> readFile(File DBfile) throws Exception{
+        if (DBfile == null){
+            throw new Exception("GeneralRepository/readFile: input parameter is null");
+        }
+        if (DBfile.length() == 0){
+            throw new Exception("GeneralRepository/readFile: file " + DBfile.getPath() + "is empty");
+        }
+
+        ArrayList<String> stringAL = new ArrayList();
+
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DBfile))){
+            String string;
+            while ((string = bufferedReader.readLine()) != null){
+                stringAL.add(string);
+            }
+        }
+        return stringAL;
+    }
 
     public long fileUpdate(long ID, File DBFile) {
         if (ID == 0 || DBFile == null || DBFile.length() == 0) {
@@ -54,25 +66,6 @@ public class GeneralRepository {
                 return Long.toString(value);
             }
         }
-    }
-
-    public ArrayList instanceDB(File file) {
-        if (file == null || file.length() == 0) {
-            return new ArrayList();
-        }
-        ArrayList instancesAL = new ArrayList();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-            String string = "";
-            while ((string = bufferedReader.readLine()) != null) {
-                String[] strings = string.split(",");
-                User user = new User(strings[1], strings[2], strings[3], UserType.valueOf(strings[4]));//////////
-                user.setId(Long.parseLong(strings[0]));///////////////////////////////////////////////////////////
-                instancesAL.add(user);
-            }
-        } catch (IOException e) {
-            System.out.println("Can't read from file:" + file.getPath());
-        }
-        return instancesAL;
     }
 
 //    public <T> ArrayList instanceDB(File file, T t) throws ParseException {

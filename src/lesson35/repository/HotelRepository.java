@@ -115,7 +115,8 @@ public class HotelRepository extends GeneralRepository {
     }
 
     public String userTypeValidate() throws Exception {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(UserRepository.getUserDB()))) {
+        try (BufferedReader bufferedReader =
+                     new BufferedReader(new FileReader(new File((new UserRepository()).getPath().toString())))) {
             String string = "";
             while ((string = bufferedReader.readLine()) != null) {
                 String[] strings = string.split(",");
@@ -125,7 +126,7 @@ public class HotelRepository extends GeneralRepository {
             }
             throw new Exception("Please login");
         } catch (IOException e) {
-            System.out.println("Can't read from file: " + UserRepository.getUserDB().getPath());
+            System.out.println("Can't read from file: " + (new UserRepository()).getPath().toString());
         }
         return null;
     }

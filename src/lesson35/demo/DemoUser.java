@@ -13,12 +13,9 @@ import java.io.File;
  */
 public class DemoUser {
     public static void main(String[] args) {
-        File userFile = new File("C:/Lesson35_DBFile/userDB.txt");
-        //File loginUserDB = new File("C:/Lesson35_DBFile/loginUserDB.txt");
 
         UserController userController = new UserController();
-        UserRepository.setUserDB(userFile);
-        //UserRepository.setLoginUserDB(loginUserDB);
+        (new UserRepository()).setUserDB(new File((new UserRepository()).getPath().toString()));
 
         User user1 = new User("John", "pass111", "USA", UserType.USER_TYPE);
         User user2 = new User("Bill", "pass222", "USA", UserType.USER_TYPE);

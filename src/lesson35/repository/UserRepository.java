@@ -33,10 +33,10 @@ public class UserRepository extends GeneralRepository {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public long registerUser(User user) throws Exception {
-        if (!registrationValidate(user, userDB)) {
+        if (!registrationValidate(user)) {
             throw new InstanceAlreadyExistsException("User with name " + user.getUserName() + " already existed");
         }
-        userDBUpdate(user);
+        addUser(user);
         return user.getId();
     }
 
@@ -82,7 +82,7 @@ public class UserRepository extends GeneralRepository {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public ArrayList instanceDB(ArrayList<String> strings) {
+    public ArrayList<User> mapping(ArrayList<String> strings) {
         if (strings == null) {
             return new ArrayList();
         }
@@ -97,15 +97,15 @@ public class UserRepository extends GeneralRepository {
         return instancesAL;
     }
 
-    private boolean registrationValidate(User user, File userDB) throws Exception {
+    private boolean registrationValidate(User user) throws Exception {
         if (user == null || userDB == null) {
             throw new Exception("Input date is error");
         }
         if (userDB.length() == 0) {
             return true;
         }
-        for (int i = 0; i < instanceDB(readFile(userDB)).size(); i++) {
-            if (user.equals(instanceDB(readFile(userDB)).get(i))) {
+        for (int i = 0; i < mapping(readFile(userDB)).size(); i++) {
+            if (user.equals(mapping(readFile(userDB)).get(i))) {
                 return false;
             }
         }
@@ -116,7 +116,7 @@ public class UserRepository extends GeneralRepository {
         if (userName == null || password == null) {
             return null;
         }
-        ArrayList<User> arrayList = instanceDB(readFile(userDB));
+        ArrayList<User> arrayList = mapping(readFile(userDB));
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i).getUserName().equals(userName) &&
                     arrayList.get(i).getPassword().equals(password)) {
@@ -126,14 +126,7 @@ public class UserRepository extends GeneralRepository {
         return null;
     }
 
-//    @Override
-//    public void instanceDBUpdate(String[] strings, ArrayList itemAL) {
-//        User user = new User(strings[1], strings[2], strings[3], UserType.valueOf(strings[4]));//////////
-//        user.setId(Long.parseLong(strings[0]));///////////////////////////////////////////////////////////
-//        itemAL.add(user);
-//    }
-
-    public void userDBUpdate(User user) {
+    public void addUser(User user) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
             bufferedWriter.append(setID()).append(',');
             bufferedWriter.append(user.getUserName()).append(',');
@@ -144,6 +137,13 @@ public class UserRepository extends GeneralRepository {
             System.out.println("Can not write to file " + userDB.getPath());
         }
     }
+
+//    @Override
+//    public void instanceDBUpdate(String[] strings, ArrayList itemAL) {
+//        User user = new User(strings[1], strings[2], strings[3], UserType.valueOf(strings[4]));//////////
+//        user.setId(Long.parseLong(strings[0]));///////////////////////////////////////////////////////////
+//        itemAL.add(user);
+//    }
 
 //    public void login(String userName, String password) throws Exception {
 //        User user2 = loginValidate(userName, password);

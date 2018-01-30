@@ -68,7 +68,7 @@ public class GeneralRepository {
         }
     }
 
-//    public <T> ArrayList instanceDB(File file, T t) throws ParseException {
+//    public <T> ArrayList mapping(File file, T t) throws ParseException {
 //        if (file == null || file.length() == 0) {
 //            return new ArrayList();
 //        }

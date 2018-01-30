@@ -33,7 +33,7 @@ public class DemoRoom {
         //Hotel hotel4 = new Hotel("Star", "Germany", "Bonn", "Gete");
 
 //        HotelRepository hotelRepository = new HotelRepository();
-//        ArrayList hotelsAL = hotelRepository.instanceDB(new File("C:/Lesson35_DBFile/hotelDB.txt"));
+//        ArrayList hotelsAL = hotelRepository.mapping(new File("C:/Lesson35_DBFile/hotelDB.txt"));
 
         Room room1 = new Room(2, 20, false, false,
                 new Date(2017, 12, 17), hotel1);

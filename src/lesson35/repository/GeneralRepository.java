@@ -11,50 +11,69 @@ import java.util.*;
 public class GeneralRepository {
     private Set<Long> IDCollection = new HashSet<>();
 
-    public ArrayList<String> readFile(File DBfile) throws Exception{
-        if (DBfile == null){
+    public ArrayList<String> readFile(File DBfile) throws Exception {
+        if (DBfile == null) {
             throw new Exception("GeneralRepository/readFile: input parameter is null");
         }
-        if (DBfile.length() == 0){
+        if (DBfile.length() == 0) {
             throw new Exception("GeneralRepository/readFile: file " + DBfile.getPath() + "is empty");
         }
 
         ArrayList<String> stringAL = new ArrayList();
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DBfile))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DBfile))) {
             String string;
-            while ((string = bufferedReader.readLine()) != null){
+            while ((string = bufferedReader.readLine()) != null) {
                 stringAL.add(string);
             }
         }
         return stringAL;
     }
 
-    public long fileUpdate(long ID, File DBFile) {
+    public long DBUpdate(long ID, File DBFile) {
         if (ID == 0 || DBFile == null || DBFile.length() == 0) {
             return 0;
         }
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DBFile));
              BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(DBFile, true))) {
-            String instanceInfo;
-            StringBuilder newContent = new StringBuilder("");
-            int count = 0;
 
-            while ((instanceInfo = bufferedReader.readLine()) != null) {
-                String[] instanceArr = instanceInfo.split(",");
-                if (instanceArr[0].equals(Long.toString(ID))) {
-                    count++;
-                    continue;
-                }
-                newContent.append(instanceInfo).append("\n");
-            }
-            if (count != 0) {
-                FileUtils.write(new File(DBFile.getPath()), "");
-                bufferedWriter.append(newContent.toString());
-                return ID;
-            }
+            deleteHotelFromDB(DBFile, bufferedReader, bufferedWriter, ID);
+
         } catch (IOException e) {
             System.out.println("Can't read DBFile " + DBFile.getPath());
+        }
+        return 0;
+    }
+
+    private StringBuilder readingOfDB(BufferedReader bufferedReader, long ID, int counter) throws IOException {
+        String instanceInfo;
+        StringBuilder newContent = new StringBuilder("");
+
+        while ((instanceInfo = bufferedReader.readLine()) != null) {
+            if (findingOfHotel(instanceInfo, ID)) {
+                counter++;
+                continue;
+            }
+            newContent.append(instanceInfo).append("\n");
+        }
+        return newContent;
+    }
+
+    private boolean findingOfHotel(String instanceInfo, long ID) {
+        String[] instanceArr = instanceInfo.split(",");
+        if (instanceArr[0].equals(Long.toString(ID))) {
+            return true;
+        }
+        return false;
+    }
+
+    private long deleteHotelFromDB(File DBFile, BufferedReader bufferedReader, BufferedWriter bufferedWriter, long ID) throws IOException {
+        int counter = 0;
+        StringBuilder stringBuilder = readingOfDB(bufferedReader, ID, counter);
+        if (counter != 0) {
+            FileUtils.write(new File(DBFile.getPath()), "");
+            bufferedWriter.append(stringBuilder.toString());
+            return ID;
         }
         return 0;
     }

@@ -55,7 +55,7 @@ public class HotelRepository extends GeneralRepository {
         if (userTypeValidate().equals((UserType.USER_TYPE).toString())) {
             throw new Exception("You haven't the right for using this function");
         }
-        return fileUpdate(ID, hotelDB);
+        return DBUpdate(ID, hotelDB);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

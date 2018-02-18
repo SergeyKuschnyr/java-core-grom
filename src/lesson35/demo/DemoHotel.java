@@ -15,7 +15,7 @@ public class DemoHotel {
 
         HotelController hotelController = new HotelController();
         HotelRepository.setHotelDB(new File("C:/Lesson35_DBFile/hotelDB.txt"));
-        (new UserRepository()).setUserDB(new File((new UserRepository()).getPath().toString()));
+        //(new UserRepository()).setUserDB(new File((new UserRepository()).getPath().toString()));
 
         Hotel hotel1 = new Hotel("Star", "Ukraine", "Kiev", "Vasilkovskaya");
         Hotel hotel2 = new Hotel("Sun", "Germany", "Bonn", "Bakha");

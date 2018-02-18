@@ -16,18 +16,9 @@ import java.util.ArrayList;
  * Created by Kushn_000 on 10.12.2017.
  */
 public class UserRepository extends GeneralRepository {
-    private File userDB ;
-    private Path path = Paths.get("C:/Lesson35_DBFile/userDB.txt");
+    private String path = "C:/Lesson35_DBFile/userDB.txt";
 
-    public File getUserDB() {
-        return userDB;
-    }
-
-    public void setUserDB(File userDB) {
-        this.userDB = userDB;
-    }
-
-    public Path getPath() {
+    public String getPath() {
         return path;
     }
 
@@ -44,8 +35,8 @@ public class UserRepository extends GeneralRepository {
         if (loginValidate(userName, password) == null) {
             throw new Exception("Name or password is wrong");
         }
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB));
-             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
+             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(path), true))) {
             String string = "";
             StringBuilder stringBuilder = new StringBuilder();
             while ((string = bufferedReader.readLine()) != null) {
@@ -55,16 +46,16 @@ public class UserRepository extends GeneralRepository {
                 }
                 stringBuilder.append(string).append("\n");
             }
-            FileUtils.write(new File(userDB.getPath()), "");
+            FileUtils.write(new File(path), "");
             bufferedWriter.append(stringBuilder.toString());
         } catch (IOException e) {
-            System.out.println("Can't to handle file: " + userDB.getPath());
+            System.out.println("Can't to handle file: " + path);
         }
     }
 
     public void logout() {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(userDB));
-             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(path)));
+             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(path), true))) {
             String string = "";
             StringBuilder stringBuilder = new StringBuilder();
             while ((string = bufferedReader.readLine()) != null) {
@@ -74,10 +65,10 @@ public class UserRepository extends GeneralRepository {
                 }
                 stringBuilder.append(string).append("\n");
             }
-            FileUtils.write(new File(userDB.getPath()), "");
+            FileUtils.write(new File(path), "");
             bufferedWriter.append(stringBuilder.toString());
         } catch (IOException e) {
-            System.out.println("Can't handled file: " + userDB.getPath());
+            System.out.println("Can't handled file: " + path);
         }
     }
 
@@ -98,14 +89,14 @@ public class UserRepository extends GeneralRepository {
     }
 
     private boolean registrationValidate(User user) throws Exception {
-        if (user == null || userDB == null) {
+        if (user == null || new File(path) == null) {
             throw new Exception("Input date is error");
         }
-        if (userDB.length() == 0) {
+        if ((new File(path)).length() == 0) {
             return true;
         }
-        for (int i = 0; i < mapping(readFile(userDB)).size(); i++) {
-            if (user.equals(mapping(readFile(userDB)).get(i))) {
+        for (int i = 0; i < mapping(readFile(new File(path))).size(); i++) {
+            if (user.equals(mapping(readFile(new File(path))).get(i))) {
                 return false;
             }
         }
@@ -116,7 +107,7 @@ public class UserRepository extends GeneralRepository {
         if (userName == null || password == null) {
             return null;
         }
-        ArrayList<User> arrayList = mapping(readFile(userDB));
+        ArrayList<User> arrayList = mapping(readFile(new File(path)));
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i).getUserName().equals(userName) &&
                     arrayList.get(i).getPassword().equals(password)) {
@@ -127,14 +118,14 @@ public class UserRepository extends GeneralRepository {
     }
 
     public void addUser(User user) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(userDB, true))) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(path), true))) {
             bufferedWriter.append(setID()).append(',');
             bufferedWriter.append(user.getUserName()).append(',');
             bufferedWriter.append(user.getPassword()).append(',');
             bufferedWriter.append(user.getCountry()).append(',');
             bufferedWriter.append(user.getTYPE().toString()).append("\n");
         } catch (IOException e) {
-            System.out.println("Can not write to file " + userDB.getPath());
+            System.out.println("Can not write to file " + (new File(path)).getPath());
         }
     }
 

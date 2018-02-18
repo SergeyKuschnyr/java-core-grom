@@ -1,6 +1,5 @@
 package lesson35.repository;
 
-import lesson19.hw1.*;
 import lesson35.model.Filter;
 import lesson35.model.Room;
 import lesson35.model.UserType;
@@ -75,7 +74,7 @@ public class RoomRepository extends GeneralRepository {
         if (userTypeValidate().equals(UserType.USER_TYPE.toString())){
             throw new Exception("You haven't the right for using this function");
         }
-        return fileUpdate(ID, roomDB);
+        return DBUpdate(ID, roomDB);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////

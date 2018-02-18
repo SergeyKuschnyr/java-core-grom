@@ -15,7 +15,7 @@ public class DemoUser {
     public static void main(String[] args) {
 
         UserController userController = new UserController();
-        (new UserRepository()).setUserDB(new File((new UserRepository()).getPath().toString()));
+        //(new UserRepository()).setUserDB(new File((new UserRepository()).getPath().toString()));
 
         User user1 = new User("John", "pass111", "USA", UserType.USER_TYPE);
         User user2 = new User("Bill", "pass222", "USA", UserType.USER_TYPE);

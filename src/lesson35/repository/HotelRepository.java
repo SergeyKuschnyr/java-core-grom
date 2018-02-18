@@ -44,11 +44,11 @@ public class HotelRepository extends GeneralRepository {
     }
 
     public Map findHotelByName(String name) {
-        return findHotelByParam(name, 1);
+        return findHotelByParam(name);
     }
 
     public Map findHotelByCity(String city) {
-        return findHotelByParam(city, 3);
+        return findHotelByParam(city);
     }
 
     public long deleteHotel(long ID) throws Exception {
@@ -59,28 +59,49 @@ public class HotelRepository extends GeneralRepository {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private Map<String, String> findHotelByParam(String param, int x) {
+    private Map<String, Hotel> findHotelByParam(String param) {
         if (param == null) {
             return new HashMap<>();
         }
         if (hotelDB == null || (hotelDB.length() == 0)) {
             return new HashMap<>();
         }
-        Map<String, String> hotelsByParam = new HashMap<>();
+        Map<String, Hotel> hotelsByParam = new HashMap<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(hotelDB.getPath()))) {
-            String nameTemp;
-            while ((nameTemp = bufferedReader.readLine()) != null) {
-                String[] hotelDescription = nameTemp.split(",");
-                if (hotelDescription[x].equals(param)) {
-                    hotelsByParam.put(hotelDescription[0], param);
-                }
-            }
+
+            readingOfDB(bufferedReader, hotelsByParam);
+            hotelsByParam.putAll(findByParam(hotelsByParam, param));
+
         } catch (FileNotFoundException e) {
             System.out.println("File " + hotelDB + "no exist");
         } catch (IOException e) {
             System.out.println("Can't read file " + hotelDB);
         }
         return hotelsByParam;
+    }
+
+    private void readingOfDB(BufferedReader bufferedReader, Map hotelsByParam) throws IOException{
+        String nameTemp;
+        while ((nameTemp = bufferedReader.readLine()) != null) {
+            String[] hotelDescription = nameTemp.split(",");
+            mapping(hotelDescription, hotelsByParam);
+        }
+    }
+
+    private void mapping(String[] strings, Map hotelsByParam){
+        Hotel hotel = new Hotel(strings[0], strings[1], strings[2], strings[3]);
+        hotelsByParam.put(strings[0], hotel);
+    }
+
+    private Map<String, Hotel> findByParam(Map<String, Hotel> hotelsByParam, String param){
+        Map<String, Hotel> hotelMap = new HashMap<>();
+        for (Hotel hotel : hotelsByParam.values()){
+            if (hotel.getName().equals(param) || hotel.getCity().equals(param)){
+                hotelMap.put(hotel.getName(), hotel);
+            }
+        }
+        hotelsByParam.clear();
+        return hotelMap;
     }
 
     private boolean validator(Hotel hotel) throws Exception {

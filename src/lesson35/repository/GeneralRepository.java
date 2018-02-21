@@ -1,5 +1,6 @@
 package lesson35.repository;
 
+import lesson35.model.Hotel;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -30,33 +31,36 @@ public class GeneralRepository {
         return stringAL;
     }
 
-    public long DBUpdate(long ID, File DBFile) {
-        if (ID == 0 || DBFile == null || DBFile.length() == 0) {
-            return 0;
-        }
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DBFile));
-             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(DBFile, true))) {
+//    public long deleteHotelFromDB(long ID, File DBFile) {
+//        if (ID == 0 || DBFile == null || DBFile.length() == 0) {
+//            return 0;
+//        }
+//        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DBFile));
+//             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(DBFile, true))) {
+//            int counter = 0;
+//            StringBuilder stringBuilder = readingOfDB(bufferedReader, ID, counter);
+//            if (counter != 0) {
+//                FileUtils.write(new File(DBFile.getPath()), "");
+//                bufferedWriter.append(stringBuilder.toString());
+//                return ID;
+//            }
+//        } catch (IOException e) {
+//            System.out.println("Can't read DBFile " + DBFile.getPath());
+//        }
+//        return 0;
+//    }
 
-            deleteHotelFromDB(DBFile, bufferedReader, bufferedWriter, ID);
-
-        } catch (IOException e) {
-            System.out.println("Can't read DBFile " + DBFile.getPath());
-        }
-        return 0;
-    }
-
-    private StringBuilder readingOfDB(BufferedReader bufferedReader, long ID, int counter) throws IOException {
-        String instanceInfo;
-        StringBuilder newContent = new StringBuilder("");
-
-        while ((instanceInfo = bufferedReader.readLine()) != null) {
-            if (findingOfHotel(instanceInfo, ID)) {
-                counter++;
-                continue;
+    public StringBuilder readingOfDB(File DBFile) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(DBFile))){
+            String tempString = "";
+            while ((tempString = bufferedReader.readLine()) != null){
+                stringBuilder.append(tempString).append("\n");
             }
-            newContent.append(instanceInfo).append("\n");
+        }catch (IOException e){
+            System.out.println(e.getMessage());
         }
-        return newContent;
+        return stringBuilder;
     }
 
     private boolean findingOfHotel(String instanceInfo, long ID) {
@@ -65,17 +69,6 @@ public class GeneralRepository {
             return true;
         }
         return false;
-    }
-
-    private long deleteHotelFromDB(File DBFile, BufferedReader bufferedReader, BufferedWriter bufferedWriter, long ID) throws IOException {
-        int counter = 0;
-        StringBuilder stringBuilder = readingOfDB(bufferedReader, ID, counter);
-        if (counter != 0) {
-            FileUtils.write(new File(DBFile.getPath()), "");
-            bufferedWriter.append(stringBuilder.toString());
-            return ID;
-        }
-        return 0;
     }
 
     public String setID() {

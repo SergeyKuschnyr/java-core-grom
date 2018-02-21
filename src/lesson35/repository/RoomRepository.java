@@ -1,12 +1,14 @@
 package lesson35.repository;
 
 import lesson35.model.Filter;
+import lesson35.model.Hotel;
 import lesson35.model.Room;
 import lesson35.model.UserType;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.io.*;
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -25,8 +27,8 @@ public class RoomRepository extends GeneralRepository {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public Map findRooms(Filter filter) throws Exception{
-        if (filter == null){
+    public Map findRooms(Filter filter) throws Exception {
+        if (filter == null) {
             System.out.println("Input date is error");
             return new HashMap();
         }
@@ -53,15 +55,11 @@ public class RoomRepository extends GeneralRepository {
             throw new InstanceAlreadyExistsException("The room " + room.toString() + " already exist");
         }
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(roomDB, true))) {
-            String string = setID();
-            room.setId(Long.parseLong(string));
-            bufferedWriter.append(string).append(',');
-            bufferedWriter.append(Integer.toString(room.getNumberOfGuests())).append(',');
-            bufferedWriter.append(Double.toString(room.getPrice())).append(',');
-            bufferedWriter.append(Boolean.toString(room.isBreakfastIncluded())).append(',');
-            bufferedWriter.append(Boolean.toString(room.isPetsAllowed())).append(',');
-            bufferedWriter.append(room.getDateAvailableFrom().toString()).append(',');
-            bufferedWriter.append(Long.toString(room.getHotel().getId())).append("\n");
+            room.setId(Long.parseLong(setID()));
+            bufferedWriter.append(Long.toString(room.getId()) + "," + Integer.toString(room.getNumberOfGuests()) + "," +
+                    Double.toString(room.getPrice()) + "," + Boolean.toString(room.isBreakfastIncluded()) + "," +
+                    Boolean.toString(room.isPetsAllowed()) + "," + room.getDateAvailableFrom().toString() + "," +
+                    Long.toString(room.getHotel().getId())).append("\n");
         } catch (FileNotFoundException e) {
             System.out.println("ERROR: File of DB " + roomDB.getPath() + " not found");
         } catch (IOException e) {
@@ -71,15 +69,66 @@ public class RoomRepository extends GeneralRepository {
     }
 
     public long deleteRoom(long ID) throws Exception {
-        if (userTypeValidate().equals(UserType.USER_TYPE.toString())){
+        if (userTypeValidate().equals(UserType.USER_TYPE.toString())) {
             throw new Exception("You haven't the right for using this function");
         }
-        return DBUpdate(ID, roomDB);
+        Map <String, Room> roomMap = mapping(readingOfDB(roomDB));
+        for (Room room : roomMap.values()){
+            if (room.getId() == ID){
+                roomMap.remove(room.getId());
+                return ID;
+            }
+        }
+        throw new Exception("Entered ID " + ID + " not exist");
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private Map<String, Room> mapping(StringBuilder stringBuilder) {
+        Map<String, Room> instanceDB = new HashMap();
+        String s = stringBuilder.toString();
+        String[] strings = s.split("\\n");
+        for (String str : strings) {
+            String[] strg = str.split(",");
+            Room t = new Room(Integer.parseInt(strg[1]), Double.parseDouble(strg[2]), Boolean.parseBoolean(strg[3]),
+                    Boolean.parseBoolean(strg[4]), getDateForRoom(strg[5]), getHotelForRoom(strg[6]));
+            t.setId(Long.parseLong(strg[0]));
+            instanceDB.put(strg[0], t);
+        }
+        return instanceDB;
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    private Map findRoomByHotel(String ID) throws Exception{
-        if (ID == null){
+    private Date getDateForRoom(String s){
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+            return simpleDateFormat.parse(s);
+        }catch (ParseException e){
+            System.out.println("String to date casting error");
+        }
+        return null;
+    }
+
+    private Hotel getHotelForRoom(String s){
+        Hotel hotel;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(HotelRepository.getHotelDB()))) {
+            String s1;
+            while ((s1 = bufferedReader.readLine()) != null){
+                String[] strings1 = s1.split(",");
+                if (strings1[0].equals(s)){
+                    hotel = new Hotel(strings1[1], strings1[2], strings1[3], strings1[4]);
+                    hotel.setId(Long.parseLong(strings1[0]));
+                    return hotel;
+                }
+            }
+        }catch (FileNotFoundException e){
+            System.out.println("Can't find file: " + roomDB);
+        }catch (IOException e) {
+            System.out.println("Can't read file: " + roomDB);
+        }
+        return null;
+    }
+
+    private Map findRoomByHotel(String ID) throws Exception {
+        if (ID == null) {
             throw new Exception("ERROR: Input date is error");
         }
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(roomDB))) {
@@ -103,14 +152,14 @@ public class RoomRepository extends GeneralRepository {
         return new HashMap();
     }
 
-    private boolean roomValidate(Room room, File roomDB) throws Exception{
-        if (userTypeValidate().equals(UserType.USER_TYPE.toString() )){
+    private boolean roomValidate(Room room, File roomDB) throws Exception {
+        if (userTypeValidate().equals(UserType.USER_TYPE.toString())) {
             throw new Exception("You haven't the right for using this function");
         }
         if (roomDB == null) {
-            throw  new Exception("The file of DB " + roomDB.getPath() + " not found");
+            throw new Exception("The file of DB " + roomDB.getPath() + " not found");
         }
-        if (roomDB.length() == 0){
+        if (roomDB.length() == 0) {
             return false;
         }
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(roomDB))) {
@@ -133,19 +182,19 @@ public class RoomRepository extends GeneralRepository {
         return false;
     }
 
-    public String userTypeValidate() throws Exception{
+    public String userTypeValidate() throws Exception {
         File file = new File((new UserRepository()).getPath().toString());
-        if (file == null || file.length() == 0){
+        if (file == null || file.length() == 0) {
             throw new Exception("ERROR: The DB not found or one is empty");
         }
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String string = "";
-            while ((string = bufferedReader.readLine()) != null){
-                if (string.split(",").length == 6){
+            while ((string = bufferedReader.readLine()) != null) {
+                if (string.split(",").length == 6) {
                     return string.split(",")[4];
                 }
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             System.out.println("ERROR: Can't read from file" + file.getPath());
         }
         return null;
